@@ -16,7 +16,7 @@ Important:
 		you have installed by running 'java -version' from the command line. Java can be
 		downloaded from https://www.java.com/download
 
-	Do NOT delete 'Converter.jar', 'Converter.java', or the 'input' and 'output' folders!
+	Do NOT delete 'Converter.jar' or the 'bin', 'input', 'output', or 'src' folders!
 		The program expects them to exist and will not be able to run without them.
 
 	You CAN safely delete the 'info' folder, it's not used by the program,
