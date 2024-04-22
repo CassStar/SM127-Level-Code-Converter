@@ -10,7 +10,8 @@ What it Does:
 
 Important:
 
-	This program requires a not-ancient version of Java installed in order to run. If you do not 				have Java installed or have a Java version less than 14.0.0, please install Java/
+	This program requires a not-ancient version of Java installed in order to run. If you do not
+		have Java installed or have a Java version less than 14.0.0, please install Java/
 		update your installation before running the program. You can find which version of Java
 		you have installed by running 'java -version' from the command line. Java can be
 		downloaded from https://www.java.com/download
