@@ -1,0 +1,76 @@
+ID	Tile Type
+
+000	Air Block(No Tile)
+
+010	Full-Tile Blue Brick
+012	Up-Right Blue Brick Stairs
+013	Up-Left Blue Brick Stairs
+
+020	Full-Tile Grass
+021	Half-Tile Grass
+022	Right Slope Grass
+023	Left Slope Grass
+
+030	Full-Tile Green Brick
+032	Up-Right Green Brick Stairs
+033	Up-Left Green Brick Stairs
+
+040	Full-Tile Red Brick
+042	Up-Right Red Brick Stairs
+043	Up-Left Red Brick Stairs
+
+050	Full-Tile Yellow Brick
+052	Up-Right Yellow Brick Stairs
+053	Up-Left Yellow Brick Stairs
+
+060	Full-Tile Invisible Block
+
+070	Full-Tile Snow
+071	Half-Tile Snow
+072	Right Slope Snow
+073	Left Slope Snow
+
+080	Full-Tile Cave
+081	Half-Tile Cave
+
+090	Glass Pane Block
+
+100	Full-Tile Wooden Cabin
+102	Up-Right Cabin Stairs
+103	Up-Left Cabin Stairs
+
+110	Red Gem Block
+120	Yellow Gem Block
+130	Green Gem Block
+140	Blue Gem Block
+
+150	Full-Tile Light Stone Brick
+152	Up-Right Light Stone Brick Stairs
+153	Up-Left Light Stone Brick Stairs
+
+160	Full-Tile Rough Stone Brick
+162	Up-Right Rough Stone Brick Stairs
+163	Up-Left Rough Stone Brick Stairs
+
+170	Full-Tile Magic Block
+172	Up-Right Magic Block Stairs
+173	Up-Left Magic Block Stairs
+
+180	Full-Tile Warped Ground
+181	Half-Tile Warped Ground
+182	Right Slope Warped Ground
+183	Left Slope Warped Ground
+
+190	Full-Tile Granite Block
+
+200	Full-Tile Cracked Stone Block
+
+210	Full-Tile Solid Colour Block (Black Only)
+
+220	Full-Tile CheckerBoard Block
+
+230	Full-Tile Carpet Block
+
+240	Full-Tile Wooden Plank Block
+
+250	Full-Tile Castle Brick

@@ -1,0 +1,116 @@
+ID	Tile Type
+
+000	Air Block(No Tile)
+
+010	Full-Tile Coloured Brick
+012	Up-Right Coloured Brick Stairs
+013	Up-Left Coloured Brick Stairs
+
+020	Full-Tile Grass
+021	Half-Tile Grass
+022	Right Slope Grass
+023	Left Slope Grass
+
+030	Full-Tile Green Brick
+032	Up-Right Green Brick Stairs
+033	Up-Left Green Brick Stairs
+
+040	Full-Tile Red Brick
+042	Up-Right Red Brick Stairs
+043	Up-Left Red Brick Stairs
+
+050	Full-Tile Yellow Brick
+052	Up-Right Yellow Brick Stairs
+053	Up-Left Yellow Brick Stairs
+
+060	Full-Tile Invisible Block
+
+070	Full-Tile Snow
+071	Half-Tile Snow
+072	Right Slope Snow
+073	Left Slope Snow
+
+080	Full-Tile Old Cave
+081	Half-Tile Old Cave
+
+090	Glass Pane Block
+
+100	Full-Tile Wooden Cabin
+102	Up-Right Cabin Stairs
+103	Up-Left Cabin Stairs
+
+110	Coloured Gem Block
+120	Yellow Gem Block
+130	Green Gem Block
+140	Blue Gem Block
+
+150	Full-Tile Light Stone Brick
+152	Up-Right Light Stone Brick Stairs
+153	Up-Left Light Stone Brick Stairs
+
+160	Full-Tile Rough Stone Brick
+162	Up-Right Rough Stone Brick Stairs
+163	Up-Left Rough Stone Brick Stairs
+
+170	Full-Tile Magic Block
+172	Up-Right Magic Block Stairs
+173	Up-Left Magic Block Stairs
+
+180	Full-Tile Warped Ground
+181	Half-Tile Warped Ground
+182	Right Slope Warped Ground
+183	Left Slope Warped Ground
+
+190	Full-Tile Granite Block
+
+200	Full-Tile Cracked Stone Block
+
+210	Full-Tile Solid Colour Block
+
+220	Full-Tile CheckerBoard Block
+
+230	Full-Tile Carpet Block
+
+240	Full-Tile Wooden Plank Block
+
+250	Full-Tile Castle Brick
+
+260	Full-Tile Castle Roof
+262	Right Slope Castle Roof
+263	Left Slope Castle Roof
+
+270	Full-Tile Sand
+271	Half-Tile Sand
+272	Right Slope Sand
+273	Left Slope Sand
+
+280	Full-Tile SandStone
+282	Up-Right SandStone Stairs
+283	Up-Left SandStone Stairs
+
+290	Full-Tile Volcano
+291	Half-Tile Volcano
+292	Right Slope Volcano
+293	Left Slope Volcano
+
+300	Full-Tile Castle Pillar Block
+
+310	Full-Tile Volcanic Brick
+312	Up-Right Volcanic Brick Stairs
+313	Up-Left Volcanic Brick Stairs
+
+320	Full-Tile Dark Stone Brick
+322	Up-Right Dark Stone Brick Stairs
+323	Up-Left Dark Stone Brick Stairs
+
+330	Cabin Window Block
+
+340	Full-Tile YI Grass
+341	Half-Tile YI Grass
+342	Right Slope YI Grass
+343	Left Slope YI Grass
+
+350	Full-Tile New Cave
+351	Half-Tile New Cave
+352	Right Slope New Cave
+353	Left Slope New Cave
