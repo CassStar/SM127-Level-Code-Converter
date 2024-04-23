@@ -55,9 +55,7 @@ public class Converter {
 	
 	Converter() {
 		
-//		String workingDirectory = System.getProperty("user.dir");
-		String workingDirectory = "C:\\Users\\27funkj\\Downloads\\Super Mario 127\\"
-				+ "Code Converter";
+		String workingDirectory = System.getProperty("user.dir");
 		directoryPath = Paths.get(workingDirectory);
 		
 		inputDirectory = directoryPath.resolve("input");
