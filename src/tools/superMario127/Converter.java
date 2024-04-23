@@ -7,9 +7,9 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import level.LevelCode;
-import objects.LevelObject;
-import tiles.LevelTile;
+import level.*;
+import objects.*;
+import tiles.*;
 import util.Utility;
 
 public class Converter {
@@ -221,9 +221,9 @@ public class Converter {
 		for (LevelObject object:postConversionAdditions) {
 			
 			// Post-conversion additions need to actually be converted as well.
-			if (object.objectID == 48) {
+			if (object instanceof DoorObject) {
 				
-				object = new LevelObject(""+object.objectID+","+
+				object = new DoorObject(""+object.objectID+","+
 						Utility.vector2DToString(
 								(double[]) object.objectData[2],false)+","+
 						Utility.vector2DToString(
@@ -708,41 +708,42 @@ public class Converter {
 				
 				LevelTile tile = tileArray[i];
 				
-				switch (tile.tileID) {
-				
-				// Coloured Brick Blocks
-				case 10,12,13:
+				if (tile instanceof ColouredBrickTile || tile instanceof DarkBrickTile) {
+					
+					// Set a default tile ID.
+					tile.tileID = ColouredBrickTile.getTileID(tile.tileID,false);
 					
 					if (tile.hasPallete) {
 						
 						switch (tile.tilePallete) {
-							
+						
 						// Red Pallete
 						case 1:
 							
 							// Change ID to Red Brick Block.
-							tile.tileID += 30;
+							tile.tileID = RedBrickTile.getTileID(tile.tileID,false);
 							break;
 							
 						// Yellow Pallete
 						case 2:
 							
 							// Change ID to Yellow Brick Block.
-							tile.tileID += 40;
+							tile.tileID = YellowBrickTile.getTileID(tile.tileID,false);
 							break;
 							
 						// Green Pallete,Purple Pallete
 						case 3,4:
 							
 							// Change ID to Green Brick Block.
-							tile.tileID += 20;
+							tile.tileID = GreenBrickTile.getTileID(tile.tileID,false);
 							break;
 						}
 					}
-					break;
-				
-				// Coloured Gem Blocks
-				case 110:
+					
+				} else if (tile instanceof ColouredGemTile) {
+					
+					// Set a default tile ID.
+					tile.tileID = ColouredGemTile.getTileID(tile.tileID,false);
 					
 					if (tile.hasPallete) {
 						
@@ -752,126 +753,69 @@ public class Converter {
 						case 1:
 							
 							// Change ID to Yellow Gem Block.
-							tile.tileID += 10;
+							tile.tileID = YellowGemTile.getTileID(tile.tileID,false);
 							break;
 							
 						// Green Pallete
 						case 2:
 							
 							// Change ID to Green Gem Block.
-							tile.tileID += 20;
+							tile.tileID = GreenGemTile.getTileID(tile.tileID,false);
 							break;
 							
 						// Blue Pallete,Purple Pallete,Light Blue Pallete,Black Pallete
 						case 3,4,5,6:
 							
 							// Change ID to Blue Gem Block.
-							tile.tileID += 30;
+							tile.tileID = BlueGemTile.getTileID(tile.tileID,false);
 							break;
 						}
 					}
-					break;
-				
-				// Castle Roof Tiles
-				case 260,262,263:
 					
-					// Change ID to Red Gem Block.
-					tile.tileID = 110;
-					break;
-					
-				// Snow Tiles
-				case 270,271,272,273:
-					
-					// Change ID to Grass Block.
-					tile.tileID -= 250;
-					break;
-					
-				// SandStone Tiles
-				case 280,282,283:
-					
-					// Change ID to Yellow Brick Block.
-					tile.tileID -= 230;
-					break;
-					
-				// Volcano Tiles
-				case 290,291,292,293:
-					
-					// Change ID to Warped Ground Block.
-					tile.tileID -= 110;
-					break;
-					
-				// Castle Pillar Tiles
-				case 300:
-					
-					// Change ID to Castle Brick Block.
-					tile.tileID -= 50;
-					break;
-					
-				// Volcanic Brick Tiles
-				case 310,312,313:
+				} else if (tile instanceof CastleRoofTile ||
+						tile instanceof VolcanicBrickTile) {
 					
 					// Change ID to Red Brick Block.
-					tile.tileID -= 270;
-					break;
+					tile.tileID = RedBrickTile.getTileID(tile.tileID,false);
 					
-				// Dark Brick Tiles
-				case 320,322,323:
-					
-					if (tile.hasPallete) {
-						
-						switch (tile.tilePallete) {
-							
-						// Red Pallete
-						case 1:
-							
-							// Change ID to Red Brick Block.
-							tile.tileID -= 280;
-							break;
-							
-						// Yellow Pallete
-						case 2:
-							
-							// Change ID to Yellow Brick Block.
-							tile.tileID -= 270;
-							break;
-							
-						// Green Pallete,Purple Pallete
-						case 3,4:
-							
-							// Change ID to Green Brick Block.
-							tile.tileID -= 290;
-							break;
-						}
-					}
-					break;
-					
-				// Cabin Window Tiles
-				case 330:
-					
-					// Change ID to Glass Pane Block.
-					tile.tileID -= 240;
-					break;
-					
-				// YI Grass Tiles
-				case 340,341,342,343:
+				} else if (tile instanceof YIGrassTile) {
 					
 					// Change ID to Grass Block.
-					tile.tileID -= 320;
-					break;
+					tile.tileID = GrassTile.getTileID(tile.tileID,false);
 					
-				// New Cave Tiles
-				case 350,351:
+				} else if (tile instanceof SandStoneTile) {
 					
-					// Change ID to Old Cave Block.
-					tile.tileID -= 270;
-					break;
+					// Change ID to Yellow Brick Block.
+					tile.tileID = YellowBrickTile.getTileID(tile.tileID,false);
 					
-				// New Cave Slope Tiles
-				case 352,353:
+				} else if (tile instanceof VolcanoTile) {
 					
-					// Change ID to Old Cave Half-Tile Block.
-					tile.tileID = 81;
-					break;
+					// Change ID to Warped Ground Block.
+					tile.tileID = WarpedGroundTile.getTileID(tile.tileID,false);
+					
+				} else if (tile instanceof CastlePillarTile) {
+					
+					// Change ID to Castle Brick Block.
+					tile.tileID = CastleBrickTile.getTileID(tile.tileID,false);
+					
+				} else if (tile instanceof CabinWindowTile) {
+					
+					// Change ID to Glass Pane Block.
+					tile.tileID = GlassPaneTile.getTileID(tile.tileID,false);
+					
+				} else if (tile instanceof NewCaveTile) {
+					
+					
+					if (tile.tileID > 351) {
+						
+						// Change ID to Old Cave half-tile.
+						tile.tileID = OldCaveTile.getTileID(tile.tileID,true)+1;
+						
+					} else {
+						
+						// Change ID to Old Cave half-tile.
+						tile.tileID = OldCaveTile.getTileID(tile.tileID,true);
+					}
 				}
 				
 				tile.tilePallete = 0;
@@ -896,73 +840,62 @@ public class Converter {
 			
 			LevelObject object = objectArray[i];
 			
-			switch(object.objectID) {
-			
-			// Metal Platform Object
-			case 3:
+			if (object instanceof MetalPlatformObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL1x1x1");
+					object = new MetalPlatformObject(object.stringData+",CL1x1x1");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new MetalPlatformObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			// Mushroom Top Object
-			case 6:
+			} else if (object instanceof MushroomTopObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL1x0x0");
+					object = new MushroomTopObject(object.stringData+",CL1x0x0");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new MushroomTopObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			// Sign Object
-			case 14:
+			} else if (object instanceof SignObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",BL0,BL0");
+					object = new SignObject(object.stringData+",BL0,BL0");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(0,
+					object = new SignObject(object.stringData.substring(0,
 						object.stringData.length()-",BL0,BL0".length()));
 				}
-				break;
 				
-			// Twited Tree Top Object
-			case 16:
+			} else if (object instanceof TwistedTreeTopObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL0.97x0.5x0.16");
+					object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new TwistedTreeTopObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			// Warp Pipe Top Object
-			case 23:
+			} else if (object instanceof WarpPipeTopObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
 					double[] pipeDestinationCoordinates = (double[]) object.objectData[8],
 							pipeCoordinates = (double[]) object.objectData[2];
 					
-					object = new LevelObject(""+object.objectID+","+
+					object = new WarpPipeTopObject(""+object.objectID+","+
 							Utility.vector2DToString(
 									(double[]) object.objectData[2],false)+","+
 							Utility.vector2DToString(
@@ -976,7 +909,7 @@ public class Converter {
 					
 					if (!Utility.areSameVectors(pipeCoordinates,pipeDestinationCoordinates)) {
 						
-						LevelObject destinationPipe = new LevelObject(object.stringData);
+						LevelObject destinationPipe = new WarpPipeTopObject(object.stringData);
 						
 						destinationPipe.objectData[2] = new double[] {
 								pipeDestinationCoordinates[0],
@@ -991,7 +924,7 @@ public class Converter {
 					
 					LevelObject destinationPipe = toLevel.findMatchingPipe(object,i);
 					
-					object = new LevelObject(""+object.objectID+",0,"+
+					object = new WarpPipeTopObject(""+object.objectID+",0,"+
 							Utility.vector2DToString(
 									(double[]) object.objectData[2],false)+","+
 							Utility.vector2DToString(
@@ -1008,30 +941,26 @@ public class Converter {
 				}
 				
 				numberOfWarpPipes++;
-				break;
 				
-			// Goomba Object
-			case 29:
+			} else if (object instanceof GoombaObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL1x0x0");
+					object = new GoombaObject(object.stringData+",CL1x0x0");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new GoombaObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			// Door Object
-			case 48:
+			} else if (object instanceof DoorObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
 					toLevel.normalizeDoors();
 					
-					object = new LevelObject(""+object.objectID+","+
+					object = new DoorObject(""+object.objectID+","+
 							Utility.vector2DToString(
 									(double[]) object.objectData[2],false)+","+
 							Utility.vector2DToString(
@@ -1042,7 +971,7 @@ public class Converter {
 							"IT0,"+object.objectData[8]+",BL0");
 				} else {
 					
-					object = new LevelObject(""+object.objectID+",0,"+
+					object = new DoorObject(""+object.objectID+",0,"+
 							Utility.vector2DToString(
 									(double[]) object.objectData[2],false)+","+
 							Utility.vector2DToString(
@@ -1053,52 +982,44 @@ public class Converter {
 							object.objectData[8]+","+
 							object.objectData[8]);
 				}
-				break;
 				
-			// Arrow Object
-			case 53:
+			} else if (object instanceof ArrowObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL1x0x0");
+					object = new ArrowObject(object.stringData+",CL1x0x0");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new ArrowObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			// Wooden Platform Object
-			case 56:
+			} else if (object instanceof WoodenPlatformObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new LevelObject(object.stringData+",CL1x0x0");
+					object = new WoodenPlatformObject(object.stringData+",CL1x0x0");
 					
 				} else {
 					
-					object = new LevelObject(object.stringData.substring(
+					object = new WoodenPlatformObject(object.stringData.substring(
 							0,object.stringData.indexOf("CL")-1));
 				}
-				break;
 				
-			default:
-				// All other objects (New Objects)
-				if (object.objectID > 69) {
-					
-					object = new LevelObject("14,"+object.objectData[1]+","+
-							Utility.vector2DToString(
-									(double[]) object.objectData[2],false)+","+
-							Utility.vector2DToString(
-									(double[]) object.objectData[3],false)+","+
-							object.dataTypes[4]+object.objectData[4]+","+
-							Utility.booleanToString((boolean) object.objectData[5])+","+
-							Utility.booleanToString((boolean) object.objectData[6])+","+
-							"STThis%20sign%20represents%20an%20object%20that%20wasn%27t%20"
-							+ "converted%2C%20since%20it%20doesn%27t%20exist%20in%20this%20"
-							+ "version%20of%20the%20game.");
-				}
+			} else if (object.objectID > 69) {
+				
+				object = new LevelObject("14,"+object.objectData[1]+","+
+						Utility.vector2DToString(
+								(double[]) object.objectData[2],false)+","+
+						Utility.vector2DToString(
+								(double[]) object.objectData[3],false)+","+
+						object.dataTypes[4]+object.objectData[4]+","+
+						Utility.booleanToString((boolean) object.objectData[5])+","+
+						Utility.booleanToString((boolean) object.objectData[6])+","+
+						"STThis%20sign%20represents%20an%20object%20that%20wasn%27t%20"
+						+ "converted%2C%20since%20it%20doesn%27t%20exist%20in%20this%20"
+						+ "version%20of%20the%20game.");
 			}
 			
 			object.setConversionType(conversionType);
