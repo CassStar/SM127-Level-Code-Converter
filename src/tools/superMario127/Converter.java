@@ -56,6 +56,7 @@ public class Converter {
 	Converter() {
 		
 		String workingDirectory = System.getProperty("user.dir");
+		
 		directoryPath = Paths.get(workingDirectory);
 		
 		inputDirectory = directoryPath.resolve("input");
@@ -188,8 +189,8 @@ public class Converter {
 		
 		if (!isValid) {
 			
-			System.err.printf("Code structure for file: %s does not match known code structure"
-					+ "for game version: %s%n",file,conversionType.gameVersionFrom);
+			System.err.printf("Code structure for file: %s does not match known code "
+					+ "structure for game version: %s%n",file,conversionType.gameVersionFrom);
 			return;
 		}
 		
@@ -197,6 +198,9 @@ public class Converter {
 		
 		// Copying all data to the new level.
 		toLevel = new LevelCode(fromLevel);
+		
+		toLevel.setConversionType(conversionType);
+		toLevel.setPostConversionAdditions(postConversionAdditions);
 		
 		// Updating code version.
 		toLevel.setCodeVersion(conversionType.codeVersionTo);
@@ -229,7 +233,7 @@ public class Converter {
 						object.dataTypes[4]+object.objectData[4]+","+
 						Utility.booleanToString((boolean) object.objectData[5])+","+
 						Utility.booleanToString((boolean) object.objectData[6])+","+
-						"IT0,"+object.objectData[8]+",BL0");
+						"IT0,"+object.objectData[8]+",BL0",conversionType);
 			}
 			
 			toLevel.addObject(object);
@@ -289,6 +293,8 @@ public class Converter {
 			}
 			
 			fromLevel = new LevelCode(levelData);
+			
+			fromLevel.setConversionType(conversionType);
 			
 //			System.out.println("Level Code: "+levelData+"\n");
 			
@@ -630,7 +636,8 @@ public class Converter {
 	
 	void convertMusicIDs() {
 		
-		if (conversionType == ConversionType.OLD_TO_NEW && toLevel.getMusicID() == maxMusicID) {
+		if (conversionType == ConversionType.OLD_TO_NEW &&
+				toLevel.getMusicID() == maxMusicID) {
 			
 			toLevel.setMusicID(66);
 			
@@ -842,48 +849,51 @@ public class Converter {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new MetalPlatformObject(object.stringData+",CL1x1x1");
+					object = new MetalPlatformObject(object.stringData+",CL1x1x1",
+							conversionType);
 					
 				} else {
 					
 					object = new MetalPlatformObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object instanceof MushroomTopObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new MushroomTopObject(object.stringData+",CL1x0x0");
+					object = new MushroomTopObject(object.stringData+",CL1x0x0",
+							conversionType);
 					
 				} else {
 					
 					object = new MushroomTopObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object instanceof SignObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new SignObject(object.stringData+",BL0,BL0");
+					object = new SignObject(object.stringData+",BL0,BL0",conversionType);
 					
 				} else {
 					
 					object = new SignObject(object.stringData.substring(0,
-						object.stringData.length()-",BL0,BL0".length()));
+						object.stringData.length()-",BL0,BL0".length()),conversionType);
 				}
 				
 			} else if (object instanceof TwistedTreeTopObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16");
+					object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16",
+							conversionType);
 					
 				} else {
 					
 					object = new TwistedTreeTopObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object instanceof WarpPipeTopObject) {
@@ -903,18 +913,17 @@ public class Converter {
 							Utility.booleanToString((boolean) object.objectData[6])+","+
 							object.dataTypes[7]+object.objectData[7]+","+
 							"STWarpPipe"+numberOfWarpPipes+","+
-							"CL0x1x0,"+"BL1");
+							"CL0x1x0,"+"BL1",conversionType);
 					
 					if (!Utility.areSameVectors(pipeCoordinates,pipeDestinationCoordinates)) {
 						
-						LevelObject destinationPipe = new WarpPipeTopObject(object.stringData);
+						LevelObject destinationPipe = new WarpPipeTopObject(object.stringData,
+								conversionType);
 						
 						destinationPipe.objectData[2] = new double[] {
 								pipeDestinationCoordinates[0],
 								pipeDestinationCoordinates[1]
 						};
-						
-						destinationPipe.setConversionType(conversionType);
 						
 						postConversionAdditions.add(destinationPipe);
 					}
@@ -935,7 +944,7 @@ public class Converter {
 							Utility.vector2DToString((double[]) object.objectData[2],false):
 							Utility.vector2DToString((double[]) destinationPipe.objectData[2],
 									false))+
-							",BL1");
+							",BL1",conversionType);
 				}
 				
 				numberOfWarpPipes++;
@@ -944,12 +953,12 @@ public class Converter {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new GoombaObject(object.stringData+",CL1x0x0");
+					object = new GoombaObject(object.stringData+",CL1x0x0",conversionType);
 					
 				} else {
 					
 					object = new GoombaObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object instanceof DoorObject) {
@@ -966,7 +975,7 @@ public class Converter {
 							object.dataTypes[4]+object.objectData[4]+","+
 							Utility.booleanToString((boolean) object.objectData[5])+","+
 							Utility.booleanToString((boolean) object.objectData[6])+","+
-							"IT0,"+object.objectData[8]+",BL0");
+							"IT0,"+object.objectData[8]+",BL0",conversionType);
 				} else {
 					
 					object = new DoorObject(""+object.objectID+",0,"+
@@ -978,31 +987,32 @@ public class Converter {
 							Utility.booleanToString((boolean) object.objectData[5])+","+
 							Utility.booleanToString((boolean) object.objectData[6])+","+
 							object.objectData[8]+","+
-							object.objectData[8]);
+							object.objectData[8],conversionType);
 				}
 				
 			} else if (object instanceof ArrowObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new ArrowObject(object.stringData+",CL1x0x0");
+					object = new ArrowObject(object.stringData+",CL1x0x0",conversionType);
 					
 				} else {
 					
 					object = new ArrowObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object instanceof WoodenPlatformObject) {
 				
 				if (conversionType == ConversionType.OLD_TO_NEW) {
 					
-					object = new WoodenPlatformObject(object.stringData+",CL1x0x0");
+					object = new WoodenPlatformObject(object.stringData+",CL1x0x0",
+							conversionType);
 					
 				} else {
 					
 					object = new WoodenPlatformObject(object.stringData.substring(
-							0,object.stringData.indexOf("CL")-1));
+							0,object.stringData.indexOf("CL")-1),conversionType);
 				}
 				
 			} else if (object.objectID > 69) {
@@ -1017,10 +1027,8 @@ public class Converter {
 						Utility.booleanToString((boolean) object.objectData[6])+","+
 						"STThis%20sign%20represents%20an%20object%20that%20wasn%27t%20"
 						+ "converted%2C%20since%20it%20doesn%27t%20exist%20in%20this%20"
-						+ "version%20of%20the%20game.");
+						+ "version%20of%20the%20game.",conversionType);
 			}
-			
-			object.setConversionType(conversionType);
 			
 			objectArray[i] = object;
 		}
