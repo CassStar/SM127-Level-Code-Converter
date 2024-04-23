@@ -11,9 +11,10 @@ public class LevelObject {
 	public String[] dataTypes;
 	ConversionType conversionType;
 	
-	public LevelObject(String data) throws Exception {
+	public LevelObject(String data,ConversionType type) throws Exception {
 		
 		stringData = data;
+		conversionType = type;
 		
 		if (conversionType == ConversionType.OLD_TO_NEW) {
 			
@@ -96,11 +97,6 @@ public class LevelObject {
 		String[] splitData = data.split(",");
 		
 		return Integer.parseInt(splitData[0]);
-	}
-	
-	public void setConversionType(ConversionType type) {
-		
-		conversionType = type;
 	}
 	
 	void removeLastValue() {

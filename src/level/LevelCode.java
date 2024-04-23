@@ -239,7 +239,7 @@ public class LevelCode {
 	
 	public void setPostConversionAdditions(ArrayList<LevelObject> list) {
 		
-		
+		postConversionAdditions = list;
 	}
 	
 	/*
@@ -436,8 +436,6 @@ public class LevelCode {
 			
 			LevelObject object = getObjectFromIDAndData(objectID,objectStrings[i]);
 			
-			object.setConversionType(conversionType);
-			
 			objects[i] = object;
 		}
 		
@@ -450,399 +448,399 @@ public class LevelCode {
 		
 		case 0:
 			
-			return new MarioSpawnObject(data);
+			return new MarioSpawnObject(data,conversionType);
 		
 		case 1:
 			
-			return new YellowCoinObject(data);
+			return new YellowCoinObject(data,conversionType);
 			
 		case 2:
 			
-			return new ShineSpriteObject(data);
+			return new ShineSpriteObject(data,conversionType);
 			
 		case 3:
 			
-			return new MetalPlatformObject(data);
+			return new MetalPlatformObject(data,conversionType);
 			
 		case 4:
 			
-			return new SM64TreeObject(data);
+			return new SM64TreeObject(data,conversionType);
 			
 		case 5:
 			
-			return new LuigiSpawnObject(data);
+			return new LuigiSpawnObject(data,conversionType);
 			
 		case 6:
 			
-			return new MushroomTopObject(data);
+			return new MushroomTopObject(data,conversionType);
 			
 		case 7:
 			
-			return new MushroomStemObject(data);
+			return new MushroomStemObject(data,conversionType);
 			
 		case 8:
 			
-			return new MushroomEndObject(data);
+			return new MushroomEndObject(data,conversionType);
 			
 		case 9:
 			
-			return new CloudPlatformObject(data);
+			return new CloudPlatformObject(data,conversionType);
 			
 		case 10:
 			
-			return new FallingLogObject(data);
+			return new FallingLogObject(data,conversionType);
 			
 		case 11:
 			
-			return new LargeBushesObject(data);
+			return new LargeBushesObject(data,conversionType);
 			
 		case 12:
 			
-			return new SmallBushesObject(data);
+			return new SmallBushesObject(data,conversionType);
 			
 		case 13:
 			
-			return new BonePlatformObject(data);
+			return new BonePlatformObject(data,conversionType);
 			
 		case 14:
 			
-			return new SignObject(data);
+			return new SignObject(data,conversionType);
 			
 		case 15:
 			
-			return new GreenDemonObject(data);
+			return new GreenDemonObject(data,conversionType);
 			
 		case 16:
 			
-			return new TwistedTreeTopObject(data);
+			return new TwistedTreeTopObject(data,conversionType);
 			
 		case 17:
 			
-			return new TwistedTreeBodyObject(data);
+			return new TwistedTreeBodyObject(data,conversionType);
 			
 		case 18:
 			
-			return new TwistedTreeAngleObject(data);
+			return new TwistedTreeAngleObject(data,conversionType);
 			
 		case 19:
 			
-			return new HoverFluddObject(data);
+			return new HoverFluddObject(data,conversionType);
 			
 		case 20:
 			
-			return new FluddNozzleObject(data);
+			return new FluddNozzleObject(data,conversionType);
 			
 		case 21:
 			
-			return new SmallWaterBottleObject(data);
+			return new SmallWaterBottleObject(data,conversionType);
 			
 		case 22:
 			
-			return new LargeWaterBottleObject(data);
+			return new LargeWaterBottleObject(data,conversionType);
 			
 		case 23:
 			
-			return new WarpPipeTopObject(data);
+			return new WarpPipeTopObject(data,conversionType);
 			
 		case 24:
 			
-			return new SmallSnowyTreeObject(data);
+			return new SmallSnowyTreeObject(data,conversionType);
 			
 		case 25:
 			
-			return new BulletBillObject(data);
+			return new BulletBillObject(data,conversionType);
 			
 		case 26:
 			
-			return new BulletBillBlasterObject(data);
+			return new BulletBillBlasterObject(data,conversionType);
 			
 		case 27:
 			
-			return new BobOmbObject(data);
+			return new BobOmbObject(data,conversionType);
 			
 		case 28:
 			
-			return new KoopaTroopaObject(data);
+			return new KoopaTroopaObject(data,conversionType);
 			
 		case 29:
 			
-			return new GoombaObject(data);
+			return new GoombaObject(data,conversionType);
 			
 		case 30:
 			
-			return new RedCoinObject(data);
+			return new RedCoinObject(data,conversionType);
 			
 		case 31:
 			
-			return new UnkownObject(data);
+			return new UnkownObject(data,conversionType);
 			
 		case 32:
 			
-			return new SnowyPlatformObject(data);
+			return new SnowyPlatformObject(data,conversionType);
 			
 		case 33:
 			
-			return new BreakableBlockObject(data);
+			return new BreakableBlockObject(data,conversionType);
 			
 		case 34:
 			
-			return new EnchantedGearObject(data);
+			return new EnchantedGearObject(data,conversionType);
 			
 		case 35:
 			
-			return new MetalBrickBlockObject(data);
+			return new MetalBrickBlockObject(data,conversionType);
 			
 		case 36:
 			
-			return new BigSteelySpawnerObject(data);
+			return new BigSteelySpawnerObject(data,conversionType);
 			
 		case 37:
 			
-			return new BigSteelyObject(data);
+			return new BigSteelyObject(data,conversionType);
 			
 		case 38:
 			
-			return new RocketFluddObject(data);
+			return new RocketFluddObject(data,conversionType);
 			
 		case 39:
 			
-			return new TurboFluddObject(data);
+			return new TurboFluddObject(data,conversionType);
 			
 		case 40:
 			
-			return new BlueCoinObject(data);
+			return new BlueCoinObject(data,conversionType);
 			
 		case 41:
 			
-			return new RainbowStarObject(data);
+			return new RainbowStarObject(data,conversionType);
 			
 		case 42:
 			
-			return new RainbowBrickBlockObject(data);
+			return new RainbowBrickBlockObject(data,conversionType);
 			
 		case 43:
 			
-			return new GhostPepperObject(data);
+			return new GhostPepperObject(data,conversionType);
 			
 		case 44:
 			
-			return new IronBarsObject(data);
+			return new IronBarsObject(data,conversionType);
 			
 		case 45:
 			
-			return new ShineShardObject(data);
+			return new ShineShardObject(data,conversionType);
 			
 		case 46:
 			
-			return new CannonObject(data);
+			return new CannonObject(data,conversionType);
 			
 		case 47:
 			
-			return new SeesawPlatformObject(data);
+			return new SeesawPlatformObject(data,conversionType);
 			
 		case 48:
 			
-			return new DoorObject(data);
+			return new DoorObject(data,conversionType);
 			
 		case 49:
 			
-			return new MovingPlatformObject(data);
+			return new MovingPlatformObject(data,conversionType);
 			
 		case 50:
 			
-			return new CarouselPlatformObject(data);
+			return new CarouselPlatformObject(data,conversionType);
 			
 		case 51:
 			
-			return new PearlPlatformObject(data);
+			return new PearlPlatformObject(data,conversionType);
 		
 		case 52:
 			
-			return new StarCoinObject(data);
+			return new StarCoinObject(data,conversionType);
 			
 		case 53:
 			
-			return new ArrowObject(data);
+			return new ArrowObject(data,conversionType);
 			
 		case 54:
 			
-			return new SmallCaveTreeObject(data);
+			return new SmallCaveTreeObject(data,conversionType);
 			
 		case 55:
 			
-			return new LargeCaveTreeObject(data);
+			return new LargeCaveTreeObject(data,conversionType);
 			
 		case 56:
 			
-			return new WoodenPlatformObject(data);
+			return new WoodenPlatformObject(data,conversionType);
 			
 		case 57:
 			
-			return new SuperFeatherObject(data);
+			return new SuperFeatherObject(data,conversionType);
 			
 		case 58:
 			
-			return new NoteblockObject(data);
+			return new NoteblockObject(data,conversionType);
 			
 		case 59:
 			
-			return new LargeSnowyTreeObject(data);
+			return new LargeSnowyTreeObject(data,conversionType);
 			
 		case 60:
 			
-			return new ShortSnowyPillarObject(data);
+			return new ShortSnowyPillarObject(data,conversionType);
 			
 		case 61:
 			
-			return new TallSnowyPillarObject(data);
+			return new TallSnowyPillarObject(data,conversionType);
 			
 		case 62:
 			
-			return new SmallPineTreeObject(data);
+			return new SmallPineTreeObject(data,conversionType);
 			
 		case 63:
 			
-			return new LargePineTreeObject(data);
+			return new LargePineTreeObject(data,conversionType);
 			
 		case 64:
 			
-			return new CavePlantObject(data);
+			return new CavePlantObject(data,conversionType);
 			
 		case 65:
 			
-			return new TallCaveSporeObject(data);
+			return new TallCaveSporeObject(data,conversionType);
 			
 		case 66:
 			
-			return new ShortCaveSporeObject(data);
+			return new ShortCaveSporeObject(data,conversionType);
 			
 		case 67:
 			
-			return new SnowyLogObject(data);
+			return new SnowyLogObject(data,conversionType);
 			
 		case 68:
 			
-			return new CastleWindowObject(data);
+			return new CastleWindowObject(data,conversionType);
 			
 		case 69:
 			
-			return new JelectroObject(data);
+			return new JelectroObject(data,conversionType);
 			
 		case 70:
 			
-			return new GoonieObject(data);
+			return new GoonieObject(data,conversionType);
 			
 		case 71:
 			
-			return new ButterflyObject(data);
+			return new ButterflyObject(data,conversionType);
 			
 		case 72:
 			
-			return new WaterObject(data);
+			return new WaterObject(data,conversionType);
 			
 		case 73:
 			
-			return new LargeStoneObject(data);
+			return new LargeStoneObject(data,conversionType);
 			
 		case 74:
 			
-			return new CheepCheepObject(data);
+			return new CheepCheepObject(data,conversionType);
 			
 		case 75:
 			
-			return new LavaObject(data);
+			return new LavaObject(data,conversionType);
 			
 		case 76:
 			
-			return new SmallBeachTreeObject(data);
+			return new SmallBeachTreeObject(data,conversionType);
 			
 		case 77:
 			
-			return new CactusObject(data);
+			return new CactusObject(data,conversionType);
 			
 		case 78:
 			
-			return new FlowerBedObject(data);
+			return new FlowerBedObject(data,conversionType);
 			
 		case 79:
 			
-			return new PSwitchBlockObject(data);
+			return new PSwitchBlockObject(data,conversionType);
 			
 		case 80:
 			
-			return new PSwitchObject(data);
+			return new PSwitchObject(data,conversionType);
 			
 		case 81:
 			
-			return new FluidControllerObject(data);
+			return new FluidControllerObject(data,conversionType);
 			
 		case 82:
 			
-			return new CheckpointObject(data);
+			return new CheckpointObject(data,conversionType);
 			
 		case 83:
 			
-			return new FirePillarObject(data);
+			return new FirePillarObject(data,conversionType);
 			
 		case 84:
 			
-			return new CharredTreeObject(data);
+			return new CharredTreeObject(data,conversionType);
 			
 		case 85:
 			
-			return new BooObject(data);
+			return new BooObject(data,conversionType);
 			
 		case 86:
 			
-			return new LargeBeachTreeObject(data);
+			return new LargeBeachTreeObject(data,conversionType);
 			
 		case 87:
 			
-			return new RoundBuildingWindowObject(data);
+			return new RoundBuildingWindowObject(data,conversionType);
 			
 		case 88:
 			
-			return new SpikeTrapObject(data);
+			return new SpikeTrapObject(data,conversionType);
 			
 		case 89:
 			
-			return new PipeBodySegmentObject(data);
+			return new PipeBodySegmentObject(data,conversionType);
 			
 		case 90:
 			
-			return new PipeMetalConnectorObject(data);
+			return new PipeMetalConnectorObject(data,conversionType);
 			
 		case 91:
 			
-			return new RecoveryHeartObject(data);
+			return new RecoveryHeartObject(data,conversionType);
 			
 		case 92:
 			
-			return new OnOffSwitchObject(data);
+			return new OnOffSwitchObject(data,conversionType);
 			
 		case 93:
 			
-			return new OnOffControlledBlockObject(data);
+			return new OnOffControlledBlockObject(data,conversionType);
 		
 		case 94:
 			
-			return new OnOffControlledMovingPlatformObject(data);
+			return new OnOffControlledMovingPlatformObject(data,conversionType);
 			
 		case 95:
 			
-			return new OnOffButtonObject(data);
+			return new OnOffButtonObject(data,conversionType);
 			
 		case 96:
 			
-			return new OnOffControlledCarouselPlatformObject(data);
+			return new OnOffControlledCarouselPlatformObject(data,conversionType);
 			
 		case 97:
 			
-			return new CoralObject(data);
+			return new CoralObject(data,conversionType);
 			
 		default:
 			
-			return new LevelObject(data);
+			return new LevelObject(data,conversionType);
 		}
 	}
 	
@@ -930,7 +928,7 @@ public class LevelCode {
 			LevelObject object = levelObjects[i];
 			
 			// Object is a door.
-			if (object.objectID == 48) {
+			if (object instanceof DoorObject) {
 				
 				// Boolean values for keeping track of if the door tags match any of the
 				// current groupings.
@@ -1036,7 +1034,8 @@ public class LevelCode {
 			for (int j = 1;j < doorGrouping.length;j++) {
 				
 				// Create a new destination door to lead to.
-				LevelObject destinationDoor = new DoorObject(doorGrouping[j].stringData);
+				LevelObject destinationDoor = new DoorObject(doorGrouping[j].stringData,
+						conversionType);
 				
 				// Find the door object that we want to position the destination at.
 				LevelObject positioner = findPositioner(doorToGroupings,i,
@@ -1055,8 +1054,6 @@ public class LevelCode {
 				
 				// Set Teleport To value to be same as Teleport From value.
 				destinationDoor.objectData[8] = destinationDoor.objectData[7];
-				
-				destinationDoor.setConversionType(conversionType);
 				
 				postConversionAdditions.add(destinationDoor);
 				
