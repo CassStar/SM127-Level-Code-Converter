@@ -1,11 +1,12 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class CloudPlatformObject extends LevelObject {
 
-	public CloudPlatformObject(String data) throws Exception {
-		super(data);
+	public CloudPlatformObject(String data,ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }

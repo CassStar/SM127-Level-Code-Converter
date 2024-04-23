@@ -1,11 +1,12 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class BigSteelyObject extends LevelObject {
 
-	public BigSteelyObject(String data) throws Exception {
-		super(data);
+	public BigSteelyObject(String data,ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }

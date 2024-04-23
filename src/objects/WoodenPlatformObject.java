@@ -1,11 +1,12 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class WoodenPlatformObject extends LevelObject {
 
-	public WoodenPlatformObject(String data) throws Exception {
-		super(data);
+	public WoodenPlatformObject(String data,ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }

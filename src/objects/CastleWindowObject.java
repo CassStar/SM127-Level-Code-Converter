@@ -1,11 +1,12 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class CastleWindowObject extends LevelObject {
 
-	public CastleWindowObject(String data) throws Exception {
-		super(data);
+	public CastleWindowObject(String data,ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }

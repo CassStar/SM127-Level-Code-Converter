@@ -1,11 +1,12 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class JelectroObject extends LevelObject {
 
-	public JelectroObject(String data) throws Exception {
-		super(data);
+	public JelectroObject(String data,ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }

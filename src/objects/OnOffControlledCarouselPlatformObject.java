@@ -1,11 +1,13 @@
 package objects;
 
 import level.LevelObject;
+import tools.superMario127.Converter.ConversionType;
 
 public class OnOffControlledCarouselPlatformObject extends LevelObject {
 
-	public OnOffControlledCarouselPlatformObject(String data) throws Exception {
-		super(data);
+	public OnOffControlledCarouselPlatformObject(String data,
+			ConversionType type) throws Exception {
+		super(data,type);
 	}
 
 }
