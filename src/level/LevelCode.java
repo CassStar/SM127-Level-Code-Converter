@@ -554,7 +554,7 @@ public class LevelCode {
 			
 		case 26:
 			
-			return new BulletBillBlaster(data);
+			return new BulletBillBlasterObject(data);
 			
 		case 27:
 			
