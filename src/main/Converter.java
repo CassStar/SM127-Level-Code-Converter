@@ -1302,19 +1302,19 @@ public class Converter {
 					
 					if (object instanceof EnchantedGearObject) {
 						
-						object = new EnchantedGearObject(object.stringData+"BL1",conversionType);
+						object = new EnchantedGearObject(object.stringData+",BL1",conversionType);
 						
 					} else if (object instanceof RainbowStarObject) {
 						
-						object = new RainbowStarObject(object.stringData+"BL1",conversionType);
+						object = new RainbowStarObject(object.stringData+",BL1",conversionType);
 						
 					} else if (object instanceof GhostPepperObject) {
 						
-						object = new GhostPepperObject(object.stringData+"BL1",conversionType);
+						object = new GhostPepperObject(object.stringData+",BL1",conversionType);
 						
 					} else if (object instanceof SuperFeatherObject) {
 						
-						object = new SuperFeatherObject(object.stringData+"BL1",conversionType);
+						object = new SuperFeatherObject(object.stringData+",BL1",conversionType);
 					}
 				}
 			}
