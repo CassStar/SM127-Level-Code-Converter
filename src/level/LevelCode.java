@@ -2,9 +2,10 @@ package level;
 
 import java.util.ArrayList;
 
+import main.ConversionType;
 import objects.*;
 import tiles.*;
-import tools.superMario127.Converter.ConversionType;
+import types.BooleanType;
 import util.Utility;
 
 public class LevelCode {
@@ -172,7 +173,7 @@ public class LevelCode {
 		areaGravity = Double.valueOf(value);
 	}
 	
-	LevelTile[] getGroundTiles() {
+	public LevelTile[] getGroundTiles() {
 		
 		return groundTiles.clone();
 	}
@@ -182,7 +183,7 @@ public class LevelCode {
 		groundTiles = value.clone();
 	}
 	
-	LevelTile[] getForeGroundTiles() {
+	public LevelTile[] getForeGroundTiles() {
 		
 		return foreGroundTiles.clone();
 	}
@@ -192,7 +193,7 @@ public class LevelCode {
 		foreGroundTiles = value.clone();
 	}
 	
-	LevelTile[] getBackGround0Tiles() {
+	public LevelTile[] getBackGround0Tiles() {
 		
 		return backGround0Tiles.clone();
 	}
@@ -202,7 +203,7 @@ public class LevelCode {
 		backGround0Tiles = value.clone();
 	}
 	
-	LevelTile[] getBackGround1Tiles() {
+	public LevelTile[] getBackGround1Tiles() {
 		
 		return backGround1Tiles.clone();
 	}
@@ -871,9 +872,9 @@ public class LevelCode {
 			
 			if (!pipe.equals(compare) && compare.objectID == 23) {
 				
-				double[] scale = (double[]) compare.objectData[3];
-				String tag = (String) pipe.objectData[8],
-						compareTag = (String) compare.objectData[8];
+				double[] scale = (double[]) compare.objectData[3].getValue();
+				String tag = (String) pipe.objectData[8].getValue(),
+						compareTag = (String) compare.objectData[8].getValue();
 				
 				if (scale[0] == 1 && scale[1] == 1 && tag.equals(compareTag)) {
 					
@@ -892,9 +893,9 @@ public class LevelCode {
 			
 			if (!pipe.equals(compare) && compare.objectID == 23) {
 				
-				double[] scale = (double[]) compare.objectData[3];
-				String tag = (String) pipe.objectData[8],
-						compareTag = (String) compare.objectData[8];
+				double[] scale = (double[]) compare.objectData[3].getValue();
+				String tag = (String) pipe.objectData[8].getValue(),
+						compareTag = (String) compare.objectData[8].getValue();
 				
 				if (scale[0] == 1 && scale[1] == 1 && tag.equals(compareTag)) {
 					
@@ -938,13 +939,15 @@ public class LevelCode {
 				for (int j = 0;j < doorToGroupings.length;j++) {
 					
 					// Get the Teleport To and Teleport From tags of the object.
-					String doorTeleportToTag = (String) object.objectData[8],
-							doorTeleportFromTag = (String) object.objectData[7],
+					String doorTeleportToTag = (String) object.objectData[8].getValue(),
+							doorTeleportFromTag = (String) object.objectData[7].getValue(),
 					
 					// Get the Teleport To and Teleport From tags of the first door in the
 					// grouping.
-					compareTeleportToTag = (String) doorToGroupings[j][0].objectData[8],
-					compareTeleportFromTag = (String) doorToGroupings[j][0].objectData[7];
+					compareTeleportToTag = (String)
+						doorToGroupings[j][0].objectData[8].getValue(),
+					compareTeleportFromTag = (String)
+						doorToGroupings[j][0].objectData[7].getValue();
 					
 					// Check if the Teleport To tags match.
 					if (doorTeleportToTag.equals(compareTeleportToTag)) {
@@ -1045,9 +1048,9 @@ public class LevelCode {
 				destinationDoor.objectData[8] = doorGrouping[j].objectData[8];
 				
 				// Disable the positioner door.
-				positioner.objectData[5] = false;
+				positioner.objectData[5] = new BooleanType("BL0");
 				// Make the positioner door invisible.
-				positioner.objectData[5] = false;
+				positioner.objectData[5] = new BooleanType("BL0");
 				
 				// Place the destination door where it should be.
 				destinationDoor.objectData[2] = positioner.objectData[2];
@@ -1326,7 +1329,8 @@ public class LevelCode {
 				"IT"+areaFronterBG+","+
 				(musicData == null? "IT"+musicID:"ST"+musicData)+","+
 				"FL"+areaGravity+
-				(codeVersion.equals("0.4.9")? ",IT"+areaBGPallete+"~":"~")+
+				(Utility.versionGreaterThanVersion(conversionType.gameVersionTo,"0.6.9")?
+						",IT"+areaBGPallete+"~":"~")+
 				getAllTileData()+"~"+
 				getAllObjectData()+"]");
 	}

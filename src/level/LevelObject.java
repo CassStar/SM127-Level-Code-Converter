@@ -1,22 +1,23 @@
 package level;
 
+import main.ConversionType;
+import types.*;
 import util.Utility;
-import tools.superMario127.Converter.ConversionType;
 
 public class LevelObject {
 	
 	public int objectID;
 	public String stringData;
-	public Object[] objectData;
-	public String[] dataTypes;
-	ConversionType conversionType;
+	public DataType[] objectData;
+//	public String[] dataTypes;
+	protected ConversionType conversionType;
 	
 	public LevelObject(String data,ConversionType type) throws Exception {
 		
 		stringData = data;
 		conversionType = type;
 		
-		if (conversionType == ConversionType.OLD_TO_NEW) {
+		if (!Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
 			
 			// Add pallete of 0.
 			data = data.substring(0,data.indexOf(',')+1)+"0,"+
@@ -26,17 +27,17 @@ public class LevelObject {
 		
 		String[] splitData = data.split(",");
 		
-		objectData = new Object[splitData.length];
-		dataTypes = new String[splitData.length];
+		objectData = new DataType[splitData.length];
+//		dataTypes = new String[splitData.length];
 		
 		int startIndex = 2;
 		
-		objectID = Integer.parseInt(splitData[0]);
-		objectData[0] = objectID;
-		dataTypes[0] = "ID";
+		objectData[0] = new IDType(splitData[0]);
+		objectID = (int) objectData[0].getValue();
+//		dataTypes[0] = "ID";
 		
-		objectData[1] = splitData[1];
-		dataTypes[1] = "PL";
+		objectData[1] = new PalleteType(splitData[1]);
+//		dataTypes[1] = "PL";
 		
 		for (int i = startIndex;i < splitData.length;i++) {
 			
@@ -56,38 +57,48 @@ public class LevelObject {
 						+ "Value of: "+dataType+" is not a recognized data type.");
 			}
 			
-			dataTypes[i] = dataType;
+//			dataTypes[i] = dataType;
 			
 			switch (dataType) {
 			case "V2":
 				
-				objectData[i] = Utility.parseVector2D(splitData[i]);
+				objectData[i] = new Vector2Type(splitData[i]);
 				break;
 				
-			case "C2","CL","ST":
+			case "C2":
 				
-				objectData[i] = splitData[i];
+				objectData[i] = new Curve2DType(splitData[i]);
+				break;
+				
+			case "CL":
+				
+				objectData[i] = new ColourType(splitData[i]);
+				break;
+				
+			case "ST":
+				
+				objectData[i] = new StringType(splitData[i]);
 				break;
 				
 			case "FL":
 				
-				objectData[i] = Utility.parseFloat(splitData[i]);
+				objectData[i] = new FloatType(splitData[i]);
 				break;
 				
 			case "BL":
 				
-				objectData[i] = Utility.parseBoolean(splitData[i]);
+				objectData[i] = new BooleanType(splitData[i]);
 				break;
 				
 			case "IT":
 				
-				objectData[i] = Utility.parseInteger(splitData[i]);
+				objectData[i] = new IntegerType(splitData[i]);
 				break;
 				
 			case "Nu":
 				
-				dataTypes[i] = "BL";
-				objectData[i] = false;
+//				dataTypes[i] = "BL";
+				objectData[i] = new BooleanType("BL0");
 			}
 		}
 	}
@@ -97,12 +108,6 @@ public class LevelObject {
 		String[] splitData = data.split(",");
 		
 		return Integer.parseInt(splitData[0]);
-	}
-	
-	void removeLastValue() {
-		
-		objectData = expandObjectArray(objectData,-1);
-		dataTypes = Utility.expandStringArray(dataTypes,-1);
 	}
 	
 	/**
@@ -159,36 +164,15 @@ public class LevelObject {
 	}
 	
 	public String toString() {
-		
+				
 		String output = "";
 		
 		for (int i = 0;i < objectData.length;i++) {
 			
-			if (dataTypes[i].equals("V2")) {
-				
-				output += Utility.vector2DToString(
-						(double[]) objectData[i],false)+",";
-				
-			} else if (dataTypes[i].equals("PL")) {
-				
-				if (conversionType == ConversionType.OLD_TO_NEW) {
-					
-					output += objectData[i]+",";
-				}
-				
-			} else if (dataTypes[i].equals("ID") || dataTypes[i].equals("ST") ||
-					dataTypes[i].equals("CL") || dataTypes[i].equals("C2")) {
-				
-				output += objectData[i]+",";
-				
-			} else if (dataTypes[i].equals("BL")) {
-				
-				output += dataTypes[i]+((boolean) objectData[i]? "1,":"0,");
-				
-			} else {
-				
-				output += dataTypes[i]+objectData[i]+",";
+			if (i == 1 && !Utility.versionGreaterThanVersion(conversionType.gameVersionTo,"0.6.9")) {
+				continue;
 			}
+			output += objectData[i].toString()+",";
 		}
 		
 		output = output.substring(0,output.length()-1);
