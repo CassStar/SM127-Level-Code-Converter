@@ -231,8 +231,8 @@ public class Utility {
 			
 			try {
 				
-				xCoord = Double.parseDouble(data.substring(0,smallXIndex));
-				yCoord = Double.parseDouble(data.substring(smallXIndex+1,largeXIndex));
+				xCoord = Double.parseDouble(groups[i].substring(0,smallXIndex));
+				yCoord = Double.parseDouble(groups[i].substring(smallXIndex+1,largeXIndex));
 				
 				if (groups[i].length() == largeXIndex+2) {
 					
@@ -244,8 +244,8 @@ public class Utility {
 				
 				smallXIndex = groups[i].indexOf('x');
 				
-				xPull = Double.parseDouble(data.substring(0,smallXIndex));
-				yPull = Double.parseDouble(data.substring(smallXIndex+1));
+				xPull = Double.parseDouble(groups[i].substring(0,smallXIndex));
+				yPull = Double.parseDouble(groups[i].substring(smallXIndex+1));
 				
 				ouput[i] = new double[] {xCoord,yCoord,xPull,yPull};
 				
@@ -395,7 +395,7 @@ public class Utility {
 		}
 		
 		ProgramLogger.logMessage("Invalid value for Boolean data type. Expected: 0 or 1 "
-				+ "Got: "+data+"Will set value to 0.",LogType.ERROR);
+				+ "Got: "+data+" Will set value to 0.",LogType.ERROR);
 		
 		return false;
 	}
