@@ -1,6 +1,21 @@
 package util;
 
+import main.ProgramLogger;
+import main.ProgramLogger.LogType;
+
 public class Utility {
+	
+	public static boolean versionGreaterThanVersion(String version1,String version2) {
+		
+		int compareValue = version1.compareTo(version2);
+		
+		if (compareValue > 0) {
+			
+			return true;
+		}
+		
+		return false;
+	}
 	
 	/**
 	 * <dl>
@@ -37,6 +52,72 @@ public class Utility {
 	}
 	
 	/**
+	 * <dl>
+	 * <b>Summary:</b><dd>Trims off any null values from the given array and returns the result.
+	 * This method works exclusively with String arrays.</dd><hr>
+	 * 
+	 * @param array	The array to trim of null values.
+	 * @return	A String array with no null values in it.
+	 */
+	public static String[] getTrimmedStringArray(String[] array) {
+		
+		// Variable for the new array.
+		String[] newArray;
+		// Length of the new array, will be changed later.
+		int arrayLength = 0;
+		
+		// Determining the length of the new array by how many non-null values were in the
+		// original.
+		for (String val:array) {
+			if (val != null) {
+				arrayLength++;
+			}
+		}
+		
+		// Creating the new array with proper length.
+		newArray = new String[arrayLength];
+		// Index to put values into the new array.
+		int index = 0;
+		
+		// Looping over every value of the old array.
+		for (String string:array) {
+			
+			// Adding the value to the new array if it isn't null.
+			if (string != null) {
+				newArray[index] = string;
+				index++;
+			}
+		}
+		
+		// Return the new array.
+		return newArray.clone();
+	}
+	
+	/**
+	 * <dl>
+	 * <b>Summary:</b><dd>Gets the first index an object appears in an array.</dd><hr>
+	 * 
+	 * @param array	The array to search through
+	 * @param value	The value to saerch for.
+	 * @return	The first index the value appears in the array, -1 if the value could not be
+	 * 			found.
+	 */
+	public static int getIndexInArray(Object[] array,Object value) {
+		
+		// Search through the array.
+		for (int i = 0;i < array.length;i++) {
+			
+			// Check if the values are equal.
+			if (array[i].equals(value)) {
+				// Found index of value.
+				return i;
+			}
+		}
+		// Could not find value in array.
+		return -1;
+	}
+	
+	/**
 	 * 
 	 * @param data
 	 * @return
@@ -70,6 +151,117 @@ public class Utility {
 		return isValid;
 	}
 	
+	public static String parseString(String data) {
+		
+		String dataType = getDataType(data);
+		
+		if (!dataType.equals("ST")) {
+			
+			ProgramLogger.logMessage("Found invalid prefix while parsing String data type. "
+					+ "Expected: ST Got: "+dataType,LogType.ERROR);
+			
+			return null;
+		}
+		
+		data = data.replace(dataType,"");
+		
+		return data;
+	}
+	
+	public static double[] parseColour(String data) {
+		
+		String dataType = getDataType(data);
+		
+		if (!dataType.equals("CL")) {
+			
+			ProgramLogger.logMessage("Found invalid prefix while parsing Colour data type. "
+					+ "Expected: CL Got: "+dataType,LogType.ERROR);
+			
+			return null;
+		}
+		
+		data = data.replace(dataType,"");
+		
+		double rValue = 0,gValue = 0,bValue = 0;
+		
+		try {
+			
+			int firstXIndex = data.indexOf('x');
+			int secondXIndex = data.indexOf('x',firstXIndex+1);
+			
+			rValue = Double.parseDouble(data.substring(0,firstXIndex));
+			gValue = Double.parseDouble(data.substring(firstXIndex+1,secondXIndex));
+			bValue = Double.parseDouble(data.substring(secondXIndex+1));
+			
+		} catch (NumberFormatException e) {
+			
+			ProgramLogger.logMessage("Error trying to parse Colour data type. Details below:",
+					LogType.ERROR);
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+		return new double[] {rValue,gValue,bValue};
+	}
+	
+	public static double[][] parseCurve2D(String data) {
+		
+		String dataType = getDataType(data);
+		
+		if (!dataType.equals("C2")) {
+			
+			ProgramLogger.logMessage("Found invalid prefix while parsing Curve2D data type. "
+					+ "Expected: C2 Got: "+dataType,LogType.ERROR);
+			
+			return null;
+		}
+		
+		data = data.replace(dataType,"");
+		
+		String[] groups = data.split(":");
+		
+		double[][] ouput = new double[groups.length][];
+		
+		double xCoord,yCoord,xPull,yPull;
+		
+		for (int i = 0;i < groups.length;i++) {
+			
+			int smallXIndex = groups[i].indexOf('x'),largeXIndex = groups[i].indexOf('X');
+			
+			try {
+				
+				xCoord = Double.parseDouble(data.substring(0,smallXIndex));
+				yCoord = Double.parseDouble(data.substring(smallXIndex+1,largeXIndex));
+				
+				if (groups[i].length() == largeXIndex+2) {
+					
+					ouput[i] = new double[] {xCoord,yCoord};
+					continue;
+				}
+				
+				groups[i] = groups[i].substring(largeXIndex+2);
+				
+				smallXIndex = groups[i].indexOf('x');
+				
+				xPull = Double.parseDouble(data.substring(0,smallXIndex));
+				yPull = Double.parseDouble(data.substring(smallXIndex+1));
+				
+				ouput[i] = new double[] {xCoord,yCoord,xPull,yPull};
+				
+			} catch (NumberFormatException e) {
+				
+				ProgramLogger.logMessage("Error trying to parse Vector2 data type. Details "
+						+ "below:",LogType.ERROR);
+				e.printStackTrace();
+				
+				return null;
+			}
+		}
+		
+		return ouput;
+	}
+	
 	/**
 	 * 
 	 * @param data
@@ -77,17 +269,17 @@ public class Utility {
 	 */
 	public static double[] parseVector2D(String data) {
 		
-		String prefix = data.substring(0,2);
+		String dataType = getDataType(data);
 		
-		if (!prefix.equals("V2")) {
+		if (!dataType.equals("V2")) {
 			
-			System.err.printf("Found invalid prefix while parsing Vector2D data type.%n"
-					+ "Expected: V2 Got: %s%n",prefix);
+			ProgramLogger.logMessage("Found invalid prefix while parsing Vector2 data type. "
+					+ "Expected: V2 Got: "+dataType,LogType.ERROR);
 			
 			return null;
 		}
 		
-		data = data.replace(prefix,"");
+		data = data.replace(dataType,"");
 		
 		double xValue = 0,yValue = 0;
 		
@@ -98,7 +290,8 @@ public class Utility {
 			
 		} catch (NumberFormatException e) {
 			
-			System.err.println("Error trying to parse Vector2D data type. Details below:");
+			ProgramLogger.logMessage("Error trying to parse Vector2 data type. Details below:",
+					LogType.ERROR);
 			e.printStackTrace();
 			
 			return null;
@@ -114,17 +307,17 @@ public class Utility {
 	 */
 	public static int parseInteger(String data) {
 		
-		String prefix = data.substring(0,2);
+		String dataType = getDataType(data);
 		
-		if (!prefix.equals("IT")) {
+		if (!dataType.equals("IT")) {
 			
-			System.err.printf("Found invalid prefix while parsing Integer data type.%n"
-					+ "Expected: IT Got: %s%n",prefix);
+			ProgramLogger.logMessage("Found invalid prefix while parsing Integer data type. "
+					+ "Expected: IT Got: "+dataType,LogType.ERROR);
 			
 			return 0;
 		}
 		
-		data = data.replace(prefix,"");
+		data = data.replace(dataType,"");
 		
 		try {
 			
@@ -132,7 +325,8 @@ public class Utility {
 			
 		} catch (NumberFormatException e) {
 			
-			System.err.println("Error trying to parse Integer data type. Details below:");
+			ProgramLogger.logMessage("Error trying to parse Integer data type. Details below:",
+					LogType.ERROR);
 			e.printStackTrace();
 			
 			return 0;
@@ -146,17 +340,17 @@ public class Utility {
 	 */
 	public static double parseFloat(String data) {
 		
-		String prefix = data.substring(0,2);
+		String dataType = getDataType(data);
 		
-		if (!prefix.equals("FL")) {
+		if (!dataType.equals("FL")) {
 			
-			System.err.printf("Found invalid prefix while parsing Float data type.%n"
-					+ "Expected: FL Got: %s%n",prefix);
+			ProgramLogger.logMessage("Found invalid prefix while parsing Float data type. "
+					+ "Expected: FL Got: "+dataType,LogType.ERROR);
 			
 			return 0;
 		}
 		
-		data = data.replace(prefix,"");
+		data = data.replace(dataType,"");
 		
 		try {
 			
@@ -164,7 +358,8 @@ public class Utility {
 			
 		} catch (NumberFormatException e) {
 			
-			System.err.println("Error trying to parse Float data type. Details below:");
+			ProgramLogger.logMessage("Error trying to parse Float data type. Details below:",
+					LogType.ERROR);
 			e.printStackTrace();
 			
 			return 0;
@@ -178,17 +373,17 @@ public class Utility {
 	 */
 	public static boolean parseBoolean(String data) {
 		
-		String prefix = data.substring(0,2);
+		String dataType = getDataType(data);
 		
-		if (!prefix.equals("BL")) {
+		if (!dataType.equals("BL")) {
 			
-			System.err.printf("Found invalid prefix while parsing Boolean data type.%n"
-					+ "Expected: BL Got: %s%n",prefix);
+			ProgramLogger.logMessage("Found invalid prefix while parsing Boolean data type. "
+					+ "Expected: BL Got: "+dataType,LogType.ERROR);
 			
 			return false;
 		}
 		
-		data = data.replace(prefix,"");
+		data = data.replace(dataType,"");
 		
 		if (data.equals("1")) {
 			
@@ -199,8 +394,8 @@ public class Utility {
 			return false;
 		}
 		
-		System.err.printf("Invalid value for Boolean data type.%nExpected: 0 or 1 Got: %s%n"
-				+ "Will set value to 0.%n",data);
+		ProgramLogger.logMessage("Invalid value for Boolean data type. Expected: 0 or 1 "
+				+ "Got: "+data+"Will set value to 0.",LogType.ERROR);
 		
 		return false;
 	}
@@ -238,12 +433,18 @@ public class Utility {
 		return true;
 	}
 	
-	/**
-	 * 
-	 * @param vector
-	 * @param flattenValues
-	 * @return
-	 */
+	public static String doubleToString(double value) {
+		
+		try {
+			
+			return String.valueOf((int) value);
+			
+		} catch (Exception e) {
+			
+			return String.valueOf(value);
+		}
+	}
+	
 	public static String vector2DToString(double[] vector,boolean flattenValues) {
 		
 		Object[] parsedVector = new Object[vector.length];
