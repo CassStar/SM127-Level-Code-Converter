@@ -65,14 +65,4 @@ ID	Tile Type
 
 200	Full-Tile Cracked Stone Block
 
-210	Full-Tile Solid Colour Block (Black Only)
-
-220	Full-Tile CheckerBoard Block
-
-230	Full-Tile Carpet Block
-
-240	Full-Tile Wooden Plank Block
-
-250	Full-Tile Castle Brick
-
-260+	Air Block(No Tile)
+210+	Air Block(No Tile)

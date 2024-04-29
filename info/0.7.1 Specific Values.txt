@@ -5,18 +5,27 @@ Index	Value
 2	Starry Sky
 3	Dark Starry Sky
 4	Evening Clouds
-5+	Grey Screen
+5	Clouds Against a Red-Coloured Background
+6	Bleak Clouds
+7+	Grey Screen (Silhouette Mode)
 
 	-Fronter BG-
 Index	Value
 0	No Fronter BG
 1	Green Hills With Blue Trees
-2	Light Blue Hills With Blue Trees
+2	Light Blue Hills With Blue Trees	Fronter BG value of 1 with pallete of 1 looks like this.
 3	Crystal Filled Cave
 4	Bowser in the Dark World Cavern
 5	Sharp, Icy Mountains
 6	Soft, Snow Capped Mountains
-7+	No Fronter BG
+7	Sand Dunes
+8	Green Hills Surrounded by Tropical Setting
+9	Magma Caverns
+10	Stone Block Structure
+11	Large Blue Pine Trees
+12	Inside of Wooden Mansion
+13	Large Green Hills With Green Trees
+14+	No Fronter BG
 
 	-Music-
 Index	Value			From/By
@@ -59,4 +68,30 @@ Index	Value			From/By
 36	The Alternate Route	Remix by ParagonX9
 37	Inside The Castle Walls	Super Mario Odyssey
 38	Environmental Noises	Super Mario Odyssey
-39+	Null			Null
+39	Ice Ice Outpost		Mario Kart 8
+40	Dire Dire Docks		Remix by Can of Nothing
+41	Deep Sea of Mare	Super Mario Sunshine
+42	Cosmic Cove Galaxy	Super Mario Galaxy 2
+43	Underwater Passage	Super Mario Odyssey
+44	Gritzy Desert		Super Smash Bros. Brawl
+45	Sinking in Quicksand	Mario & Luigi: Paper Jam
+46	Slipsand Galaxy		Super Mario Galaxy 2
+47	Tostarena: Ruins	Super Mario Odyssey
+48	Walleye Tumble Temple	Captain Toad
+49	Beach Bowl Galaxy	Super Mario Galaxy
+50	Beach			Captian Toad
+51	Sunshine Seaside	Super Mario 3D World
+52	Melty Molten Galaxy	Super Mario Galaxy
+53	Melty Monster Galaxy	Super Mario Galaxy 2
+54	Magma			Captain Toad
+55	Fort Fire Bros		Super Mario 3D World
+56	Waltz of the Boos	Super Mario Galaxy
+57	Deep Dark Galaxy	Super Mario Galaxy
+58	Boo Moon Galaxy		Super Mario Galaxy 2
+59	Shifty Boo Mansion	Super Mario 3D World
+60	Secret Course		Remix by AM4
+61	Sammer's Kingdom	Super Paper Mario
+62	Yoshi's Island - Underground (Remix)	Remix by Aqua & FastMario
+63	Waltz of the Boos (Remix)		Remix by FastMario
+64	Super Mario Sunshine - Sky & Sea	Remix by AM4
+65+	Null			Null

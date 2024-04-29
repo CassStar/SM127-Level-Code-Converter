@@ -110,9 +110,4 @@ ID	Tile Type				Max Pallete Value
 342	Right Slope YI Grass				5
 343	Left Slope YI Grass				5
 
-350	Full-Tile New Cave				6
-351	Half-Tile New Cave				6
-352	Right Slope New Cave				6
-353	Left Slope New Cave				6
-
-360+	Air Block(No Tile)				0
+350+	Air Block(No Tile)				0

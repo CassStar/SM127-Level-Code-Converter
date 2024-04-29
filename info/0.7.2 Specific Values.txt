@@ -7,7 +7,7 @@ Index	Value
 4	Evening Clouds
 5	Clouds Against a Red-Coloured Background
 6	Bleak Clouds
-7	Grey Screen
+7+	Grey Screen
 
 	-Fronter BG-
 Index	Value
@@ -25,6 +25,7 @@ Index	Value
 11	Large Blue Pine Trees
 12	Inside of Wooden Mansion
 13	Large Green Hills With Green Trees
+14+	No Fronter BG
 
 	-Music-
 Index	Value			From/By
@@ -94,4 +95,4 @@ Index	Value			From/By
 63	Waltz of the Boos (Remix)		Remix by FastMario
 64	Super Mario Sunshine - Sky & Sea	Remix by AM4
 65	Princess Peach's Castle	Super Smash Bros. Melee
-66	Null			Null
+66+	Null			Null

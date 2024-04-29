@@ -14,9 +14,7 @@ Index	Value
 2	Light Blue Hills With Blue Trees
 3	Crystal Filled Cave
 4	Bowser in the Dark World Cavern
-5	Sharp, Icy Mountains
-6	Soft, Snow Capped Mountains
-7+	No Fronter BG
+5+	No Fronter BG
 
 	-Music-
 Index	Value			From/By
@@ -57,6 +55,4 @@ Index	Value			From/By
 34	Underground		Yoshi's New Island
 35	Cosmic Comet		Super Mario Galaxy
 36	The Alternate Route	Remix by ParagonX9
-37	Inside The Castle Walls	Super Mario Odyssey
-38	Environmental Noises	Super Mario Odyssey
-39+	Null			Null
+37+	Null			Null
