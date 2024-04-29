@@ -26,7 +26,7 @@ public class FluddNozzleObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		velocity = (double[]) objectData[7].getValue();
-		nozzleType = (String) objectData[8].getValue();
+		nozzleType = String.valueOf(objectData[8].getValue());
 		
 		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
 			

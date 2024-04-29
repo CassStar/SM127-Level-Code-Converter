@@ -35,7 +35,7 @@ public class WarpPipeTopObject extends LevelObject {
 		} else {
 			
 			pallete = (int) objectData[1].getValue();
-			tag = (String) objectData[8].getValue();
+			tag = String.valueOf(objectData[7].getValue());
 			colour = (double[]) objectData[9].getValue();
 			teleportMode = (boolean) objectData[10].getValue();
 		}

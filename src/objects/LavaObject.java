@@ -29,7 +29,7 @@ public class LavaObject extends LevelObject {
 		height = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		colour = (double[]) objectData[9].getValue();
 		renderInFront = (boolean) objectData[10].getValue();
-		tag = (String) objectData[11].getValue();
+		tag = String.valueOf(objectData[7].getValue());
 		tapMode = (boolean) objectData[12].getValue();
 		
 		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {

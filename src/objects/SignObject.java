@@ -25,7 +25,7 @@ public class SignObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		text = (String) objectData[7].getValue();
+		text = String.valueOf(objectData[7].getValue());
 		
 		try {
 			

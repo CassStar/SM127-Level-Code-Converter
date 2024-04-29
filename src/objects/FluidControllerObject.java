@@ -25,7 +25,7 @@ public class FluidControllerObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		tag = (String) objectData[7].getValue();
+		tag = String.valueOf(objectData[7].getValue());
 		autoActivate = (boolean) objectData[8].getValue();
 		moveSpeed = (double) Double.valueOf(String.valueOf(objectData[9].getValue()));
 		offset = (double) Double.valueOf(String.valueOf(objectData[10].getValue()));

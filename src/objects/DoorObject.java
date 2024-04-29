@@ -28,14 +28,14 @@ public class DoorObject extends LevelObject {
 		
 		if (!Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
 			
-			tag = (String) objectData[7].getValue();
-			destinationTag = (String) objectData[8].getValue();
+			tag = String.valueOf(objectData[7].getValue());
+			destinationTag = String.valueOf(objectData[8].getValue());
 			
 		} else {
 			
 			pallete = (int) objectData[1].getValue();
 			areaID = (int) objectData[7].getValue();
-			tag = (String) objectData[8].getValue();
+			tag = String.valueOf(objectData[8].getValue());
 			
 			if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.7.0")) {
 				

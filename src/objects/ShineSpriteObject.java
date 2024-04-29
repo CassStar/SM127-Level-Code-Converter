@@ -25,8 +25,8 @@ public class ShineSpriteObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		title = (String) objectData[7].getValue();
-		description = (String) objectData[8].getValue();
+		title = String.valueOf(objectData[7].getValue());
+		description = String.valueOf(objectData[8].getValue());
 		showInMenu = (boolean) objectData[9].getValue();
 		activated = (boolean) objectData[10].getValue();
 		redCoinsActivate = (boolean) objectData[11].getValue();

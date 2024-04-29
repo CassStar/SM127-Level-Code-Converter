@@ -29,7 +29,7 @@ public class WaterObject extends LevelObject {
 		height = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		colour = (double[]) objectData[9].getValue();
 		renderInFront = (boolean) objectData[10].getValue();
-		tag = (String) objectData[11].getValue();
+		tag = String.valueOf(objectData[11].getValue());
 		toxicity = (double) Double.valueOf(String.valueOf(objectData[12].getValue()));
 		tapMode = (boolean) objectData[13].getValue();
 		
