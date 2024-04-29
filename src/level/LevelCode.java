@@ -6,6 +6,7 @@ import main.ConversionType;
 import objects.*;
 import tiles.*;
 import types.BooleanType;
+import types.DataType;
 import util.Utility;
 
 public class LevelCode {
@@ -1072,7 +1073,7 @@ public class LevelCode {
 	}
 	
 	LevelObject findPositioner(LevelObject[][] doorToGroupings,int indexFrom,
-			Object searchValue) {
+			DataType searchValue) {
 		
 		LevelObject positioner = null;
 		
@@ -1084,7 +1085,7 @@ public class LevelCode {
 				
 				LevelObject compare = doorGrouping[j];
 				
-				if (compare.objectData[7] == searchValue) {
+				if (compare.objectData[7].getValue().equals(searchValue.getValue())) {
 					
 					positioner = compare;
 				}
@@ -1104,7 +1105,7 @@ public class LevelCode {
 				
 				LevelObject compare = doorGrouping[j];
 				
-				if (compare.objectData[7].equals(searchValue)) {
+				if (compare.objectData[7].getValue().equals(searchValue.getValue())) {
 					
 					return compare;
 				}
