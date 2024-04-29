@@ -47,7 +47,7 @@ public class Converter {
 		
 		ProgramLogger.checkForLogFile();
 		
-		fileHandler.setupDirectories(new Path[] {inputDirectory,outputDirectory});
+		fileHandler.setupDirectories(new Path[] {inputDirectory});
 		
 		getfileNames(inputDirectory.toFile());
 		
@@ -117,6 +117,8 @@ public class Converter {
 		String levelData = code.levelData;
 		
 		Path outputFile = outputDirectory.resolve(fileName);
+		
+		fileHandler.setupDirectories(new Path[] {outputDirectory});
 		
 		// Write the level data to file.
 		fileHandler.writeToFile(levelData,outputFile,new OpenOption[] {CREATE,
