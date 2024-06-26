@@ -22,6 +22,10 @@ Important:
 	Do NOT delete 'Converter.jar' or the 'src' folder! These are the source files for the program,
 		so deleting them will delete the program.
 
+	This program bundles another program with it called 'wget' This is used purely to get and
+		update the program to it's latest version. You CAN delete the 'wget' folder, the
+		program just won't self update if you do that.
+
 	You CAN safely delete the 'info' folder, it's not used by the program,
 		it's just for documentation purposes. All other folder aside from 'src' can also be
 		deleted, and will be remade by the program as needed.
