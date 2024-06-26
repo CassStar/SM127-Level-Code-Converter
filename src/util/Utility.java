@@ -17,6 +17,32 @@ public class Utility {
 		return false;
 	}
 	
+	public static boolean areSameGameVersions(String version1,String version2) {
+		
+		String[] versions = {version1,version2};
+		
+		boolean hasVersion1 = false,hasVersion2 = false;
+		
+		for (String version:versions) {
+			
+			if (version.equals("0.7.1")) {
+				
+				hasVersion1 = true;
+				
+			} else if (version.equals("0.7.2")) {
+				
+				hasVersion2 = true;
+			}
+		}
+		
+		if (hasVersion1 && hasVersion2) {
+			
+			return true;
+		}
+		
+		return version1.equals(version2);
+	}
+	
 	/**
 	 * <dl>
 	 * <b>Summary:</b><dd>Expands or shrinks the given array using the given amount. This
@@ -41,6 +67,40 @@ public class Utility {
 		
 		// Create a new array with increased/decreased capacity.
 		String[] newArray = new String[array.length+amount];
+		
+		// Copy values from the old array to the new array.
+		for (int i = 0;i < Math.min(newArray.length,array.length);i++) {
+			newArray[i] = array[i];
+		}
+		
+		// Return the new expanded/shrunk array.
+		return newArray.clone();
+	}
+	
+	/**
+	 * <dl>
+	 * <b>Summary:</b><dd>Expands or shrinks the given array using the given amount. This
+	 * method works exclusively on int arrays.</dd><hr>
+	 * 
+	 * @param array		The array to expand/shrink.
+	 * @param amount	The amount to expand the array by. Negative values will shrink the array.
+	 * @return	The expanded/shrunk array. Expanded arrays have values of 0 for new indexes,
+	 * 			shrunk arrays may lose data at removed indexes.
+	 */
+	public static int[] expandIntegerArray(int[] array,int amount) {
+		
+		// Null check.
+		if (array == null) {
+			array = new int[0];
+		}
+		
+		// Making sure the amount to shrink by doesn't exceed the current array length.
+		if (array.length+amount < 0) {
+			amount = array.length*-1;
+		}
+		
+		// Create a new array with increased/decreased capacity.
+		int[] newArray = new int[array.length+amount];
 		
 		// Copy values from the old array to the new array.
 		for (int i = 0;i < Math.min(newArray.length,array.length);i++) {
@@ -435,14 +495,12 @@ public class Utility {
 	
 	public static String doubleToString(double value) {
 		
-		try {
+		if (value%1 == 0) {
 			
 			return String.valueOf((int) value);
-			
-		} catch (Exception e) {
-			
-			return String.valueOf(value);
 		}
+		
+		return String.valueOf(value);
 	}
 	
 	public static String vector2DToString(double[] vector,boolean flattenValues) {
