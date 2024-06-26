@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class BulletBillBlasterObject extends LevelObject {
@@ -14,6 +15,17 @@ public class BulletBillBlasterObject extends LevelObject {
 	public BulletBillBlasterObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
+	}
+	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
 	}
 	
 	void setupValues() {
@@ -31,9 +43,11 @@ public class BulletBillBlasterObject extends LevelObject {
 		invincible = (boolean) objectData[11].getValue();
 		chaseDirection = (int) objectData[12].getValue();
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
+			
+		} catch (Exception e) {
 		}
 	}
 

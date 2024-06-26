@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class FirePillarObject extends LevelObject {
@@ -14,6 +15,17 @@ public class FirePillarObject extends LevelObject {
 	public FirePillarObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
+	}
+	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
 	}
 	
 	void setupValues() {
@@ -30,9 +42,11 @@ public class FirePillarObject extends LevelObject {
 		reversed = (boolean) objectData[10].getValue();
 		offset = (double) Double.valueOf(String.valueOf(objectData[11].getValue()));
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
+			
+		} catch (Exception e) {
 		}
 	}
 

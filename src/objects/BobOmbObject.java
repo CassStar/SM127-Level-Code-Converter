@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class BobOmbObject extends LevelObject {
@@ -16,6 +17,17 @@ public class BobOmbObject extends LevelObject {
 		setupValues();
 	}
 	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+	}
+	
 	void setupValues() {
 		
 		ID = objectID;
@@ -25,9 +37,11 @@ public class BobOmbObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
+			
+		} catch (Exception e) {
 		}
 	}
 

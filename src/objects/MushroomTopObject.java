@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class MushroomTopObject extends LevelObject {
@@ -14,6 +15,17 @@ public class MushroomTopObject extends LevelObject {
 	public MushroomTopObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
+	}
+	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
 	}
 	
 	void setupValues() {
@@ -32,9 +44,11 @@ public class MushroomTopObject extends LevelObject {
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
+			
+		} catch (Exception e) {
 		}
 	}
 

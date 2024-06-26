@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class DoorObject extends LevelObject {
@@ -17,6 +18,17 @@ public class DoorObject extends LevelObject {
 		setupValues();
 	}
 	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+	}
+	
 	void setupValues() {
 		
 		ID = objectID;
@@ -26,20 +38,32 @@ public class DoorObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		if (!Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
-			
-			tag = String.valueOf(objectData[7].getValue());
-			destinationTag = String.valueOf(objectData[8].getValue());
-			
-		} else {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
 			areaID = (int) objectData[7].getValue();
 			tag = String.valueOf(objectData[8].getValue());
 			
-			if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.7.0")) {
+		} catch (Exception e) {
+			
+			if (objectData.length > 9 &&
+					String.valueOf(objectData[7].getType()).equals("ST") &&
+					String.valueOf(objectData[8].getType()).equals("ST") &&
+					String.valueOf(objectData[9].getType()).equals("ST")) {
 				
-				teleportMode = (boolean) objectData[9].getValue();
+				tag = String.valueOf(objectData[9].getValue());
+				
+			} else {
+				
+				tag = String.valueOf(objectData[7].getValue());
+				destinationTag = String.valueOf(objectData[8].getValue());
+				
+				try {
+					
+					teleportMode = (boolean) objectData[9].getValue();
+					
+				} catch (ArrayIndexOutOfBoundsException e2) {
+				}
 			}
 		}
 	}

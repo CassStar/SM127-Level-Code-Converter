@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class WarpPipeTopObject extends LevelObject {
@@ -17,6 +18,17 @@ public class WarpPipeTopObject extends LevelObject {
 		setupValues();
 	}
 	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+	}
+	
 	void setupValues() {
 		
 		ID = objectID;
@@ -27,17 +39,24 @@ public class WarpPipeTopObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		areaID = (int) objectData[7].getValue();
 		
-		if (!Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
-			
-			destination = (double[]) objectData[8].getValue();
-			teleportMode = (boolean) objectData[9].getValue();
-			
-		} else {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
 			tag = String.valueOf(objectData[7].getValue());
 			colour = (double[]) objectData[9].getValue();
-			teleportMode = (boolean) objectData[10].getValue();
+			
+		} catch (Exception e) {
+			
+			destination = (double[]) objectData[8].getValue();
+			teleportMode = (boolean) objectData[9].getValue();
+			
+			try {
+				
+				teleportMode = (boolean) objectData[10].getValue();
+				
+			} catch (ArrayIndexOutOfBoundsException e2) {
+			}
+			
 		}
 	}
 

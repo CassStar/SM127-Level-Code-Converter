@@ -2,6 +2,7 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
+import types.Vector2Type;
 import util.Utility;
 
 public class OnOffControlledCarouselPlatformObject extends LevelObject {
@@ -15,6 +16,17 @@ public class OnOffControlledCarouselPlatformObject extends LevelObject {
 			ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
+	}
+	
+	protected double[] getPosition() {
+		
+		return position.clone();
+	}
+	
+	protected void setPosition(double[] position) {
+		
+		this.position = position.clone();
+		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
 	}
 	
 	void setupValues() {
@@ -33,9 +45,11 @@ public class OnOffControlledCarouselPlatformObject extends LevelObject {
 		unkownBooleanValue = (boolean) objectData[12].getValue();
 		inverted = (boolean) objectData[13].getValue();
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		try {
 			
 			pallete = (int) objectData[1].getValue();
+			
+		} catch (Exception e) {
 		}
 	}
 
