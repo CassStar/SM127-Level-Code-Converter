@@ -57,6 +57,11 @@ public class LevelTile {
 		return tileID;
 	}
 	
+	protected LevelTile clone() {
+		
+		return new LevelTile(this.toString());
+	}
+	
 	public String toString() {
 		
 		String output = "";

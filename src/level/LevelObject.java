@@ -4,12 +4,11 @@ import main.ConversionType;
 import types.*;
 import util.Utility;
 
-public class LevelObject {
+public abstract class LevelObject {
 	
 	public int objectID;
 	public String stringData;
 	public DataType[] objectData;
-//	public String[] dataTypes;
 	protected ConversionType conversionType;
 	
 	public LevelObject(String data,ConversionType type) throws Exception {
@@ -17,15 +16,27 @@ public class LevelObject {
 		stringData = data;
 		conversionType = type;
 		
-		if (!Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
+		String[] splitData = data.split(",");
+		String tempType;
+		
+		try {
+			
+			tempType = Utility.getDataType(splitData[1]);
+			
+		} catch (Exception e) {
+			
+			tempType = "";
+		}
+		
+		
+		if (Utility.isValidType(tempType)) {
 			
 			// Add pallete of 0.
 			data = data.substring(0,data.indexOf(',')+1)+"0,"+
-					data.substring(data.indexOf(',')+1);
-			
+			data.substring(data.indexOf(',')+1);
 		}
 		
-		String[] splitData = data.split(",");
+		splitData = data.split(",");
 		
 		objectData = new DataType[splitData.length];
 //		dataTypes = new String[splitData.length];
@@ -163,20 +174,44 @@ public class LevelObject {
 		return true;
 	}
 	
+	protected abstract double[] getPosition();
+	protected abstract void setPosition(double[] position);
+	
 	public String toString() {
 				
-		String output = "";
+		StringBuilder output = new StringBuilder();
 		
 		for (int i = 0;i < objectData.length;i++) {
 			
 			if (i == 1 && !Utility.versionGreaterThanVersion(conversionType.gameVersionTo,"0.6.9")) {
 				continue;
 			}
-			output += objectData[i].toString()+",";
+			output.append(objectData[i].toString());
+			output.append(",");
 		}
 		
-		output = output.substring(0,output.length()-1);
+		output.deleteCharAt(output.length()-1);
 		
-		return output;
+		return output.toString();
+	}
+	
+	public String toString(boolean forceShowPallete) {
+		
+		if (!forceShowPallete) {
+			
+			return this.toString();
+		}
+		
+		StringBuilder output = new StringBuilder();
+		
+		for (int i = 0;i < objectData.length;i++) {
+			
+			output.append(objectData[i].toString());
+			output.append(",");
+		}
+		
+		output.deleteCharAt(output.length()-1);
+		
+		return output.toString();
 	}
 }
