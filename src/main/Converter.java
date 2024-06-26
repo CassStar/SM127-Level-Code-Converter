@@ -50,6 +50,8 @@ public class Converter {
 		
 		ProgramLogger.checkForLogFile();
 		
+		new UpdateChecker(input,workingDirectory);
+		
 		fileHandler.setupDirectories(new Path[] {inputDirectory});
 		
 		getfileNames(inputDirectory.toFile());
