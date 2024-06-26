@@ -161,30 +161,4 @@ public class ConversionType {
 		
 		return gameVersionFrom;
 	}
-	
-	boolean areSameGameVersions(String version1,String version2) {
-		
-		String[] versions = {version1,version2};
-		
-		boolean hasVersion1 = false,hasVersion2 = false;
-		
-		for (String version:versions) {
-			
-			if (version.equals("0.7.1")) {
-				
-				hasVersion1 = true;
-				
-			} else if (version.equals("0.7.2")) {
-				
-				hasVersion2 = true;
-			}
-		}
-		
-		if (hasVersion1 && hasVersion2) {
-			
-			return true;
-		}
-		
-		return version1.equals(version2);
-	}
 }
