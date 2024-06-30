@@ -11,7 +11,7 @@ import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.3.3",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private static final String VERSION = "V0.3.4",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
 	private Scanner input;
 	private String workingDirectory,parentDirectory;
 	
@@ -59,6 +59,9 @@ public class UpdateChecker {
 			if (updateVersion) {
 				
 				updated = updateProgram(latestVersion.toLowerCase());
+				
+				System.out.println("________________________________________________________________________________________________"+
+						"________________________________________________________________________________________________\n");
 				
 				if (updated) {
 					
@@ -154,7 +157,8 @@ public class UpdateChecker {
 		}
 		
 		FileInputStream inputStream;
-        //buffer for read and write data to file
+		
+        //buffer for read and write data to file.
         byte[] buffer = new byte[1024];
         
         FileHandler.getInstance().setupDirectories(new Path[] {Path.of(downloadDirectory+"\\Code Converter")});
@@ -172,7 +176,7 @@ public class UpdateChecker {
                 
                 ProgramLogger.logMessage("Extracting to "+newFile.getAbsolutePath(),LogType.INFO);
                 
-                //create directories for sub directories in zip
+                //create directories for sub directories in zip.
                 if (fileName.endsWith("/")) {
                 	
                 	FileHandler.getInstance().setupDirectories(new Path[] {Path.of(newFile.getAbsolutePath())});
@@ -191,14 +195,35 @@ public class UpdateChecker {
                     outputStream.close();
                 }
                 
-                //close this ZipEntry
+                //close this ZipEntry.
                 zipInput.closeEntry();
                 zipEntry = zipInput.getNextEntry();
             }
-            //close last ZipEntry
+            //close last ZipEntry.
             zipInput.closeEntry();
             zipInput.close();
             inputStream.close();
+            
+            // Delete the zip file.
+            Files.deleteIfExists(Path.of(downloadOutput));
+            
+            // Move any input files over to the new input folder.
+            Files.list(Path.of(workingDirectory+"\\input")).forEach(path -> {
+            	
+            	String stringPath = path.toString();
+            	Path newInput = Path.of(downloadDirectory+"\\input\\"+stringPath.substring(stringPath.lastIndexOf('\\')));
+            	
+            	try {
+            		
+            		ProgramLogger.logMessage("Copying file: "+path+" to new input folder",LogType.INFO);
+					Files.copy(path,newInput,StandardCopyOption.REPLACE_EXISTING);
+					
+				} catch (IOException e) {
+					
+					ProgramLogger.logMessage("Couldn't copy file! See below for detailed error:",LogType.ERROR);
+					ProgramLogger.logMessage(e.getMessage(),LogType.ERROR);
+				}
+            });
             
         } catch (IOException e) {
         	
