@@ -17,14 +17,6 @@ public class UpdateChecker {
 	
 	UpdateChecker(Scanner input,String workingDir) {
 		
-		Path wgetPath = Path.of(workingDir+"\\wget");
-		
-		if (!Files.exists(wgetPath)) {
-			
-			ProgramLogger.logMessage("wget folder doesn't exist, skipping update check.",LogType.WARNING);
-			return;
-		}
-		
 		this.input = input;
 		workingDirectory = workingDir;
 		getParentDirectory();
@@ -52,6 +44,8 @@ public class UpdateChecker {
 			return;
 		}
 		
+		String downloadOutput = parentDirectory+"\\Code Converter "+latestVersion;
+		
 		int difference = VERSION.compareTo(latestVersion);
 		boolean updated = false;
 		
@@ -69,8 +63,6 @@ public class UpdateChecker {
 				if (updated) {
 					
 					ProgramLogger.logMessage("Updated program to latest version!",LogType.INFO);
-					
-					String downloadOutput = "NEW DOWNLOAD Code Converter "+latestVersion;
 					
 					ProgramLogger.logMessage("You can find the new program in the folder: "+downloadOutput,LogType.INFO);
 					
