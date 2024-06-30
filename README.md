@@ -4,7 +4,7 @@ What it Does:
 
 	This program converts SM127 level codes between game versions 0.6.0, 0.6.1, 0.7.0, 0.7.1, and 0.7.2
 		It will NOT convert levels from 0.7.1 to 0.7.2 or vice versa, because they share the same
-		code sturcture.
+		code version.
 
 	You can try to use it to convert between other versions, but the program will probably give you
 		an error complaining about an invalid code version, and I haven't tested any of the
@@ -21,10 +21,6 @@ Important:
 
 	Do NOT delete 'Converter.jar' or the 'src' folder! These are the source files for the program,
 		so deleting them will delete the program.
-
-	This program bundles another program with it called 'wget' This is used purely to get and
-		update the program to it's latest version. You CAN delete the 'wget' folder, the
-		program just won't self update if you do that.
 
 	You CAN safely delete the 'info' folder, it's not used by the program,
 		it's just for documentation purposes. All other folder aside from 'src' can also be
