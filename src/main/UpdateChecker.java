@@ -1,20 +1,19 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.channels.*;
+import java.nio.file.*;
 import java.util.Scanner;
+import java.util.zip.*;
 
 import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.3.2",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private static final String VERSION = "V0.3.3",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
 	private Scanner input;
-	private String workingDirectory;
+	private String workingDirectory,parentDirectory;
 	
 	UpdateChecker(Scanner input,String workingDir) {
 		
@@ -28,6 +27,7 @@ public class UpdateChecker {
 		
 		this.input = input;
 		workingDirectory = workingDir;
+		getParentDirectory();
 		
 		ProgramLogger.logMessage("Checking for updates... Current program version: "+VERSION,LogType.INFO);
 		
@@ -100,6 +100,11 @@ public class UpdateChecker {
 		}
 	}
 	
+	private void getParentDirectory() {
+		
+		parentDirectory = workingDirectory.substring(0,workingDirectory.lastIndexOf('\\'));
+	}
+	
 	private String getLatestVersionNumber() throws IOException {
 		
 		URL latestURL = new URL(LATEST_URL);
@@ -128,24 +133,86 @@ public class UpdateChecker {
 	
 	private boolean updateProgram(String versionTo) {
 		
-		Path downloadDirectory = Path.of(workingDirectory+"\\NEW DOWNLOAD Code Converter "+versionTo);
+		Path downloadDirectory = Path.of(parentDirectory+"\\Code Converter "+versionTo);
 		
 		FileHandler.getInstance().setupDirectories(new Path[] {downloadDirectory});
 		
 		String downloadLink = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/download/"+versionTo+"/Code.Converter.zip";
-		String downloadOutput = workingDirectory+"\\NEW DOWNLOAD Code Converter "+versionTo+"\\Code Converter.zip";
-		String command = "\""+workingDirectory+"\\wget\\wget.exe\" --output-document=\""+downloadOutput+"\" "+downloadLink;
+		String downloadOutput = downloadDirectory.toString()+"\\Code Converter.zip";
+		URL downloadURL;
+		
+		ProgramLogger.logMessage("Downloading...",LogType.INFO);
 		
 		try {
 			
-			Runtime.getRuntime().exec(command);
+			downloadURL = new URL(downloadLink);
+			ReadableByteChannel bytesChannel = Channels.newChannel(downloadURL.openStream());
+			
+			try (FileOutputStream outputStream = new FileOutputStream(downloadOutput)) {
+				outputStream.getChannel().transferFrom(bytesChannel,0,Long.MAX_VALUE);
+			}
+			
+			ProgramLogger.logMessage("Finished downloading.",LogType.INFO);
 			
 		} catch (IOException e) {
 			
-			ProgramLogger.logMessage("Couldn't get latest version of Code Converter! Detailed error below:",LogType.ERROR);
-			ProgramLogger.logMessage(e.getMessage(),LogType.ERROR);
+			ProgramLogger.logMessage("Couldn't download file! Detailed error below:",LogType.ERROR);
+			e.printStackTrace();
 			return false;
 		}
+		
+		FileInputStream inputStream;
+        //buffer for read and write data to file
+        byte[] buffer = new byte[1024];
+        
+        FileHandler.getInstance().setupDirectories(new Path[] {Path.of(downloadDirectory+"\\Code Converter")});
+        
+        try {
+        	
+        	inputStream = new FileInputStream(downloadOutput);
+            ZipInputStream zipInput = new ZipInputStream(inputStream);
+            ZipEntry zipEntry = zipInput.getNextEntry();
+            
+            while(zipEntry != null){
+            	
+                String fileName = zipEntry.getName();
+                File newFile = new File(downloadDirectory.toString()+File.separator+fileName);
+                
+                ProgramLogger.logMessage("Extracting to "+newFile.getAbsolutePath(),LogType.INFO);
+                
+                //create directories for sub directories in zip
+                if (fileName.endsWith("/")) {
+                	
+                	FileHandler.getInstance().setupDirectories(new Path[] {Path.of(newFile.getAbsolutePath())});
+                	
+                } else {
+                	
+                	FileOutputStream outputStream = new FileOutputStream(newFile);
+                    int length;
+                    
+                    while ((length = zipInput.read(buffer)) > 0) {
+                    	
+                    	outputStream.write(buffer,0,length);
+                    	
+                    	}
+                    
+                    outputStream.close();
+                }
+                
+                //close this ZipEntry
+                zipInput.closeEntry();
+                zipEntry = zipInput.getNextEntry();
+            }
+            //close last ZipEntry
+            zipInput.closeEntry();
+            zipInput.close();
+            inputStream.close();
+            
+        } catch (IOException e) {
+        	
+        	ProgramLogger.logMessage("Couldn't extract files! Detailed error below:",LogType.ERROR);
+            e.printStackTrace();
+        }
 		
 		return true;
 	}
