@@ -62,7 +62,7 @@ public class DoorObject extends LevelObject {
 					
 					teleportMode = (boolean) objectData[9].getValue();
 					
-				} catch (ArrayIndexOutOfBoundsException e2) {
+				} catch (ArrayIndexOutOfBoundsException | ClassCastException e2) {
 				}
 			}
 		}
