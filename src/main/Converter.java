@@ -7,32 +7,65 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import conversions.*;
 import level.*;
 import main.ProgramLogger.LogType;
 import objects.*;
-import tiles.*;
 import util.Utility;
 
 public class Converter {
 	
-	String directory;
-	Path directoryPath,inputDirectory,outputDirectory,logDirectory;
+	/*
+	 * fileNames		A String array containing the names of all the text files found by the program in the input folder.
+	 * directoryPath	The filepath that this program is currently running in.
+	 * inputDirectory	The filepath of the input folder.
+	 * outputDirectory	The filepath of the output folder.
+	 * logDirectory		The filepath of the logs folder.
+	 * fromLevel		An object containing all the data of the level we are converting from.
+	 * toLevel			An object containing all the data of the level we have converted.
+	 */
+	
 	String[] fileNames;
+	Path directoryPath,inputDirectory,outputDirectory,logDirectory;
 	ConversionType conversionType;
+	ConversionBase fromZeroSixZero,fromZeroSixOne,fromZeroSevenZero,fromZeroSevenOne,fromZeroSevenTwo,fromZeroEightZero;
 	LevelCode fromLevel,toLevel;
 	
+	// File handler used to handle file input and output operations.
 	FileHandler fileHandler = FileHandler.getInstance();
+	
+	/*
+	 * numberOfWarpPipes	The number of warp pipes in the level. This is used when converting older levels codes to newer versions.
+	 * numberOfAreas		The number of areas in the level. Not used for older level versions, since multiple areas didn't exist then.
+	 * skipConvert			Skips the entire process of converting level codes to different versions. This should only be true when
+	 * 							"converting" a level from and to the same version.
+	 * areaGrid				A grid-like object. Used when converting a multi-area level to a single area level.
+	 */
 	
 	int numberOfWarpPipes = 0;
 	int numberOfAreas;
+	boolean skipConvert = false;
 	AreaGrid areaGrid;
 	
+	// A list of level objects that were added after the conversion process. These need to be converted as well.
 	ArrayList<LevelObject> postConversionAdditions = new ArrayList<LevelObject>();
 	
+	// A flag determining if this program should include debug information in its logging.
 	static boolean isDebug;
 	
+	// Used for all user input.
 	Scanner input = new Scanner(System.in);
 	
+	// Main function. All it does is run the converter.
+	public static void main(String[] args) {
+		
+		new Converter();
+	}
+	
+	/**
+	 * The starting function of our converter. It sets up all the directories it needs to function, gets a list of text files from the input
+	 * 	folder, and starts the main process if there are any files to work with.
+	 */
 	Converter() {
 		
 		// For debugging or troubleshooting, uncomment the below line.
@@ -109,11 +142,6 @@ public class Converter {
 		System.out.print("\n\nFinished converting files. Press enter to quit...");
 		input.nextLine();		
 	}
-
-	public static void main(String[] args) {
-		
-		new Converter();
-	}
 	
 	void saveLevelCode(LevelCode code,String fileName) {
 		
@@ -140,14 +168,38 @@ public class Converter {
 		
 		ProgramLogger.logMessage("Level was created using game version: "+
 				temp.getGameVersionFrom(),LogType.INFO);
+		
+		String tempInput;
+		
+		if (temp.codeVersionFrom.equals("0.4.9") || temp.codeVersionFrom.equals("0.4.5")) {
+			
+			System.out.printf("Cannot determine game version from code for file: %s%n%n"
+					+ "Please enter the game version this level was made in: ",file);
+			
+			tempInput = input.nextLine();
+			temp = new ConversionType(true,tempInput,temp.gameVersionFrom);
+			
+			while (!temp.isValid) {
+				
+				System.out.println();
+				ProgramLogger.logMessage("Invalid game version entered!",LogType.ERROR);
+				
+				System.out.printf("Cannot determine game version from code for file: %s%n"
+						+ "Valid game versions: %s%n%n",file,temp.listValidGameVersions());
+				
+				System.out.printf("Please enter the game version this level was made in: ");
+				
+				tempInput = input.nextLine();
+				temp = new ConversionType(true,tempInput,tempInput);
+			}
+		}
+		
 		System.out.printf("Please enter which game version you want to convert to for file:"
 				+ " %s%n",file);
 		System.out.println();
 		
 		
 		System.out.print("Enter game version: ");
-		
-		String tempInput;
 		
 		tempInput = input.nextLine();
 		
@@ -164,8 +216,9 @@ public class Converter {
 				
 			} else {
 				
-				ProgramLogger.logMessage("The level was made in the game version specified! "
-						+ "Please choose a different game version.",LogType.ERROR);
+				// Picked same game version so we skip the conversion process.
+				skipConvert = true;
+				break;
 			}
 			
 			System.out.printf("%nPlease enter which game version you want to convert to for"
@@ -182,7 +235,6 @@ public class Converter {
 		return conversion;
 	}
 	
-	@SuppressWarnings("unchecked")
 	void convertFile(String file) throws Exception {
 		
 		System.out.println();
@@ -203,9 +255,6 @@ public class Converter {
 			return;
 		}
 		
-		ProgramLogger.logMessage("Converting level data...",LogType.INFO);
-		System.out.println();
-		
 		// Copying all data to the new level.
 		toLevel = new LevelCode(fromLevel);
 		
@@ -213,6 +262,36 @@ public class Converter {
 		
 		// Updating code version.
 		toLevel.setCodeVersion(conversionType.codeVersionTo);
+		
+		if (!skipConvert) {
+			
+			ProgramLogger.logMessage("Converting level data...",LogType.INFO);
+			System.out.println();
+			
+			convertLevel();
+		}
+		
+		String newFileName = file.substring(0,file.length()-4)+
+				" [Converted to V"+conversionType.gameVersionTo+"].txt";
+		
+		saveLevelCode(toLevel,newFileName);
+		
+		ProgramLogger.logMessage("Finished converting level data!",LogType.INFO);
+		ProgramLogger.logMessage("You can find the converted level in the output folder with "
+				+ "the filename: "+newFileName,LogType.INFO);
+		System.out.println("_____________________________________________________________________________________________________");
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	void convertLevel() throws Exception {
+		
+		fromZeroSixZero = new ZeroSixZero(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroSixOne = new ZeroSixOne(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroSevenZero = new ZeroSevenZero(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroSevenOne = new ZeroSevenOne(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroSevenTwo = new ZeroSevenTwo(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroEightZero = new ZeroEightZero(numberOfWarpPipes,postConversionAdditions,conversionType);
 		
 		for (int i = 0;i < toLevel.getNumberOfAreas();i++) {
 			
@@ -271,17 +350,6 @@ public class Converter {
 			postConversionAdditions = (ArrayList<LevelObject>) postConversionAdditions.clone();
 			postConversionAdditions.clear();
 		}
-		
-		String newFileName = file.substring(0,file.length()-4)+
-				" [Converted to V"+conversionType.gameVersionTo+"].txt";
-		
-		saveLevelCode(toLevel,newFileName);
-		
-		ProgramLogger.logMessage("Finished converting level data!",LogType.INFO);
-		ProgramLogger.logMessage("You can find the converted level in the output folder with "
-				+ "the filename: "+newFileName,LogType.INFO);
-		System.out.println("_____________________________________________________________________________________________________");
-		
 	}
 	
 	boolean checkCodeStructure(String fileName) {
@@ -315,7 +383,7 @@ public class Converter {
 			
 			ProgramLogger.logMessage("Number of areas in level: "+numberOfAreas+"\n",LogType.INFO);
 			
-			if (numberOfAreas > 2 && Utility.versionGreaterThanVersion("0.7.0",conversionType.gameVersionTo)) {
+			if (numberOfAreas > 1 && Utility.versionGreaterThanVersion("0.7.0",conversionType.gameVersionTo)) {
 				
 				boolean defaultAreaLayout = getYesNo("Since there are multiple areas in the level, you can either choose where you "
 						+ "want them placed, or leave it to the default layout.%n%nThe default layout places each area sequentially "
@@ -329,6 +397,34 @@ public class Converter {
 				fromLevel.setNumberOfAreas(1);
 				
 				levelData = fromLevel.getLevelData();
+				
+			} else if (numberOfAreas > 1) {
+				
+				boolean changeToSingleArea = getYesNo("Would you like to change the level to consist of only one area? (Y/N): ",
+						"%nInvalid value entered.%nWould you like to change the level to consist of only one area? "
+						+ "(Please enter either 'Y' or 'N'): ");
+				
+				if (!changeToSingleArea) {
+					
+					ProgramLogger.logMessage("Continuing to level conversion.",LogType.INFO);
+					
+					fromLevel = new LevelCode(levelData,numberOfAreas,conversionType);
+					
+				} else {
+					
+					boolean defaultAreaLayout = getYesNo("You can either choose where you want areas placed, or leave it to the default "
+							+ "layout.%n%nThe default layout places each area sequentially "
+							+ "left-to-right starting from area ID 0.%n%nDo you want to go with the default layout? (Y/N): ",
+							"%nInvalid value entered.%nDo you want to go with the default layout? (Please enter either 'Y' or 'N'): ");
+					
+					placeAreas(levelData,defaultAreaLayout);
+					
+					fromLevel = new LevelCode(levelData,areaGrid,conversionType);
+					
+					fromLevel.setNumberOfAreas(1);
+					
+					levelData = fromLevel.getLevelData();
+				}
 				
 			} else {
 				
@@ -344,10 +440,17 @@ public class Converter {
 			
 			if (!codeVersion.equals(conversionType.codeVersionFrom)) {
 				
-				ProgramLogger.logMessage("Invalid level code version! Expected: "+
-						conversionType.codeVersionFrom+" Got: "+codeVersion,LogType.ERROR);
-				
-				return false;
+				if (!codeVersion.equals("0.4.3")) {
+					
+					ProgramLogger.logMessage("Invalid level code version! Expected: "+
+							conversionType.codeVersionFrom+" Got: "+codeVersion,LogType.ERROR);
+					
+					return false;
+					
+				} else {
+					
+					codeVersion = "0.4.5";
+				}
 			}
 			System.out.println();
 			
@@ -489,7 +592,7 @@ public class Converter {
 			
 		} else if (areaBackerBG == conversionType.maxBackerBG[0]) {
 			
-//			ProgramLogger.logMessage("Silhouette Mode detected.",LogType.INFO);
+			ProgramLogger.logMessage("Silhouette Mode detected.",LogType.DEBUG);
 		}
 		
 		ProgramLogger.logMessage("Area backer BG: "+areaBackerBG,LogType.INFO);
@@ -777,13 +880,37 @@ public class Converter {
 		
 		AreaCode fromArea = fromLevel.getAreaCode(area),toArea = toLevel.getAreaCode(area);
 		
+		// Do this before doing any version specific conversions.
 		if (fromArea.getBackerBG() == conversionType.maxBackerBG[0]) {
 			
 			toArea.setBackerBG(conversionType.maxBackerBG[1]);
+		}
+		
+		switch(conversionType.gameVersionFrom) {
+		
+		case "0.8.0":
 			
-		} else if (fromArea.getBackerBG() > conversionType.maxBackerBG[1]) {
+			toArea = fromZeroEightZero.convertBackerBG(fromArea,toArea);
+		
+		// 0.7.2 doesn't need to convert anything down to 0.7.1
+		case "0.7.2","0.7.1":
 			
-			toArea.setBackerBG(conversionType.maxBackerBG[1]-1);
+			toArea = fromZeroSevenOne.convertBackerBG(fromArea,toArea);
+			
+		case "0.7.0":
+			
+			toArea = fromZeroSevenZero.convertBackerBG(fromArea,toArea);
+		
+		// First two versions don't need to be done since they don't have anything to convert down to.
+//		case "0.6.0":
+//			
+//			toArea = fromZeroSixZero.convertBackerBG(fromArea,toArea);
+//			break;
+//			
+//		case "0.6.1":
+//			
+//			toArea = fromZeroSixOne.convertBackerBG(fromArea,toArea);
+//			break;
 		}
 	}
 	
@@ -791,40 +918,31 @@ public class Converter {
 		
 		AreaCode fromArea = fromLevel.getAreaCode(area),toArea = toLevel.getAreaCode(area);
 		
-		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
-			
-			if (fromArea.getFronterBG() == 1 && fromArea.getBGPallete() == 1) {
-				
-				toArea.setFronterBG(Math.min(2,conversionType.maxFronterBG[1]));
-			}
-			
-//			toArea.setBGPallete(0);
-			
-			switch (fromArea.getFronterBG()) {
-			case 7,8,10,12,13:
-				
-				toArea.setFronterBG(Math.min(1,conversionType.maxFronterBG[1]));
-				break;
-				
-			case 9:
-				
-				toArea.setFronterBG(Math.min(3,conversionType.maxFronterBG[1]));
-				break;
-				
-			case 11:
-				
-				toArea.setFronterBG(Math.min(2,conversionType.maxFronterBG[1]));
-				break;
-			}
-		}
-		
+		// Do this before doing any version specific conversions.
 		if (toArea.getFronterBG() == conversionType.maxFronterBG[0]) {
 			
 			toArea.setFronterBG(conversionType.maxFronterBG[1]);
+		}
+		
+		switch(conversionType.gameVersionFrom) {
+		
+		case "0.8.0":
 			
-		} else if (toArea.getFronterBG() > conversionType.maxFronterBG[1]) {
+			toArea = fromZeroEightZero.convertFronterBG(fromArea,toArea);
+		
+		// 0.7.2 and 0.7.1 have the same Fronter Backgrounds as 0.7.0.
+		case "0.7.2","0.7.1","0.7.0":
 			
-			toArea.setFronterBG(conversionType.maxFronterBG[1]-1);
+			toArea = fromZeroSevenZero.convertFronterBG(fromArea,toArea);
+		
+		case "0.6.1":
+			
+			toArea = fromZeroSixOne.convertFronterBG(fromArea,toArea);
+		
+		// First version doesn't need to be done since it doesn't have anything to convert down to.
+//		case "0.6.0":
+//			
+//			toArea = fromZeroSixZero.convertFronterBG(fromArea,toArea);
 		}
 	}
 	
@@ -832,6 +950,7 @@ public class Converter {
 		
 		AreaCode fromArea = fromLevel.getAreaCode(area),toArea = toLevel.getAreaCode(area);
 		
+		// Do this before doing any version specific conversions.
 		if (fromArea.getMusicID() == conversionType.maxMusicID[0]) {
 			
 			toArea.setMusicID(conversionType.maxMusicID[1]);
@@ -839,190 +958,30 @@ public class Converter {
 		
 		switch (conversionType.gameVersionFrom) {
 		
+		case "0.8.0":
+			
+			toArea = fromZeroEightZero.convertMusicIDs(fromArea,toArea);
+		
 		case "0.7.2":
 			
-			// This is the same as MusicID 1 in all other versions.
-			if (fromArea.getMusicID() == 65) {
-				
-				toArea.setMusicID(1);
-			}
+			toArea = fromZeroSevenTwo.convertMusicIDs(fromArea,toArea);
 			
 		case "0.7.1":
 			
-			switch (conversionType.gameVersionTo) {
-			
-			case "0.7.0":
-				
-				switch(fromArea.getMusicID()) {
-				
-				// Yoshi's Island - Underground (Remix)
-				case 62:
-					
-					// Set to Underground Yoshi's New Island
-					toArea.setMusicID(34);
-					break;
-				
-				// Waltz of the Boos (Remix)
-				case 63:
-					
-					// Set to Waltz of the Boos Super Mario Galaxy
-					toArea.setMusicID(56);
-					break;
-				
-				// Super Mario Sunshine - Sky & Sea
-				case 64:
-					
-					// Set to Deep Sea of Mare Super Mario Sunshine
-					toArea.setMusicID(41);
-				}
-			
-			}
+			toArea = fromZeroSevenOne.convertMusicIDs(fromArea,toArea);
 			
 		case "0.7.0":
 			
-			switch (conversionType.gameVersionTo) {
-			
-			case "0.6.1":
-				
-				switch(fromArea.getMusicID()) {
-				
-				// Ice Ice Outpost
-				case 39:
-					
-					// Set to Snow Rise Paper Mario: Sticker Star
-					toArea.setMusicID(12);
-					break;
-				
-				// Water themes
-				case 40,41,42,43,64:
-					
-					// Set to Buoy Base Galaxy Super Mario Galaxy
-					toArea.setMusicID(9);
-					break;
-					
-				// Desert themes, Waltz of the Boos (Remix)
-				case 44,45,46,47,48,63:
-					
-					// Set to Princess Peach's Castle Super Smash Bros. Melee
-					toArea.setMusicID(1);
-					break;
-					
-				// Beach themes
-				case 49,50,51:
-					
-					// Set to Yoshi Star Galaxy Super Mario Galaxy 2
-					toArea.setMusicID(16);
-					break;
-					
-				// Fire themes
-				case 52,53,54,55:
-					
-					// Set to Speedy Comet Super Mario Galaxy
-					toArea.setMusicID(8);
-					break;
-					
-				// Ghost themes
-				case 56,57,58,59:
-					
-					// Set to SMW Underground Super Mario Maker
-					toArea.setMusicID(32);
-					break;
-					
-				// Secret Course
-				case 60:
-					
-					// Set to Mario's Pwnd Slide Remix by m477zorz
-					toArea.setMusicID(5);
-					break;
-					
-				// Sammer's Kingdom
-				case 61:
-					
-					// Set to Champion's Road Super Mario 3D World
-					toArea.setMusicID(7);
-					break;
-				
-				// Yoshi's Island - Underground (Remix)
-				case 62:
-					
-					// Set to Underground Yoshi's New Island
-					toArea.setMusicID(34);
-					break;
-				}
-			}
+			toArea = fromZeroSevenZero.convertMusicIDs(fromArea,toArea);
 			
 		case "0.6.1":
 			
-			switch (conversionType.gameVersionTo) {
-			
-			case "0.6.0":
-				
-				switch(fromArea.getMusicID()) {
-				
-				// Ice Ice Outpost
-				case 39:
-					
-					// Set to Snow Rise Paper Mario: Sticker Star
-					toArea.setMusicID(12);
-					break;
-				
-				// Water themes
-				case 40,41,42,43,64:
-					
-					// Set to Buoy Base Galaxy Super Mario Galaxy
-					toArea.setMusicID(9);
-					break;
-					
-				// Desert themes, Waltz of the Boos (Remix)
-				case 44,45,46,47,48,63:
-					
-					// Set to Princess Peach's Castle Super Smash Bros. Melee
-					toArea.setMusicID(1);
-					break;
-					
-				// Beach themes
-				case 49,50,51:
-					
-					// Set to Yoshi Star Galaxy Super Mario Galaxy 2
-					toArea.setMusicID(16);
-					break;
-					
-				// Fire themes
-				case 52,53,54,55:
-					
-					// Set to Speedy Comet Super Mario Galaxy
-					toArea.setMusicID(8);
-					break;
-					
-				// Ghost themes
-				case 56,57,58,59:
-					
-					// Set to SMW Underground Super Mario Maker
-					toArea.setMusicID(32);
-					break;
-					
-				// Secret Course
-				case 60:
-					
-					// Set to Mario's Pwnd Slide Remix by m477zorz
-					toArea.setMusicID(5);
-					break;
-					
-				// Sammer's Kingdom
-				case 61:
-					
-					// Set to Champion's Road Super Mario 3D World
-					toArea.setMusicID(7);
-					break;
-				
-				// Yoshi's Island - Underground (Remix)
-				case 62:
-					
-					// Set to Underground Yoshi's New Island
-					toArea.setMusicID(34);
-					break;
-				}
-			}
+			toArea = fromZeroSixOne.convertMusicIDs(fromArea,toArea);
+		
+		// First version doesn't need to be done since it doesn't have anything to convert down to.
+//		case "0.6.0":
+//			
+//			toArea = fromZeroSixZero.convertMusicIDs(fromArea,toArea);
 		}
 		
 	}
@@ -1036,168 +995,29 @@ public class Converter {
 		
 		LevelTile[] tileArray = toArea.getAllTiles();
 		
-		int arrayLength = tileArray.length;
+		switch (conversionType.gameVersionFrom) {
 		
-		for (int i = 0;i < arrayLength;i++) {
+		case "0.8.0":
 			
-			LevelTile tile = tileArray[i];
+			tileArray = fromZeroEightZero.convertTiles(toArea,tileArray);
+		
+		// 0.7.2 Doesn't need to convert anything down to 0.7.1	
+		case "0.7.2","0.7.1":
 			
-			switch(conversionType.gameVersionFrom) {
+			tileArray = fromZeroSevenOne.convertTiles(toArea,tileArray);
 			
-			case "0.7.2","0.7.1":
-				
-				if (Utility.versionGreaterThanVersion("0.7.1",conversionType.gameVersionTo)) {
-					
-					if (tile instanceof NewCaveTile) {
-						
-						if (tile.tileID > 351) {
-							
-							// Change ID to Old Cave half-tile.
-							tile.tileID = OldCaveTile.getTileID(tile.tileID,true)+1;
-							
-						} else {
-							
-							// Change ID to Old Cave full-tile.
-							tile.tileID = OldCaveTile.getTileID(tile.tileID,true);
-						}
-					}
-				}
-				
-			case "0.7.0":
-				
-				if (Utility.versionGreaterThanVersion("0.7.0",conversionType.gameVersionTo)) {
-					
-					if (tile instanceof ColouredBrickTile || tile instanceof DarkBrickTile) {
-						
-						// Set a default tile ID.
-						tile.tileID = ColouredBrickTile.getTileID(tile.tileID,false);
-						
-						if (tile.hasPallete) {
-							
-							switch (tile.tilePallete) {
-							
-							// Red Pallete
-							case 1:
-								
-								// Change ID to Red Brick Block.
-								tile.tileID = RedBrickTile.getTileID(tile.tileID,false);
-								break;
-								
-							// Yellow Pallete
-							case 2:
-								
-								// Change ID to Yellow Brick Block.
-								tile.tileID = YellowBrickTile.getTileID(tile.tileID,false);
-								break;
-								
-							// Green Pallete,Purple Pallete
-							case 3,4:
-								
-								// Change ID to Green Brick Block.
-								tile.tileID = GreenBrickTile.getTileID(tile.tileID,false);
-								break;
-							}
-						}
-						
-					} else if (tile instanceof ColouredGemTile) {
-						
-						// Set a default tile ID.
-						tile.tileID = ColouredGemTile.getTileID(tile.tileID,false);
-						
-						if (tile.hasPallete) {
-							
-							switch (tile.tilePallete) {
-							
-							// Yellow Pallete
-							case 1:
-								
-								// Change ID to Yellow Gem Block.
-								tile.tileID = YellowGemTile.getTileID(tile.tileID,false);
-								break;
-								
-							// Green Pallete
-							case 2:
-								
-								// Change ID to Green Gem Block.
-								tile.tileID = GreenGemTile.getTileID(tile.tileID,false);
-								break;
-								
-							// Blue Pallete,Purple Pallete,Light Blue Pallete,Black Pallete
-							case 3,4,5,6:
-								
-								// Change ID to Blue Gem Block.
-								tile.tileID = BlueGemTile.getTileID(tile.tileID,false);
-								break;
-							}
-						}
-						
-					} else if (tile instanceof CastleRoofTile ||
-							tile instanceof VolcanicBrickTile) {
-						
-						// Change ID to Red Brick Block.
-						tile.tileID = RedBrickTile.getTileID(tile.tileID,false);
-						
-					} else if (tile instanceof SandTile ||
-							tile instanceof YIGrassTile) {
-						
-						// Change ID to Grass Block.
-						tile.tileID = GrassTile.getTileID(tile.tileID,false);
-						
-					} else if (tile instanceof SandStoneTile) {
-						
-						// Change ID to Yellow Brick Block.
-						tile.tileID = YellowBrickTile.getTileID(tile.tileID,false);
-						
-					} else if (tile instanceof VolcanoTile) {
-						
-						// Change ID to Warped Ground Block.
-						tile.tileID = WarpedGroundTile.getTileID(tile.tileID,false);
-						
-					} else if (tile instanceof CastlePillarTile) {
-						
-						// Change ID to Castle Brick Block.
-						tile.tileID = CastleBrickTile.getTileID(tile.tileID,false);
-						
-					} else if (tile instanceof CabinWindowTile) {
-						
-						// Change ID to Glass Pane Block.
-						tile.tileID = GlassPaneTile.getTileID(tile.tileID,false);
-						
-					}
-				}
-				
-			case "0.6.1":
-				
-				if (Utility.versionGreaterThanVersion("0.6.1",conversionType.gameVersionTo)) {
-					
-					if (tile instanceof SolidColourTile) {
-						
-						// Change ID to Old Cave full-tile.
-						tile.tileID = OldCaveTile.getTileID(tile.tileID,true);
-						
-					} else if (tile instanceof CheckerBoardTile || tile instanceof CastleBrickTile) {
-						
-						// Change ID to Light Stone Brick Block.
-						tile.tileID = LightStoneBrickTile.getTileID(tile.tileID,true);
-						
-					} else if (tile instanceof CarpetBlockTile) {
-						
-						// Change ID to Red Gem Block.
-						tile.tileID = ColouredGemTile.getTileID(tile.tileID,true);
-						
-					} else if (tile instanceof WoodenPlankTile) {
-						
-						// Change ID to Wooden Cabin Block.
-						tile.tileID = WoodenCabinTile.getTileID(tile.tileID,true);
-						
-					}
-				}
-			}
+		case "0.7.0":
 			
-			tile.tilePallete = 0;
-			tile.hasPallete = false;
+			tileArray = fromZeroSevenZero.convertTiles(toArea,tileArray);
 			
-			tileArray[i] = tile;
+		case "0.6.1":
+			
+			tileArray = fromZeroSixOne.convertTiles(toArea,tileArray);
+		
+		// First version doesn't need to be done since it doesn't have anything to convert down to.
+//		case "0.6.0":
+//			
+//			tileArray = fromZeroSixZero.convertTiles(toArea,tileArray);
 		}
 		
 		toArea.setAllTiles(tileArray);
@@ -1211,498 +1031,46 @@ public class Converter {
 		AreaCode toArea = toLevel.getAreaCode(area);
 		
 		LevelObject[] objectArray = toArea.getObjects();
-		int arrayLength = objectArray.length;
+		boolean[] conversionsDone = {false,false,false,false,false};
+		Object[] data;
 		
-		for (int i = 0;i < arrayLength;i++) {
+		switch (conversionType.gameVersionFrom) {
+		
+		case "0.8.0":
 			
-			LevelObject object = objectArray[i];
+			data = fromZeroEightZero.convertObjects(toArea,objectArray,conversionsDone);
 			
-			// Testing if object exists in version converting to.
-			if (object.objectID > conversionType.maxObjectID[1]) {
-				
-				// Change object to placeholder if it doesn't exist.
-				object = new SignObject("14,"+object.objectData[1].toString()+","+
-						object.objectData[2].toString()+","+
-						object.objectData[3].toString()+","+
-						object.objectData[4].toString()+","+
-						object.objectData[5].toString()+","+
-						object.objectData[6].toString()+","+
-						"STThis%20sign%20represents%20an%20object%20that%20wasn%27t%20"
-						+ "converted%2C%20since%20it%20doesn%27t%20exist%20in%20this%20"
-						+ "version%20of%20the%20game.",conversionType);
-			}
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
+		
+		// 0.7.1 is the same object-wise as 0.7.2
+		case "0.7.2","0.7.1":
 			
-			if (conversionType.gameVersionFrom.equals("0.7.2") || conversionType.gameVersionFrom.equals("0.7.1")) {
-				
-				switch (conversionType.gameVersionTo) {
-				
-				case "0.6.0":
-					
-					if (object instanceof EnchantedGearObject) {
-						
-						object = new EnchantedGearObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof RainbowStarObject) {
-						
-						object = new RainbowStarObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof GhostPepperObject) {
-						
-						object = new GhostPepperObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof SuperFeatherObject) {
-						
-						object = new SuperFeatherObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-					}
-					
-				case "0.6.1":
-					
-					if (object instanceof MushroomTopObject) {
-						
-						object = new MushroomTopObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					} else if (object instanceof SignObject) {
-						
-						object = new SignObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0,BL0".length()),conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						LevelObject destinationPipe = toArea.findMatchingPipe(object,i);
-						
-						object = new WarpPipeTopObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[7].toString()+","+
-								(destinationPipe == null?
-								object.objectData[2].toString():
-								destinationPipe.objectData[2].toString())+
-								",BL1",conversionType);
-						
-						numberOfWarpPipes++;
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[8].toString()+","+
-								object.objectData[8].toString(),conversionType);
-						break;
-						
-					} else if (object instanceof ArrowObject) {
-						
-						object = new ArrowObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-					}
-					
-				case "0.7.0":
-					
-					if (object instanceof MetalPlatformObject) {
-						
-						object = new MetalPlatformObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					} else if (object instanceof TwistedTreeTopObject) {
-						
-						object = new TwistedTreeTopObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						object = new WarpPipeTopObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[7].toString()+","+
-								object.objectData[8].toString()+","+
-								object.objectData[9].toString(),
-								conversionType);
-						
-					} else if (object instanceof GoombaObject) {
-						
-						object = new GoombaObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								"STnone,STnone,"+
-								object.objectData[7].toString(),conversionType);
-						
-					} else if (object instanceof WoodenPlatformObject) {
-						
-						object = new WoodenPlatformObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					}
-				}
-				
-				
-			} else if (conversionType.gameVersionFrom.equals("0.7.0")) {
-				
-				switch (conversionType.gameVersionTo) {
-				
-				case "0.6.0":
-					
-					if (object instanceof EnchantedGearObject) {
-						
-						object = new EnchantedGearObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof RainbowStarObject) {
-						
-						object = new RainbowStarObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof GhostPepperObject) {
-						
-						object = new GhostPepperObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof SuperFeatherObject) {
-						
-						object = new SuperFeatherObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-					}
-					
-				case "0.6.1":
-					
-					if (object instanceof MushroomTopObject) {
-						
-						object = new MushroomTopObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-						
-					} else if (object instanceof SignObject) {
-						
-						object = new SignObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0,BL0".length()),conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						LevelObject destinationPipe = toArea.findMatchingPipe(object,i);
-						
-						object = new WarpPipeTopObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[7].toString()+","+
-								(destinationPipe == null?
-								object.objectData[2].toString():
-								destinationPipe.objectData[2].toString())+
-								",BL1",conversionType);
-						
-						numberOfWarpPipes++;
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[8].toString()+","+
-								object.objectData[8].toString(),conversionType);
-						
-					} else if (object instanceof ArrowObject) {
-						
-						object = new ArrowObject(object.stringData.substring(
-								0,object.stringData.indexOf("CL")-1),conversionType);
-					}
-					
-					break;
-					
-				case "0.7.1","0.7.2":
-					
-					if (object instanceof MetalPlatformObject) {
-						
-						object = new MetalPlatformObject(object.stringData+",CL1x1x1",
-								conversionType);
-						
-					} else if (object instanceof TwistedTreeTopObject) {
-						
-						object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16",
-								conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						object = new WarpPipeTopObject(object.stringData+",BL1",
-								conversionType);
-						
-					} else if (object instanceof GoombaObject) {
-						
-						object = new GoombaObject(object.stringData+",CL1x0x0",conversionType);
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(object.stringData+",BL1",
-								conversionType);
-						
-					} else if (object instanceof WoodenPlatformObject) {
-						
-						object = new WoodenPlatformObject(object.stringData+",CL1x0x0",conversionType);
-					}
-				}
-			} else if (conversionType.gameVersionFrom.equals("0.6.1")) {
-				
-				switch (conversionType.gameVersionTo) {
-				
-				case "0.6.0":
-					
-					if (object instanceof EnchantedGearObject) {
-						
-						object = new EnchantedGearObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof RainbowStarObject) {
-						
-						object = new RainbowStarObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof GhostPepperObject) {
-						
-						object = new GhostPepperObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-						
-					} else if (object instanceof SuperFeatherObject) {
-						
-						object = new SuperFeatherObject(object.stringData.substring(0,
-								object.stringData.length()-",BL0".length()),conversionType);
-					}
-					
-					break;
-					
-				case "0.7.1","0.7.2":
-					
-					if (object instanceof MetalPlatformObject) {
-						
-						object = new MetalPlatformObject(object.stringData+",CL1x1x1",
-								conversionType);
-						
-					} else if (object instanceof TwistedTreeTopObject) {
-						
-						object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16",
-								conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						object = new WarpPipeTopObject(object.stringData+",BL1",
-								conversionType);
-						
-					} else if (object instanceof GoombaObject) {
-						
-						object = new GoombaObject(object.stringData+",CL1x0x0",conversionType);
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(object.stringData+",BL1",
-								conversionType);
-						break;
-						
-					} else if (object instanceof WoodenPlatformObject) {
-						
-						object = new WoodenPlatformObject(object.stringData+",CL1x0x0",conversionType);
-					}
-					
-				case "0.7.0":
-					
-					if (object instanceof MushroomTopObject) {
-						
-						object = new MushroomTopObject(object.stringData+",CL1x0x0",
-								conversionType);
-						
-					} else if (object instanceof SignObject) {
-						
-						object = new SignObject(object.stringData+",BL0,BL0",conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						double[] pipeDestinationCoordinates = (
-								double[]) object.objectData[8].getValue(),
-								pipeCoordinates = (double[]) object.objectData[2].getValue();
-						
-						object = new WarpPipeTopObject(""+object.objectID+","+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[7].toString()+","+
-								"STWarpPipe"+numberOfWarpPipes+","+
-								"CL0x1x0,"+"BL1",conversionType);
-						
-						if (!Utility.areSameVectors(pipeCoordinates,pipeDestinationCoordinates)) {
-							
-							LevelObject destinationPipe = new WarpPipeTopObject(object.stringData,
-									conversionType);
-							
-							destinationPipe.objectData[2].setValue(new double[] {
-									pipeDestinationCoordinates[0],
-									pipeDestinationCoordinates[1]
-							});
-							
-							postConversionAdditions.add(destinationPipe);
-						}
-						
-						numberOfWarpPipes++;
-						
-					} else if (object instanceof DoorObject) {
-						
-						toArea.normalizeDoors();
-						
-						object = new DoorObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								"STnone,STnone,"+
-								object.objectData[8].toString(),conversionType);
-						
-					} else if (object instanceof ArrowObject) {
-						
-						object = new ArrowObject(object.stringData+",CL1x0x0",conversionType);
-					}
-				}
-			} else if (conversionType.gameVersionFrom.equals("0.6.0")) {
-				
-				switch (conversionType.gameVersionTo) {
-				
-				case "0.7.1","0.7.2":
-					
-					if (object instanceof MetalPlatformObject) {
-						
-						object = new MetalPlatformObject(object.stringData+",CL1x1x1",
-								conversionType);
-						
-					} else if (object instanceof TwistedTreeTopObject) {
-						
-						object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16",
-								conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						object = new WarpPipeTopObject(object.stringData+",BL1",
-								conversionType);
-						
-					} else if (object instanceof GoombaObject) {
-						
-						object = new GoombaObject(object.stringData+",CL1x0x0",conversionType);
-						
-					} else if (object instanceof DoorObject) {
-						
-						object = new DoorObject(object.stringData+",BL1",
-								conversionType);
-						break;
-						
-					} else if (object instanceof WoodenPlatformObject) {
-						
-						object = new WoodenPlatformObject(object.stringData+",CL1x0x0",conversionType);
-					}
-				
-				case "0.7.0":
-					
-					if (object instanceof MushroomTopObject) {
-						
-						object = new MushroomTopObject(object.stringData+",CL1x0x0",
-								conversionType);
-						
-					} else if (object instanceof SignObject) {
-						
-						object = new SignObject(object.stringData+",BL0,BL0",conversionType);
-						
-					} else if (object instanceof WarpPipeTopObject) {
-						
-						double[] pipeDestinationCoordinates = (
-								double[]) object.objectData[8].getValue(),
-								pipeCoordinates = (double[]) object.objectData[2].getValue();
-						
-						object = new WarpPipeTopObject(""+object.objectID+","+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								object.objectData[7].toString()+","+
-								"STWarpPipe"+numberOfWarpPipes+","+
-								"CL0x1x0,"+"BL1",conversionType);
-						
-						if (!Utility.areSameVectors(pipeCoordinates,pipeDestinationCoordinates)) {
-							
-							LevelObject destinationPipe = new WarpPipeTopObject(object.stringData,
-									conversionType);
-							
-							destinationPipe.objectData[2].setValue(new double[] {
-									pipeDestinationCoordinates[0],
-									pipeDestinationCoordinates[1]
-							});
-							
-							postConversionAdditions.add(destinationPipe);
-						}
-						
-						numberOfWarpPipes++;
-						
-					} else if (object instanceof DoorObject) {
-						
-						toArea.normalizeDoors();
-						
-						object = new DoorObject(""+object.objectID+",0,"+
-								object.objectData[2].toString()+","+
-								object.objectData[3].toString()+","+
-								object.objectData[4].toString()+","+
-								object.objectData[5].toString()+","+
-								object.objectData[6].toString()+","+
-								"STnone,STnone,"+
-								object.objectData[8].toString(),conversionType);
-						
-					} else if (object instanceof ArrowObject) {
-						
-						object = new ArrowObject(object.stringData+",CL1x0x0",conversionType);
-					}
-					
-				case "0.6.1":
-					
-					if (object instanceof EnchantedGearObject) {
-						
-						object = new EnchantedGearObject(object.stringData+",BL1",conversionType);
-						
-					} else if (object instanceof RainbowStarObject) {
-						
-						object = new RainbowStarObject(object.stringData+",BL1",conversionType);
-						
-					} else if (object instanceof GhostPepperObject) {
-						
-						object = new GhostPepperObject(object.stringData+",BL1",conversionType);
-						
-					} else if (object instanceof SuperFeatherObject) {
-						
-						object = new SuperFeatherObject(object.stringData+",BL1",conversionType);
-					}
-				}
-			}
+			data = fromZeroSevenTwo.convertObjects(toArea,objectArray,conversionsDone);
 			
-			objectArray[i] = object;
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
+			
+		case "0.7.0":
+			
+			data = fromZeroSevenZero.convertObjects(toArea,objectArray,conversionsDone);
+			
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
+			
+		case "0.6.1":
+			
+			data = fromZeroSixOne.convertObjects(toArea,objectArray,conversionsDone);
+			
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
+		
+		case "0.6.0":
+			
+			data = fromZeroSixZero.convertObjects(toArea,objectArray,conversionsDone);
+			
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
 		}
 		
 		toArea.setObjects(objectArray);

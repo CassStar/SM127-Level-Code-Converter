@@ -11,7 +11,7 @@ import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.3.4",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private static final String VERSION = "V0.4.0",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
 	private Scanner input;
 	private String workingDirectory,parentDirectory;
 	
@@ -51,7 +51,7 @@ public class UpdateChecker {
 		
 		if (difference < 0) {
 			
-			ProgramLogger.logMessage("A newer version of the program is available!",LogType.INFO);
+			ProgramLogger.logMessage("A newer version of the program is available! View changelog from here: "+LATEST_URL,LogType.INFO);
 			
 			boolean updateVersion = getYesNo("Would you like to update the program from: "+VERSION+" to: "+latestVersion+"? (Y/N): ",
 					"%nInvalid value entered.%nWould you like to update the program from: "+VERSION+" to: "+latestVersion+"? (Y/N): ");
@@ -102,7 +102,22 @@ public class UpdateChecker {
 	
 	private String getLatestVersionNumber() throws IOException {
 		
-		URL latestURL = new URL(LATEST_URL);
+		URL latestURL;
+		URI uri = null;
+		
+		try {
+			
+			uri = new URI(LATEST_URL);
+			
+		} catch (URISyntaxException e) {
+			
+			e.printStackTrace();
+			
+			return "0";
+		}
+		
+		latestURL = uri.toURL();
+		
 		URLConnection connection = latestURL.openConnection();
 		BufferedReader dataReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		
@@ -140,7 +155,8 @@ public class UpdateChecker {
 		
 		try {
 			
-			downloadURL = new URL(downloadLink);
+			URI uri = new URI(downloadLink);
+			downloadURL = uri.toURL();
 			ReadableByteChannel bytesChannel = Channels.newChannel(downloadURL.openStream());
 			
 			try (FileOutputStream outputStream = new FileOutputStream(downloadOutput)) {
@@ -149,7 +165,7 @@ public class UpdateChecker {
 			
 			ProgramLogger.logMessage("Finished downloading.",LogType.INFO);
 			
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			
 			ProgramLogger.logMessage("Couldn't download file! Detailed error below:",LogType.ERROR);
 			e.printStackTrace();
@@ -160,8 +176,6 @@ public class UpdateChecker {
 		
         //buffer for read and write data to file.
         byte[] buffer = new byte[1024];
-        
-        FileHandler.getInstance().setupDirectories(new Path[] {Path.of(downloadDirectory+"\\Code Converter")});
         
         try {
         	

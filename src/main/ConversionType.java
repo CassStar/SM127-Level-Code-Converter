@@ -9,20 +9,14 @@ public class ConversionType {
 	public int[] maxBackerBG,maxFronterBG,maxMusicID,maxObjectID,maxTileID;
 	public String gameVersionFrom,gameVersionTo,codeVersionFrom,codeVersionTo;
 	
-	int[] allMinBackerBG = {0,0,0,0,0};
-	int[] allMinFronterBG = {0,0,0,0,0};
-	int[] allMinMusicID = {0,0,0,0,0};
-	int[] allMinObjectID = {0,0,0,0,0};
-	int[] allMinTileID = {0,0,0,0,0};
+	int[] allMaxBackerBG = {5,5,6,7,7,12};
+	int[] allMaxFronterBG = {5,7,14,14,14,22};
+	int[] allMaxMusicID = {37,39,62,65,66,67};
+	int[] allMaxObjectID = {68,69,90,96,97,125};
+	int[] allMaxTileID = {210,250,350,360,360,410};
 	
-	int[] allMaxBackerBG = {5,5,6,7,7};
-	int[] allMaxFronterBG = {5,7,14,14,14};
-	int[] allMaxMusicID = {37,39,62,65,66};
-	int[] allMaxObjectID = {68,69,90,96,97};
-	int[] allMaxTileID = {210,250,350,360,360};
-	
-	String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2"};
-	String[] validCodeVersions = {"0.4.3","0.4.5","0.4.8","0.4.9","0.4.9"};
+	String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2","0.8.0"};
+	String[] validCodeVersions = {"0.4.5","0.4.5","0.4.8","0.4.9","0.4.9","0.4.9"};
 	
 	public ConversionType(boolean fromGameVersion,String versionFrom,String versionTo) {
 		
@@ -31,6 +25,7 @@ public class ConversionType {
 			isValid = getAreValidGameVersions(new String[] {versionFrom,versionTo});
 			
 			if (!isValid) {
+				
 				return;
 			}
 			
@@ -49,7 +44,17 @@ public class ConversionType {
 			isValid = getAreValidCodeVersions(new String[] {versionFrom,versionTo});
 			
 			if (!isValid) {
-				return;
+				
+				if (versionFrom.equals("0.4.3")) {
+					
+					isValid = true;
+					
+					versionFrom = "0.4.5";
+					versionTo = "0.4.5";
+					
+				} else {
+					return;
+				}
 			}
 			
 			codeVersionFrom = versionFrom;
@@ -125,11 +130,11 @@ public class ConversionType {
 	
 	void setupValues(int[] indexes) {
 		
-		minBackerBG = new int[] {allMinBackerBG[indexes[0]],allMinBackerBG[indexes[1]]};
-		minFronterBG = new int[] {allMinFronterBG[indexes[0]],allMinFronterBG[indexes[1]]};
-		minMusicID = new int[] {allMinMusicID[indexes[0]],allMinMusicID[indexes[1]]};
-		minObjectID = new int[] {allMinObjectID[indexes[0]],allMinObjectID[indexes[1]]};
-		minTileID = new int[] {allMinTileID[indexes[0]],allMinTileID[indexes[1]]};
+		minBackerBG = new int[] {0,0};
+		minFronterBG = new int[] {0,0};
+		minMusicID = new int[] {0,0};
+		minObjectID = new int[] {0,0};
+		minTileID = new int[] {0,0};
 		
 		maxBackerBG = new int[] {allMaxBackerBG[indexes[0]],allMaxBackerBG[indexes[1]]};
 		maxFronterBG = new int[] {allMaxFronterBG[indexes[0]],allMaxFronterBG[indexes[1]]};
@@ -156,7 +161,11 @@ public class ConversionType {
 		
 		if (codeVersionFrom.equals("0.4.9")) {
 			
-			return "0.7.1 or 0.7.2";
+			return "0.7.1 or 0.7.2 or 0.8.0";
+			
+		} else if (codeVersionFrom.equals("0.4.5")) {
+			
+			return "0.6.0 or 0.6.1";
 		}
 		
 		return gameVersionFrom;
