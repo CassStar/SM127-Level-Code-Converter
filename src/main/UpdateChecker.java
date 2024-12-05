@@ -11,7 +11,7 @@ import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.4.0",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private static final String VERSION = "V0.3.4",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
 	private Scanner input;
 	private String workingDirectory,parentDirectory;
 	
@@ -89,7 +89,7 @@ public class UpdateChecker {
 		
 		if (updated) {
 			
-			ProgramLogger.logMessage("Please close this program. Extract and use the new program version for added functionality/stability.",
+			ProgramLogger.logMessage("Please close this program. Use the new program version for added or fixed functionality.",
 					LogType.WARNING);
 			input.nextLine();
 		}
