@@ -5,42 +5,7 @@ import java.util.ArrayList;
 import main.ProgramLogger;
 import main.ProgramLogger.LogType;
 import objects.*;
-import tiles.AirBlockTile;
-import tiles.BlueGemTile;
-import tiles.CabinWindowTile;
-import tiles.CarpetBlockTile;
-import tiles.CastleBrickTile;
-import tiles.CastlePillarTile;
-import tiles.CastleRoofTile;
-import tiles.CheckerBoardTile;
-import tiles.ColouredBrickTile;
-import tiles.ColouredGemTile;
-import tiles.CrackedStoneTile;
-import tiles.DarkBrickTile;
-import tiles.GlassPaneTile;
-import tiles.GraniteBlockTile;
-import tiles.GrassTile;
-import tiles.GreenBrickTile;
-import tiles.GreenGemTile;
-import tiles.InvisibleBlockTile;
-import tiles.LightStoneBrickTile;
-import tiles.MagicBlockTile;
-import tiles.NewCaveTile;
-import tiles.OldCaveTile;
-import tiles.RedBrickTile;
-import tiles.RoughStoneBrickTile;
-import tiles.SandStoneTile;
-import tiles.SandTile;
-import tiles.SnowTile;
-import tiles.SolidColourTile;
-import tiles.VolcanicBrickTile;
-import tiles.VolcanoTile;
-import tiles.WarpedGroundTile;
-import tiles.WoodenCabinTile;
-import tiles.WoodenPlankTile;
-import tiles.YIGrassTile;
-import tiles.YellowBrickTile;
-import tiles.YellowGemTile;
+import tiles.*;
 import types.BooleanType;
 import types.DataType;
 import util.Utility;
@@ -932,6 +897,26 @@ public class AreaCode {
 		case 350,351,352,353:
 			
 			return new NewCaveTile(data);
+		
+		case 360:
+			
+			return new BookCaseTile(data);
+			
+		case 370,371,372,373:
+			
+			return new StoneFenceTile(data);
+		
+		case 380,381,382,383:
+			
+			return new TreeBlockTile(data);
+		
+		case 390,391:
+			
+			return new CloudBlockTile(data);
+		
+		case 400,402,403:
+			
+			return new WoodenFenceTile(data);
 		
 		default:
 			
