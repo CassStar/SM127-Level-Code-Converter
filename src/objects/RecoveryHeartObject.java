@@ -8,9 +8,9 @@ import util.Utility;
 public class RecoveryHeartObject extends LevelObject {
 	
 	public int ID,pallete = 0,minHealthPerSecond,coolDownTime;
-	public double[] position,scale;
+	public double[] position,scale,colour;
 	public double rotation,healDuration;
-	public boolean enabled,visible,hasCoolDown;
+	public boolean enabled,visible,hasCoolDown,rainbow;
 	
 	public RecoveryHeartObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -44,8 +44,17 @@ public class RecoveryHeartObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			colour = (double[]) objectData[11].getValue();
+			rainbow = (boolean) objectData[12].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure colour and rainbow have values when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				colour = new double[] {1,0,0};
+				rainbow = false;
+			}
 		}
 	}
 
