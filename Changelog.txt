@@ -1,0 +1,5 @@
+Added support for converting levels made in 0.8.0
+The program will now ask which game version a level was made in if it cannot determine it from the level code version (should be the case for most versions aside from 0.7.0)
+The process of converting level data between versions has been seperated to individual files based on what version the level comes from
+Background palletes now have a greater effect during the conversion process, when relevant
+Finally fixed the area Re-arranger functionality! You can now place areas above, below, and all around each other without stuff breaking :)
