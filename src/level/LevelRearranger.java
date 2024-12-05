@@ -268,7 +268,7 @@ public class LevelRearranger {
 		
 		for (int i = 0;i < rowGrid.length;i++) {
 			
-			if (areas[rowGrid[i]] != null) {
+			if (rowGrid[i] >= 0 && areas[rowGrid[i]] != null) {
 				
 				int start = areas[rowGrid[i]].indexOf('~')+1;
 				int end = areas[rowGrid[i]].lastIndexOf('~');
@@ -277,11 +277,28 @@ public class LevelRearranger {
 				
 				areaWidths[i] = (int) dimensions[0];
 				areaHeights[i] = (int) dimensions[1];
-				areas[rowGrid[i]] = areas[rowGrid[i]].substring(start,end);
+				
+				overflowTiles.add(null);
+				gridAreas[i] = new String(areas[rowGrid[i]].substring(start,end));
+				
+			} else if (rowGrid[i] == -1) {
+				
+				areaWidths[i] = widths[i];
+				areaHeights[i] = height;
+				StringBuilder base = new StringBuilder();
+				
+				for (int k = 0;k < 4;k++) {
+					
+					base.append("000*");
+					base.append(widths[i]*height);
+					base.append('~');
+				}
+				
+				base.deleteCharAt(base.length()-1);
+				
+				gridAreas[i] = base.toString();
+				overflowTiles.add(null);
 			}
-			
-			overflowTiles.add(null);
-			gridAreas[i] = new String(areas[rowGrid[i]]);
 		}
 		
 		while (hasTilesLeft(gridAreas,overflowTiles)) {
@@ -290,7 +307,7 @@ public class LevelRearranger {
 				
 				if (!checkedHeight[i]) {
 					
-					if (areaHeights[i] < height) {
+					if (areaHeights[i] != 0 && areaHeights[i] < height) {
 						
 						LevelTile buffer = new LevelTile("000*"+areaWidths[i]*(height-areaHeights[i]));
 						
@@ -413,6 +430,14 @@ public class LevelRearranger {
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
 						
+						// Area width less than column width.
+						if (areaWidths[i] < widths[i]) {
+							
+							LevelTile buffer = new LevelTile("000*"+(widths[i]-areaWidths[i]));
+							
+							rowTiles.add(buffer.clone());
+						}
+						
 						if (originalAmount-nextTile.tileAmount > 0) {
 							
 							LevelTile overflowTile = nextTile.clone();
@@ -440,6 +465,14 @@ public class LevelRearranger {
 					
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
+						
+						// Area width less than column width.
+						if (areaWidths[i] < widths[i]) {
+							
+							LevelTile buffer = new LevelTile("000*"+(widths[i]-areaWidths[i]));
+							
+							rowTiles.add(buffer.clone());
+						}
 						
 						if (originalAmount-nextTile.tileAmount > 0) {
 							
@@ -494,13 +527,6 @@ public class LevelRearranger {
 						i++;
 					}
 				}
-				
-				if (i < areaWidths.length && areaWidths[i] < widths[i]) {
-					
-					LevelTile buffer = new LevelTile("000*"+(widths[i]-areaWidths[i]));
-					
-					rowTiles.add(buffer.clone());
-				}
 			}
 		}
 		
@@ -514,6 +540,11 @@ public class LevelRearranger {
 			if (areas[i] != null && areas[i].length() > 0) {
 				
 				return true;
+			}
+			
+			if (overflow == null) {
+				
+				continue;
 			}
 			
 			if (overflow.get(i) != null) {

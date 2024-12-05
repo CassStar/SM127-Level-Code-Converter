@@ -639,8 +639,120 @@ public class AreaCode {
 			
 		case 97:
 			
-			return new CoralObject(data,levelCode.conversionType);
+			return new MediumCoralObject(data,levelCode.conversionType);
 			
+		case 98:
+			
+			return new WaterBalloonObject(data,levelCode.conversionType);
+			
+		case 99:
+			
+			return new WaterSpongeObject(data,levelCode.conversionType);
+			
+		case 100:
+			
+			return new TorchObject(data,levelCode.conversionType);
+			
+		case 101:
+			
+			return new LargeCoralObject(data,levelCode.conversionType);
+			
+		case 102:
+			
+			return new SmallCoralObject(data,levelCode.conversionType);
+			
+		case 103:
+			
+			return new RadialQuarterSpiderWebObject(data,levelCode.conversionType);
+			
+		case 104:
+			
+			return new BannerObject(data,levelCode.conversionType);
+			
+		case 105:
+			
+			return new SmallCrystalObject(data,levelCode.conversionType);
+			
+		case 106:
+			
+			return new MediumCrystalObject(data,levelCode.conversionType);
+			
+		case 107:
+			
+			return new LargeCrystalObject(data,levelCode.conversionType);
+			
+		case 108:
+			
+			return new LaunchStarObject(data,levelCode.conversionType);
+			
+		case 109:
+			
+			return new SlingStarObject(data,levelCode.conversionType);
+			
+		case 110:
+			
+			return new BigSteelyDespawnerObject(data,levelCode.conversionType);
+			
+		case 111:
+			
+			return new DeathPlaneObject(data,levelCode.conversionType);
+			
+		case 112:
+			
+			return new WarpZoneObject(data,levelCode.conversionType);
+			
+		case 113:
+			
+			return new ConditionLockedDoorObject(data,levelCode.conversionType);
+			
+		case 114:
+			
+			return new SawBladeObject(data,levelCode.conversionType);
+			
+		case 115:
+			
+			return new RadialHalfSpiderWebObject(data,levelCode.conversionType);
+			
+		case 116:
+			
+			return new CornerSpiderWebObject(data,levelCode.conversionType);
+			
+		case 117:
+			
+			return new LengthWiseSpiderWebObject(data,levelCode.conversionType);
+			
+		case 118:
+			
+			return new FlowerPlatformObject(data,levelCode.conversionType);
+			
+		case 119:
+			
+			return new VineBuddedEndObject(data,levelCode.conversionType);
+			
+		case 120:
+			
+			return new VineBodyObject(data,levelCode.conversionType);
+			
+		case 121:
+			
+			return new SpikyVineObject(data,levelCode.conversionType);
+			
+		case 122:
+			
+			return new VineQuarterCircleCurveObject(data,levelCode.conversionType);
+		
+		case 123:
+			
+			return new VineCurledEndObject(data,levelCode.conversionType);
+			
+		case 124:
+			
+			return new WoodenTopFloatingPlatformObject(data,levelCode.conversionType);
+			
+		case 125:
+			
+			return new FloatingDuckPlatformObject(data,levelCode.conversionType);
+				
 		default:
 			
 			ProgramLogger.logMessage("Invalid ID for object detected! Converting object to Turbo Fludd object.",LogType.WARNING);
@@ -648,7 +760,7 @@ public class AreaCode {
 		}
 	}
 	
-public LevelTile[] parseTiles(String data) {
+	public LevelTile[] parseTiles(String data) {
 		
 		LevelTile[] tiles;
 		
