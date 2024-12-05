@@ -10,7 +10,7 @@ public class LargeWaterBottleObject extends LevelObject {
 	public int ID,pallete = 0;
 	public double[] position,scale;
 	public double rotation;
-	public boolean enabled,visible;
+	public boolean enabled,visible,respawns;
 	
 	public LargeWaterBottleObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -40,8 +40,15 @@ public class LargeWaterBottleObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			respawns = (boolean) objectData[7].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure respawns has a value when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				respawns = true;
+			}
 		}
 	}
 

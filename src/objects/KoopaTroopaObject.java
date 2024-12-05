@@ -10,7 +10,7 @@ public class KoopaTroopaObject extends LevelObject {
 	public int ID,pallete = 0;
 	public double[] position,scale,colour;
 	public double rotation;
-	public boolean enabled,visible,rainbow,troopaType;
+	public boolean enabled,visible,rainbow,troopaType,shelled;
 	
 	public KoopaTroopaObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -43,8 +43,15 @@ public class KoopaTroopaObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			shelled = (boolean) objectData[10].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure shelled has a value when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				shelled = false;
+			}
 		}
 	}
 

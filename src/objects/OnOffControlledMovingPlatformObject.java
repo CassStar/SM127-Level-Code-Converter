@@ -11,7 +11,7 @@ public class OnOffControlledMovingPlatformObject extends LevelObject {
 	public double[] position,scale;
 	public double rotation,maxSpeed,startOffset;
 	public boolean enabled,visible,touchStart,unkownBooleanValue,inverted;
-	public double[][] path;
+	public double[][] path,pathDuplicate;
 	
 	public OnOffControlledMovingPlatformObject(String data,
 			ConversionType type) throws Exception {
@@ -50,8 +50,15 @@ public class OnOffControlledMovingPlatformObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			pathDuplicate = (double[][]) objectData[15].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure pathDuplicate has a value when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				pathDuplicate = new double[][] {{0,0},{0,-64}};
+			}
 		}
 	}
 

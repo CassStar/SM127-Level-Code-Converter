@@ -10,7 +10,7 @@ public class HoverFluddObject extends LevelObject {
 	public int ID,pallete = 0;
 	public double[] position,scale;
 	public double rotation;
-	public boolean enabled,visible;
+	public boolean enabled,visible,activated;
 	
 	public HoverFluddObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -40,8 +40,15 @@ public class HoverFluddObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			activated = (boolean) objectData[7].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure activated has a value when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				activated = true;
+			}
 		}
 	}
 

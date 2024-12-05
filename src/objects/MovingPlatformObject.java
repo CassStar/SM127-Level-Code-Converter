@@ -11,7 +11,7 @@ public class MovingPlatformObject extends LevelObject {
 	public double[] position,scale,colour;
 	public double rotation,maxSpeed,startOffset;
 	public boolean enabled,visible,touchStart;
-	public double[][] path;
+	public double[][] path,pathDuplicate;
 	
 	public MovingPlatformObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -48,8 +48,15 @@ public class MovingPlatformObject extends LevelObject {
 		try {
 			
 			pallete = (int) objectData[1].getValue();
+			pathDuplicate = (double[][]) objectData[14].getValue();
 			
 		} catch (Exception e) {
+			
+			// Making sure pathDuplicate has a value when converting levels made in 0.8.0
+			if (conversionType.gameVersionFrom.equals("0.8.0")) {
+				
+				pathDuplicate = new double[][] {{0,0},{0,-64}};
+			}
 		}
 	}
 
