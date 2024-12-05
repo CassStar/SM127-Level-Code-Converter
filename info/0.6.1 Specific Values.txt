@@ -1,14 +1,16 @@
 	-Backer BG-
 Index	Value
+
 0	Black Screen
 1	Midday Clouds
 2	Starry Sky
 3	Dark Starry Sky
 4	Evening Clouds
-5+	Grey Screen
+5+	Silhouette Mode
 
 	-Fronter BG-
 Index	Value
+
 0	No Fronter BG
 1	Green Hills With Blue Trees
 2	Light Blue Hills With Blue Trees
@@ -20,12 +22,13 @@ Index	Value
 
 	-Music-
 Index	Value			From/By
+
 0	No Music
 1	Princess Peach's Castle	Super Smash Bros. Melee
 2	Cloudy Court Galaxy	Super Mario Galaxy 2
-3	Bob Omb Battlefield	Remix by Can of Nothing
+3	Bob Omb Battlefield	Remix By Can of Nothing
 4	Purple Coins		Super Mario Galaxy
-5	Mario's Pwnd Slide	Remix by m477zorz
+5	Mario's Pwnd Slide	Remix By m477zorz
 6	Double Cherry Pass	Super Mario 3D World
 7	Champion's Road		Super Mario 3D World
 8	Speedy Comet		Super Mario Galaxy
@@ -33,30 +36,30 @@ Index	Value			From/By
 10	Snowball Park		Super Mario 3D World
 11	Freezy Flake Galaxy	Super Mario Galaxy 2
 12	Snow Rise		Paper Mario: Sticker Star
-13	Cool Cool Mountain	Remix by Nanashima
+13	Cool Cool Mountain	Remix By Nanashima
 14	Ice Mountain		Super Mario Galaxy
-15	Over Shiver Mountain	Remix by Paper Mikes
+15	Over Shiver Mountain	Remix By Paper Mikes
 16	Yoshi Star Galaxy	Super Mario Galaxy 2
 17	Chainlink Charge	Super Mario 3D World
 18	Super Bell Hill		Super Mario 3D World
 19	Mushroom Gorge		Mario Kart Wii
-20	Cave Dungeon		Remix by Valtteri Valtteri
+20	Cave Dungeon		Remix By Valtteri Valtteri
 21	Underground		Super Smash Bros. Brawl
 22	Underground		Super Mario 3D World
 23	Top Hat Tower		Super Mario Odyssey
 24	Underground		Super Mario Run
-25	Metallic Mario		Remix by JerryStuff
-26	Rainbow Mario		Remix by AM4
-27	Wing Mario		Remix by AM4
-28	Course Clear		Remix by JerryStuff
-29	Vanish Mario		Remix by AM4
+25	Metallic Mario		Remix By JerryStuff
+26	Rainbow Mario		Remix By AM4
+27	Wing Mario		Remix By AM4
+28	Course Clear		Remix By JerryStuff
+29	Vanish Mario		Remix By AM4
 30	Excess Express at Dusk	Paper Mario: TTYD
-31	Level Designer Portal	Remix by AM4
+31	Level Designer Portal	Remix By AM4
 32	SMW Underground		Super Mario Maker
 33	NSMBU Underground	Super Mario Maker
 34	Underground		Yoshi's New Island
 35	Cosmic Comet		Super Mario Galaxy
-36	The Alternate Route	Remix by ParagonX9
+36	The Alternate Route	Remix By ParagonX9
 37	Inside The Castle Walls	Super Mario Odyssey
 38	Environmental Noises	Super Mario Odyssey
 39+	Null			Null

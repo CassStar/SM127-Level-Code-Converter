@@ -8,7 +8,12 @@ Index	Value
 4	Evening Clouds
 5	Clouds Against a Red-Coloured Background
 6	Bleak Clouds
-7+	Silhouette Mode
+7	Underwater (Light streaming in top, plants and rocks on bottom)
+8	Dusk/Dawn Sky with Stars on Top and Clouds on Bottom
+9	Blue and Black Gradient
+10	Underwater with Sparkles
+11	Galaxy, Planets, and Stars
+12+	Silhouette Mode
 
 	-Fronter BG-
 Index	Value
@@ -27,10 +32,18 @@ Index	Value
 11	Large Blue Pine Trees
 12	Inside of Wooden Mansion
 13	Large Green Hills With Green Trees
-14+	No Fronter BG
+14	Yoshi's Island Styled Forest
+15	Ocean with Small Islands and Spaced-Out Clouds
+16	Green Grassland and Forest with Castle and Rocks in Back
+17	Rocky Waterbed Surrounded by Dense Vegetation
+18	Silhouette Trees
+19	Volcano with Lava Waterfalls
+20	Choco Island with Blue Trees
+21	Underwater Rocks and Coral
+22+	No Fronter BG
 
 	-Music-
-Index	Value			From/By
+Index	Value					From/By
 
 0	No Music
 1	Princess Peach's Castle			Super Smash Bros. Melee
@@ -57,7 +70,7 @@ Index	Value			From/By
 22	Underground				Super Mario 3D World
 23	Top Hat Tower				Super Mario Odyssey
 24	Underground				Super Mario Run
-25	Metallic Mario				Remix By JerryStuff
+25	Metallic Mario				Remix By ArieJ & RetroReboot
 26	Rainbow Mario				Remix By AM4
 27	Wing Mario				Remix By AM4
 28	Course Clear				Remix By JerryStuff
@@ -97,4 +110,6 @@ Index	Value			From/By
 62	Yoshi's Island - Underground (Remix)	Remix By Aqua & FastMario
 63	Waltz of the Boos (Remix)		Remix By FastMario
 64	Super Mario Sunshine - Sky & Sea	Remix By AM4
-65+	Null					Null
+65	Metallic Mario (Legacy)			Remix By JerryStuff
+66	Piranha Plant Lullaby			By Arie
+67+	Null					Null

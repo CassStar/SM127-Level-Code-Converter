@@ -8,8 +8,8 @@ ID	Tile Type				Max Pallete Value
 
 020	Full-Tile Grass					5
 021	Half-Tile Grass					5
-022	Right Slope Grass				5
-023	Left Slope Grass				5
+022	Up-Right Slope Grass				5
+023	Up-Left Slope Grass				5
 
 030	Full-Tile Green Brick				0
 032	Up-Right Green Brick Stairs			0
@@ -27,8 +27,8 @@ ID	Tile Type				Max Pallete Value
 
 070	Full-Tile Snow					0
 071	Half-Tile Snow					0
-072	Right Slope Snow				0
-073	Left Slope Snow					0
+072	Up-Right Slope Snow				0
+073	Up-Left Slope Snow				0
 
 080	Full-Tile Old Cave				0
 081	Half-Tile Old Cave				0
@@ -58,8 +58,8 @@ ID	Tile Type				Max Pallete Value
 
 180	Full-Tile Warped Ground				3
 181	Half-Tile Warped Ground				3
-182	Right Slope Warped Ground			3
-183	Left Slope Warped Ground			3
+182	Up-Right Slope Warped Ground			3
+183	Up-Left Slope Warped Ground			3
 
 190	Full-Tile Granite Block				0
 
@@ -76,13 +76,13 @@ ID	Tile Type				Max Pallete Value
 250	Full-Tile Castle Brick				0
 
 260	Full-Tile Castle Roof				3
-262	Right Slope Castle Roof				3
-263	Left Slope Castle Roof				3
+262	Up-Right Slope Castle Roof			3
+263	Up-Left Slope Castle Roof			3
 
 270	Full-Tile Sand					3
 271	Half-Tile Sand					3
-272	Right Slope Sand				3
-273	Left Slope Sand					3
+272	Up-Right Slope Sand				3
+273	Up-Left Slope Sand				3
 
 280	Full-Tile SandStone				3
 282	Up-Right SandStone Stairs			3
@@ -90,8 +90,8 @@ ID	Tile Type				Max Pallete Value
 
 290	Full-Tile Volcano				4
 291	Half-Tile Volcano				4
-292	Right Slope Volcano				4
-293	Left Slope Volcano				4
+292	Up-Right Slope Volcano				4
+293	Up-Left Slope Volcano				4
 
 300	Full-Tile Castle Pillar Block			0
 
@@ -107,7 +107,7 @@ ID	Tile Type				Max Pallete Value
 
 340	Full-Tile YI Grass				5
 341	Half-Tile YI Grass				5
-342	Right Slope YI Grass				5
-343	Left Slope YI Grass				5
+342	Up-Right Slope YI Grass				5
+343	Up-Left Slope YI Grass				5
 
 350+	Air Block(No Tile)				0

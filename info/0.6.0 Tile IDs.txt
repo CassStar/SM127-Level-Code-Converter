@@ -8,8 +8,8 @@ ID	Tile Type
 
 020	Full-Tile Grass
 021	Half-Tile Grass
-022	Right Slope Grass
-023	Left Slope Grass
+022	Up-Right Slope Grass
+023	Up-Left Slope Grass
 
 030	Full-Tile Green Brick
 032	Up-Right Green Brick Stairs
@@ -27,8 +27,8 @@ ID	Tile Type
 
 070	Full-Tile Snow
 071	Half-Tile Snow
-072	Right Slope Snow
-073	Left Slope Snow
+072	Up-Right Slope Snow
+073	Up-Left Slope Snow
 
 080	Full-Tile Cave
 081	Half-Tile Cave
@@ -58,8 +58,8 @@ ID	Tile Type
 
 180	Full-Tile Warped Ground
 181	Half-Tile Warped Ground
-182	Right Slope Warped Ground
-183	Left Slope Warped Ground
+182	Up-Right Slope Warped Ground
+183	Up-Left Slope Warped Ground
 
 190	Full-Tile Granite Block
 
