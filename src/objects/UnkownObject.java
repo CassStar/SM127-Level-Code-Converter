@@ -40,11 +40,9 @@ public class UnkownObject extends LevelObject {
 		power = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		speed = (double) Double.valueOf(String.valueOf(objectData[9].getValue()));
 		
-		try {
+		if (objectData.length > 9) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

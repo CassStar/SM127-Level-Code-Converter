@@ -38,11 +38,9 @@ public class StarCoinObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		coinPlacedIndex = (int) objectData[7].getValue();
 		
-		try {
+		if (objectData.length > 7) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

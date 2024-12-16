@@ -10,7 +10,7 @@ public class WarpPipeTopObject extends LevelObject {
 	public int ID,pallete = 0,areaID;
 	public double[] position,scale,colour,destination;
 	public double rotation;
-	public boolean enabled,visible,teleportMode;
+	public boolean enabled,visible,teleportMode,forceFadeOut;
 	public String tag;
 	
 	public WarpPipeTopObject(String data,ConversionType type) throws Exception {
@@ -39,24 +39,30 @@ public class WarpPipeTopObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		areaID = (int) objectData[7].getValue();
 		
-		try {
+		switch (objectData.length) {
+		
+		case 12:
+			
+			forceFadeOut = (boolean) objectData[11].getValue();
+		
+		case 11:
 			
 			pallete = (int) objectData[1].getValue();
-			tag = String.valueOf(objectData[7].getValue());
+			tag = String.valueOf(objectData[8].getValue());
 			colour = (double[]) objectData[9].getValue();
+			teleportMode = (boolean) objectData[10].getValue();
+			break;
+		
+		case 10:
 			
-		} catch (Exception e) {
+			pallete = (int) objectData[1].getValue();
+			break;
+		
+		case 9:
 			
 			destination = (double[]) objectData[8].getValue();
 			teleportMode = (boolean) objectData[9].getValue();
-			
-			try {
-				
-				teleportMode = (boolean) objectData[10].getValue();
-				
-			} catch (ArrayIndexOutOfBoundsException e2) {
-			}
-			
+			break;
 		}
 	}
 

@@ -5,14 +5,14 @@ import main.ConversionType;
 import types.Vector2Type;
 import util.Utility;
 
-public class TallCaveSporeObject extends LevelObject {
+public class WindAreaObject extends LevelObject {
 	
 	public int ID,pallete = 0;
-	public double[] position,scale;
-	public double rotation;
-	public boolean enabled,visible;
+	public double[] position,scale,size,colour;
+	public double rotation,windStrength;
+	public boolean enabled,visible,triggerable;
 	
-	public TallCaveSporeObject(String data,ConversionType type) throws Exception {
+	public WindAreaObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
 	}
@@ -31,16 +31,16 @@ public class TallCaveSporeObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		
-		if (objectData.length > 6) {
-			
-			pallete = (int) objectData[1].getValue();
-		}
+		size = (double[]) objectData[7].getValue();
+		windStrength = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
+		colour = (double[]) objectData[9].getValue();
+		triggerable = (boolean) objectData[10].getValue();
 	}
-
+	
 }

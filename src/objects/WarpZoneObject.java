@@ -10,7 +10,7 @@ public class WarpZoneObject extends LevelObject {
 	public int ID,pallete = 0,areaDestination,parts;
 	public double[] position,scale;
 	public double rotation;
-	public boolean enabled,visible,teleportMode,vertical,stopsCamera;
+	public boolean enabled,visible,teleportMode,vertical,stopsCamera,forceFadeOut;
 	public String destinationTag;
 	
 	public WarpZoneObject(String data,ConversionType type) throws Exception {
@@ -44,5 +44,10 @@ public class WarpZoneObject extends LevelObject {
 		vertical = (boolean) objectData[10].getValue();
 		parts = (int) objectData[11].getValue();
 		stopsCamera = (boolean) objectData[12].getValue();
+		
+		if (objectData.length > 13) {
+			
+			forceFadeOut = (boolean) objectData[13].getValue();
+		}
 	}
 }

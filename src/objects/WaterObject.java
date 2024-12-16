@@ -32,6 +32,7 @@ public class WaterObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -44,13 +45,6 @@ public class WaterObject extends LevelObject {
 		tag = String.valueOf(objectData[11].getValue());
 		toxicity = (double) Double.valueOf(String.valueOf(objectData[12].getValue()));
 		tapMode = (boolean) objectData[13].getValue();
-		
-		try {
-			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
-		}
 	}
 
 }

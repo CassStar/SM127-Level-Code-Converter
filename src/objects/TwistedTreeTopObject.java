@@ -37,18 +37,15 @@ public class TwistedTreeTopObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 8:
 			
 			colour = (double[]) objectData[7].getValue();
-			
-		} catch (ArrayIndexOutOfBoundsException e) {
-		}
 		
-		try {
+		case 7:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

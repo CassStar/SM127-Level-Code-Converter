@@ -38,18 +38,15 @@ public class WoodenPlatformObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		parts = (int) objectData[7].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 9:
 			
 			colour = (double[]) objectData[8].getValue();
-			
-		} catch (ArrayIndexOutOfBoundsException e) {
-		}
 		
-		try {
+		case 8:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 
