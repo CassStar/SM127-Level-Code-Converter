@@ -320,16 +320,16 @@ public class LevelRearranger {
 				if (overflowTiles.get(i) != null) {
 					
 					LevelTile overflowTile = overflowTiles.get(i).clone();
-					int originalAmount = overflowTile.tileAmount;
+					int originalAmount = overflowTile.getTileAmount();
 					
-					overflowTile.tileAmount = Math.min(originalAmount,areaWidths[i]-xValue);
+					overflowTile.setTileAmount(Math.min(originalAmount,areaWidths[i]-xValue));
 					
-					rowTiles.add(overflowTile);
-					overflowTiles.get(i).tileAmount -= overflowTile.tileAmount;
-					xValue += overflowTile.tileAmount;
+					rowTiles.add(overflowTile.clone());
+					overflowTiles.get(i).setTileAmount(overflowTiles.get(i).getTileAmount()-overflowTile.getTileAmount());
+					xValue += overflowTile.getTileAmount();
 					
 					// Overflow tiles are empty.
-					if (overflowTiles.get(i).tileAmount <= 0) {
+					if (overflowTiles.get(i).getTileAmount() <= 0) {
 						
 						overflowTiles.set(i,null);
 						
@@ -420,12 +420,12 @@ public class LevelRearranger {
 					gridAreas[i] = gridAreas[i].substring(gridAreas[i].indexOf(',')+1);
 					
 					LevelTile nextTile = new LevelTile(tileString);
-					int originalAmount = nextTile.tileAmount;
+					int originalAmount = nextTile.getTileAmount();
 					
-					nextTile.tileAmount = Math.min(originalAmount,areaWidths[i]-xValue);
+					nextTile.setTileAmount(Math.min(originalAmount,areaWidths[i]-xValue));
 					
 					rowTiles.add(nextTile.clone());
-					xValue += nextTile.tileAmount;
+					xValue += nextTile.getTileAmount();
 					
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
@@ -438,11 +438,11 @@ public class LevelRearranger {
 							rowTiles.add(buffer.clone());
 						}
 						
-						if (originalAmount-nextTile.tileAmount > 0) {
+						if (originalAmount-nextTile.getTileAmount() > 0) {
 							
 							LevelTile overflowTile = nextTile.clone();
 							
-							overflowTile.tileAmount = originalAmount-nextTile.tileAmount;
+							overflowTile.setTileAmount(originalAmount-nextTile.getTileAmount());
 							overflowTiles.set(i,overflowTile);
 						}
 						
@@ -456,12 +456,12 @@ public class LevelRearranger {
 					gridAreas[i] = gridAreas[i].substring(gridAreas[i].indexOf('~')+1);
 					
 					LevelTile nextTile = new LevelTile(tileString);
-					int originalAmount = nextTile.tileAmount;
+					int originalAmount = nextTile.getTileAmount();
 					
-					nextTile.tileAmount = Math.min(originalAmount,areaWidths[i]-xValue);
+					nextTile.setTileAmount(Math.min(originalAmount,areaWidths[i]-xValue));
 					
 					rowTiles.add(nextTile.clone());
-					xValue += nextTile.tileAmount;
+					xValue += nextTile.getTileAmount();
 					
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
@@ -474,11 +474,11 @@ public class LevelRearranger {
 							rowTiles.add(buffer.clone());
 						}
 						
-						if (originalAmount-nextTile.tileAmount > 0) {
+						if (originalAmount-nextTile.getTileAmount() > 0) {
 							
 							LevelTile overflowTile = nextTile.clone();
 							
-							overflowTile.tileAmount = originalAmount-nextTile.tileAmount;
+							overflowTile.setTileAmount(originalAmount-nextTile.getTileAmount());
 							overflowTiles.set(i,overflowTile);
 						}
 						
@@ -505,21 +505,21 @@ public class LevelRearranger {
 					gridAreas[i] = null;
 					
 					LevelTile nextTile = new LevelTile(tileString);
-					int originalAmount = nextTile.tileAmount;
+					int originalAmount = nextTile.getTileAmount();
 					
-					nextTile.tileAmount = Math.min(originalAmount,areaWidths[i]-xValue);
+					nextTile.setTileAmount(Math.min(originalAmount,areaWidths[i]-xValue));
 					
 					rowTiles.add(nextTile.clone());
-					xValue += nextTile.tileAmount;
+					xValue += nextTile.getTileAmount();
 					
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
 						
-						if (originalAmount-nextTile.tileAmount > 0) {
+						if (originalAmount-nextTile.getTileAmount() > 0) {
 							
 							LevelTile overflowTile = nextTile.clone();
 							
-							overflowTile.tileAmount = originalAmount-nextTile.tileAmount;
+							overflowTile.setTileAmount(originalAmount-nextTile.getTileAmount());
 							overflowTiles.set(i,overflowTile);
 						}
 						
@@ -603,43 +603,47 @@ public class LevelRearranger {
 		LevelTile currentTile = null,previousTile = null;
 		int totalAmount = 0;
 		
-		for (LevelTile tile:tiles) {
+		for (int i = 0;i < tiles.size();i++) {
 			
-			currentTile = tile;
+			if (i == 2906) {
+				
+				System.currentTimeMillis();
+			}
+			
+			currentTile = tiles.get(i);
 			
 			if (currentTile == null) {
 				
-				previousTile.tileAmount = totalAmount;
+				previousTile.setTileAmount(totalAmount);
 				newArray.add(previousTile.clone());
 				newArray.add(null);
 				totalAmount = 0;
 				
-			} else if (currentTile.tileAmount == 0) {
+			} else if (currentTile.getTileAmount() == 0) {
 				
-				previousTile.tileAmount = totalAmount;
+				previousTile.setTileAmount(totalAmount);
 				
 				newArray.add(previousTile.clone());
 				
 			} else if (previousTile == null || (currentTile.tileID == previousTile.tileID &&
 					currentTile.tilePallete == previousTile.tilePallete)) {
 				
-				totalAmount += currentTile.tileAmount;
+				totalAmount += currentTile.getTileAmount();
 				previousTile = currentTile.clone();
 				
 			} else {
 				
-				previousTile.tileAmount = totalAmount;
+				previousTile.setTileAmount(totalAmount);
 				
 				if (totalAmount > 0) {
 					newArray.add(previousTile.clone());
 				}
 				
-				totalAmount = currentTile.tileAmount;
+				totalAmount = currentTile.getTileAmount();
 				previousTile = currentTile.clone();
 			}
 		}
-		// Remove the last null value.
-		previousTile.tileAmount = totalAmount;
+		previousTile.setTileAmount(totalAmount);
 		newArray.add(previousTile.clone());
 		
 		return newArray;
@@ -688,11 +692,7 @@ public class LevelRearranger {
 				
 				LevelObject[] areaObjects;
 				
-				if (grid[row][column] == -1) {
-					
-//					areaObjects = getAreaObjects(null,0,currentX*32,currentY*32);
-					
-				} else {
+				if (grid[row][column] != -1) {
 					
 					areaObjects = getAreaObjects(areas[grid[row][column]],heights[row],currentX*32,currentY*32);
 					
@@ -703,6 +703,9 @@ public class LevelRearranger {
 						objects.append('|');
 					}
 					
+				} else {
+					
+					// No abjects exist in null areas.
 				}
 				
 				currentX += widths[column];

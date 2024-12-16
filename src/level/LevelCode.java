@@ -2,11 +2,12 @@ package level;
 
 import main.ConversionType;
 import main.Converter.AreaGrid;
+import util.Utility;
 
 public class LevelCode {
 	
 	String levelData;
-	String codeVersion,levelName,emptyArray;
+	String codeVersion,levelName,levelAuthor,levelDescription,levelThumbnail,levelHotBar;
 	int numberOfAreas;
 	AreaCode[] areaCodes;
 	
@@ -38,7 +39,10 @@ public class LevelCode {
 		setLevelData(base.getLevelData());
 		setCodeVersion(base.getCodeVersion());
 		setLevelName(base.getLevelName());
-		setEmptyArray(base.getEmptyArray());
+		setLevelAuthor(base.getLevelAuthor());
+		setLevelDescription(base.getLevelDescription());
+		setLevelThumbnail(base.getLevelThumbnail());
+		setLevelHotBar(base.getLevelHotBar());
 		setNumberOfAreas(base.getNumberOfAreas());
 		setAreaCodes(base.getAreaCodes());
 	}
@@ -88,14 +92,44 @@ public class LevelCode {
 		levelName = new String(value);
 	}
 	
-	String getEmptyArray() {
+	String getLevelAuthor() {
 		
-		return emptyArray;
+		return levelAuthor;
 	}
 	
-	public void setEmptyArray(String value) {
+	public void setLevelAuthor(String value) {
 		
-		emptyArray = new String(value);
+		levelAuthor = new String(value);
+	}
+	
+	String getLevelDescription() {
+		
+		return levelDescription;
+	}
+	
+	public void setLevelDescription(String value) {
+		
+		levelDescription = new String(value);
+	}
+	
+	String getLevelThumbnail() {
+		
+		return levelThumbnail;
+	}
+	
+	public void setLevelThumbnail(String value) {
+		
+		levelThumbnail = new String(value);
+	}
+	
+	String getLevelHotBar() {
+		
+		return levelHotBar;
+	}
+	
+	public void setLevelHotBar(String value) {
+		
+		levelHotBar = new String(value);
 	}
 	
 	public int getNumberOfAreas() {
@@ -134,7 +168,18 @@ public class LevelCode {
 		code.append(',');
 		code.append(levelName);
 		code.append(',');
-		code.append(emptyArray);
+		
+		// More data needs to be added to the level code depending on the version
+		if (Utility.versionGreaterThanVersion(codeVersion,"0.4.9")) {
+			
+			code.append(levelAuthor);
+			code.append(',');
+			code.append(levelDescription);
+			code.append(',');
+			code.append(levelThumbnail);
+			code.append(',');
+		}
+		code.append(levelHotBar);
 		code.append(',');
 		
 		for (int i = 0;i < areaCodes.length;i++) {

@@ -39,16 +39,13 @@ public abstract class LevelObject {
 		splitData = data.split(",");
 		
 		objectData = new DataType[splitData.length];
-//		dataTypes = new String[splitData.length];
 		
 		int startIndex = 2;
 		
 		objectData[0] = new IDType(splitData[0]);
 		objectID = (int) objectData[0].getValue();
-//		dataTypes[0] = "ID";
 		
 		objectData[1] = new PalleteType(splitData[1]);
-//		dataTypes[1] = "PL";
 		
 		for (int i = startIndex;i < splitData.length;i++) {
 			
@@ -67,8 +64,6 @@ public abstract class LevelObject {
 				throw new Exception("Invalid data type found while parsing an object!\n"
 						+ "Value of: "+dataType+" is not a recognized data type.");
 			}
-			
-//			dataTypes[i] = dataType;
 			
 			switch (dataType) {
 			case "V2":
@@ -106,10 +101,15 @@ public abstract class LevelObject {
 				objectData[i] = new IntegerType(splitData[i]);
 				break;
 				
+			case "SA":
+				
+				objectData[i] = new DialogueType(splitData[i]);
+				break;
+				
 			case "Nu":
 				
-//				dataTypes[i] = "BL";
 				objectData[i] = new BooleanType("BL0");
+				break;
 			}
 		}
 	}

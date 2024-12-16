@@ -15,7 +15,7 @@ public class AreaCode {
 	String areaData,musicData;
 	int backerBG,fronterBG,musicID,BGPallete;
 	int[] tileTypeSeperationIndexes;
-	double gravity;
+	double gravity,timer;
 	double[] dimensions;
 	LevelTile[] groundTiles,foreGroundTiles,backGround0Tiles,backGround1Tiles,allTiles;
 	LevelObject[] objects;
@@ -110,6 +110,16 @@ public class AreaCode {
 	public void setGravity(double value) {
 		
 		gravity = Double.valueOf(value);
+	}
+	
+	double getTimer() {
+		
+		return Double.valueOf(timer);
+	}
+	
+	public void setTimer(double value) {
+		
+		timer = Double.valueOf(value);
 	}
 	
 	public LevelTile[] getGroundTiles() {
@@ -717,6 +727,62 @@ public class AreaCode {
 		case 125:
 			
 			return new FloatingDuckPlatformObject(data,levelCode.conversionType);
+			
+		case 126:
+			
+			return new ZoomTriggerObject(data,levelCode.conversionType);
+			
+		case 127:
+			
+			return new ToadNPCObject(data,levelCode.conversionType);
+			
+		case 128:
+			
+			return new DialogueControllerObject(data,levelCode.conversionType);
+			
+		case 129:
+			
+			return new WindAreaObject(data,levelCode.conversionType);
+			
+		case 130:
+			
+			return new RexObject(data,levelCode.conversionType);
+			
+		case 131:
+			
+			return new BoneGoonieObject(data,levelCode.conversionType);
+			
+		case 132:
+			
+			return new GoggleCheepObject(data,levelCode.conversionType);
+			
+		case 133:
+			
+			return new NipperObject(data,levelCode.conversionType);
+			
+		case 134:
+			
+			return new NipperFireBallObject(data,levelCode.conversionType);
+		
+		case 135:
+			
+			return new StarBitObject(data,levelCode.conversionType);
+			
+		case 136:
+			
+			return new PropellerObject(data,levelCode.conversionType);
+			
+		case 137:
+			
+			return new PrincessPeachNPCObject(data,levelCode.conversionType);
+			
+		case 138:
+			
+			return new YoshiNPCObject(data,levelCode.conversionType);
+			
+		case 139:
+			
+			return new BobOmbNPCObject(data,levelCode.conversionType);
 				
 		default:
 			

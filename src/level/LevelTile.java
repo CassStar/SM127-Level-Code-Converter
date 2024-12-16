@@ -2,8 +2,10 @@ package level;
 
 public class LevelTile {
 	
-	public int tileID,tilePallete,tileAmount;
+	public int tileID,tilePallete;
 	public boolean hasPallete,noLength;
+	
+	private int tileAmount;
 	
 	public LevelTile(String tileData) {
 		
@@ -60,6 +62,23 @@ public class LevelTile {
 	protected LevelTile clone() {
 		
 		return new LevelTile(this.toString());
+	}
+	
+	int getTileAmount() {
+		
+		return Integer.valueOf(tileAmount);
+	}
+	
+	void setTileAmount(int value) {
+		
+		tileAmount = Integer.valueOf(value);
+		
+		noLength = false;
+		
+		if (value < 2) {
+			
+			noLength = true;
+		}
 	}
 	
 	public String toString() {
