@@ -177,28 +177,18 @@ public class Utility {
 		return -1;
 	}
 	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	public static String getDataType(String data) {
 		
 		return data.substring(0,2);
 	}
 	
-	/**
-	 * 
-	 * @param type
-	 * @return
-	 */
 	public static boolean isValidType(String type) {
 		
 		if (type.length() != 2) {
 			return false;
 		}
 		
-		String[] validDataTypes = {"V2","C2","FL","BL","CL","IT","ST"};
+		String[] validDataTypes = {"V2","C2","FL","BL","CL","IT","ST","SA"};
 		boolean isValid = false;
 		
 		for (String value:validDataTypes) {
@@ -223,7 +213,7 @@ public class Utility {
 			return null;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		return data;
 	}
@@ -240,9 +230,11 @@ public class Utility {
 			return null;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
-		double rValue = 0,gValue = 0,bValue = 0;
+		double rValue = 0,gValue = 0,bValue = 0,aValue = 0;
+		
+		boolean hasAlpha = data.split("x").length == 4;
 		
 		try {
 			
@@ -253,6 +245,11 @@ public class Utility {
 			gValue = Double.parseDouble(data.substring(firstXIndex+1,secondXIndex));
 			bValue = Double.parseDouble(data.substring(secondXIndex+1));
 			
+			if (hasAlpha) {
+				
+				aValue = Double.parseDouble(data.substring(data.lastIndexOf('x')+1));
+			}
+			
 		} catch (NumberFormatException e) {
 			
 			ProgramLogger.logMessage("Error trying to parse Colour data type. Details below:",
@@ -260,6 +257,11 @@ public class Utility {
 			e.printStackTrace();
 			
 			return null;
+		}
+		
+		if (hasAlpha) {
+			
+			return new double[] {rValue,gValue,bValue,aValue};
 		}
 		
 		return new double[] {rValue,gValue,bValue};
@@ -277,7 +279,7 @@ public class Utility {
 			return null;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		String[] groups = data.split(":");
 		
@@ -322,11 +324,6 @@ public class Utility {
 		return ouput;
 	}
 	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	public static double[] parseVector2D(String data) {
 		
 		String dataType = getDataType(data);
@@ -339,7 +336,7 @@ public class Utility {
 			return null;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		double xValue = 0,yValue = 0;
 		
@@ -360,11 +357,6 @@ public class Utility {
 		return new double[] {xValue,yValue};
 	}
 	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	public static int parseInteger(String data) {
 		
 		String dataType = getDataType(data);
@@ -377,7 +369,7 @@ public class Utility {
 			return 0;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		try {
 			
@@ -393,11 +385,6 @@ public class Utility {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	public static double parseFloat(String data) {
 		
 		String dataType = getDataType(data);
@@ -410,7 +397,7 @@ public class Utility {
 			return 0;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		try {
 			
@@ -426,11 +413,6 @@ public class Utility {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	public static boolean parseBoolean(String data) {
 		
 		String dataType = getDataType(data);
@@ -443,7 +425,7 @@ public class Utility {
 			return false;
 		}
 		
-		data = data.replace(dataType,"");
+		data = data.substring(2);
 		
 		if (data.equals("1")) {
 			
@@ -460,12 +442,89 @@ public class Utility {
 		return false;
 	}
 	
-	/**
-	 * 
-	 * @param vector1
-	 * @param vector2
-	 * @return
-	 */
+	public static String[] parseDialogue(String data) {
+		
+		String dataType = getDataType(data);
+		
+		if (!dataType.equals("SA")) {
+			
+			ProgramLogger.logMessage("Found invalid prefix while parsing Dialogue data type. "
+					+ "Expected: SA Got: "+dataType,LogType.ERROR);
+			
+			// Format: ExpressionID,ActionID,FollowUpTag,%3b,Text,: (if another dialogue box follows), pattern repeats...
+			return new String[] {"01","00","","%3b","This%20is%20a%20dialogue%20object.",":","01","00","",
+					"3b","Try%20putting%20this%20on%20top%20of%20an%20NPC%20and%20see%20what%20happens%21"};
+		}
+		
+		data = data.substring(2);
+		
+		int numberOfColons = 0;
+		
+		for (char character:data.toCharArray()) {
+			
+			if (character == ':') {
+				
+				numberOfColons++;
+			}
+		}
+		
+		String[] arrayData = new String[5+numberOfColons*6];
+		
+		// Expression and Action IDs.
+		arrayData[0] = data.substring(0,2);
+		arrayData[1] = data.substring(2,4);
+		
+		int textStartIndex = data.indexOf("%3b");
+		
+		// Follow up Tag.
+		arrayData[2] = data.substring(4,textStartIndex);
+		
+		// Text start indicator.
+		arrayData[3] = data.substring(textStartIndex,textStartIndex+3);
+		
+		// Dialogue Text.
+		try {
+			arrayData[4] = data.substring(textStartIndex+3,data.indexOf(':'));
+			arrayData[5] = ":";
+			
+			data = data.substring(data.indexOf(':')+1);
+			
+		} catch (IndexOutOfBoundsException e) {
+			
+			arrayData[4] = data.substring(textStartIndex+3);
+		}
+		
+		// Loop over the remaining dialogue boxes.
+		for (int i = 6;i < arrayData.length;i += 6) {
+			
+			// Expression and Action IDs.
+			arrayData[i] = data.substring(0,2);
+			arrayData[i+1] = data.substring(2,4);
+			
+			textStartIndex = data.indexOf("%3b");
+			
+			// Follow up Tag.
+			arrayData[i+2] = data.substring(4,textStartIndex);
+			
+			// Text start indicator.
+			arrayData[i+3] = data.substring(textStartIndex,textStartIndex+3);
+			
+			// Dialogue Text.
+			try {
+				arrayData[i+4] = data.substring(textStartIndex+3,data.indexOf(':'));
+				arrayData[i+5] = ":";
+				
+				data = data.substring(data.indexOf(':')+1);
+				
+			} catch (IndexOutOfBoundsException e) {
+				
+				arrayData[i+4] = data.substring(textStartIndex+3);
+			}
+		}
+		
+		return arrayData;
+	}
+	
 	public static boolean areSameVectors(double[] vector1,double[] vector2) {
 		
 		if (vector1 == null && vector2 == null) {
@@ -525,11 +584,6 @@ public class Utility {
 		return new String("V2"+parsedVector[0]+"x"+parsedVector[1]);
 	}
 	
-	/**
-	 * 
-	 * @param value
-	 * @return
-	 */
 	public static String booleanToString(boolean value) {
 		
 		return value? "BL1":"BL0";

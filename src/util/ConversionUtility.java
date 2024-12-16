@@ -204,6 +204,92 @@ public class ConversionUtility {
 		return object;
 	}
 	
+	public static LevelObject convertDownToZeroEightZero(LevelObject object,ConversionType conversionType) throws Exception {
+		
+		if (object instanceof SawBladeObject) {
+			
+			// Remove last value.
+			object = new SawBladeObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",FL")),conversionType);
+			
+		} else if (object instanceof WarpZoneObject) {
+			
+			// Remove last value.
+			object = new WarpZoneObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof OnOffControlledMovingPlatformObject) {
+			
+			// Remove last value.
+			object = new OnOffControlledMovingPlatformObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",FL")),conversionType);
+			
+		} else if (object instanceof CheckpointObject) {
+			
+			// Remove last value.
+			object = new CheckpointObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof FluidControllerObject) {
+			
+			// Remove last two values.
+			object = new FluidControllerObject(object.stringData.substring(
+					0,object.stringData.substring(0,object.stringData.lastIndexOf(",FL")).lastIndexOf(",FL")),
+					conversionType);
+			
+		} else if (object instanceof ArrowObject) {
+			
+			// Remove last two values.
+			object = new ArrowObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof MovingPlatformObject) {
+			
+			// Remove last value.
+			object = new MovingPlatformObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",FL")),conversionType);
+			
+		} else if (object instanceof DoorObject) {
+			
+			// Remove last value.
+			object = new DoorObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof CannonObject) {
+			
+			// Remove last value.
+			object = new CannonObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",FL")),conversionType);
+			
+		} else if (object instanceof BulletBillBlasterObject) {
+			
+			// Remove last value.
+			object = new BulletBillBlasterObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",FL")),conversionType);
+			
+		} else if (object instanceof WarpPipeTopObject) {
+			
+			// Remove last value.
+			object = new WarpPipeTopObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof MushroomTopObject) {
+			
+			// Remove last two values.
+			object = new MushroomTopObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",BL")),conversionType);
+			
+		} else if (object instanceof ShineSpriteObject) {
+			
+			// Remove last value.
+			object = new ShineSpriteObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",IT")),conversionType);
+			
+		}
+		
+		return object;
+	}
+	
 	public static LevelObject convertUpToZeroSixOne(LevelObject object,ConversionType conversionType) throws Exception {
 		
 		if (object instanceof EnchantedGearObject) {
@@ -339,6 +425,78 @@ public class ConversionUtility {
 			}
 			
 			object = compareObject;
+		}
+		
+		return object;
+	}
+	
+	public static LevelObject convertUpToZeroNineZero(LevelObject object,ConversionType conversionType) throws Exception {
+		
+		if (object instanceof SawBladeObject) {
+			
+			// Add last value
+			object = new SawBladeObject(object.stringData+",FL0",conversionType);
+			
+		} else if (object instanceof WarpZoneObject) {
+			
+			// Add last value.
+			object = new WarpZoneObject(object.stringData+",BL0",conversionType);
+			
+		} else if (object instanceof OnOffControlledMovingPlatformObject) {
+			
+			// Add last value.
+			object = new OnOffControlledMovingPlatformObject(object.stringData+",FL0",conversionType);
+			
+		} else if (object instanceof CheckpointObject) {
+			
+			// Add last value.
+			object = new CheckpointObject(object.stringData+",BL1",conversionType);
+			
+		} else if (object instanceof FluidControllerObject) {
+			
+			// Add last two values.
+			object = new FluidControllerObject(object.stringData+",FL0,FL0",conversionType);
+			
+		} else if (object instanceof ArrowObject) {
+			
+			// Add last two values.
+			object = new ArrowObject(object.stringData+",BL0,CL1x1x1x1",conversionType);
+			
+		} else if (object instanceof MovingPlatformObject) {
+			
+			// Add last value.
+			object = new MovingPlatformObject(object.stringData+",FL0",conversionType);
+			
+		} else if (object instanceof DoorObject) {
+			
+			// Add last value.
+			object = new DoorObject(object.stringData+",BL0",conversionType);
+			
+		} else if (object instanceof CannonObject) {
+			
+			// Add last value.
+			object = new CannonObject(object.stringData+",FL1.5",conversionType);
+			
+		} else if (object instanceof BulletBillBlasterObject) {
+			
+			// Add last value.
+			object = new BulletBillBlasterObject(object.stringData+",FL0",conversionType);
+			
+		} else if (object instanceof WarpPipeTopObject) {
+			
+			// Add last value.
+			object = new WarpPipeTopObject(object.stringData+",BL0",conversionType);
+			
+		} else if (object instanceof MushroomTopObject) {
+			
+			// Add last two values.
+			object = new MushroomTopObject(object.stringData+",BL0,IT650",conversionType);
+			
+		} else if (object instanceof ShineSpriteObject) {
+			
+			// Add last value.
+			object = new ShineSpriteObject(object.stringData+"IT0",conversionType);
+			
 		}
 		
 		return object;
