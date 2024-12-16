@@ -486,6 +486,15 @@ public class ZeroSevenZero implements ConversionBase {
 				
 				break;
 				
+			case "0.9.0":
+				
+				if (!conversionsDone[5]) {
+					
+					object = ConversionUtility.convertUpToZeroNineZero(object,conversionType);
+					
+					conversionsDone[5] = true;
+				}
+				
 			case "0.8.0":
 				
 				if (!conversionsDone[4]) {

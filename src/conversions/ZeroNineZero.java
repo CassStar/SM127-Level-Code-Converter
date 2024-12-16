@@ -8,14 +8,14 @@ import objects.*;
 import util.ConversionUtility;
 import util.Utility;
 
-public class ZeroSevenTwo implements ConversionBase {
+public class ZeroNineZero implements ConversionBase {
 	
 	int numberOfWarpPipes;
-	String thisGameVersion = "0.7.2";
+	String thisGameVersion = "0.9.0";
 	ArrayList<LevelObject> postConversionAdditions;
 	ConversionType conversionType;
 	
-	public ZeroSevenTwo(int numberOfWarpPipes,ArrayList<LevelObject> postConversionAdditions,ConversionType conversionType) {
+	public ZeroNineZero(int numberOfWarpPipes,ArrayList<LevelObject> postConversionAdditions,ConversionType conversionType) {
 		
 		this.conversionType = conversionType;
 		this.numberOfWarpPipes = numberOfWarpPipes;
@@ -24,6 +24,19 @@ public class ZeroSevenTwo implements ConversionBase {
 	
 	@Override
 	public AreaCode convertBackerBG(AreaCode fromArea,AreaCode toArea) {
+		
+		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
+			
+			switch(fromArea.getBackerBG()) {
+			
+			// Brown and Black Gradient
+			case 12:
+				
+				// Set Backer BG to Blue and Black Gradient
+				toArea.setBackerBG(9);
+				break;
+			}
+		}
 		
 		return toArea;
 	}
@@ -41,11 +54,32 @@ public class ZeroSevenTwo implements ConversionBase {
 			
 			switch(fromArea.getMusicID()) {
 			
-			// Princess Peach's Castle
-			case 65:
+			// File Select (63)
+			case 67:
 				
-				// Set MusicID to Princess Peach's Castle, which is ID 1 in all other versions.
-				toArea.setMusicID(1);
+				// Set MusicID to Main Menu
+				toArea.setMusicID(31);
+				break;
+				
+			// Level Designer Portal
+			case 68:
+				
+				// Set MusicID to Cosmic Cove Galaxy
+				toArea.setMusicID(42);
+				break;
+				
+			// Excess Express at Day
+			case 69:
+				
+				// Set MusicID to Excess Express at Dusk
+				toArea.setMusicID(30);
+				break;
+				
+			// Excess Express at Night
+			case 70:
+				
+				// Set MusicID to Excess Express at Dusk
+				toArea.setMusicID(30);
 				break;
 			}
 		}
@@ -114,23 +148,22 @@ public class ZeroSevenTwo implements ConversionBase {
 					
 					conversionsDone[2] = true;
 				}
+			
 				
-				break;
+			case "0.7.1","0.7.2":
 				
-			case "0.9.0":
-				
-				if (!conversionsDone[5]) {
+				if (!conversionsDone[3]) {
 					
-					object = ConversionUtility.convertUpToZeroNineZero(object,conversionType);
+					object = ConversionUtility.convertDownToZeroSevenTwo(object,conversionType);
 					
-					conversionsDone[5] = true;
+					conversionsDone[3] = true;
 				}
-				
+			
 			case "0.8.0":
 				
 				if (!conversionsDone[4]) {
 					
-					object = ConversionUtility.convertUpToZeroEightZero(object,conversionType);
+					object = ConversionUtility.convertDownToZeroEightZero(object,conversionType);
 					
 					conversionsDone[4] = true;
 				}

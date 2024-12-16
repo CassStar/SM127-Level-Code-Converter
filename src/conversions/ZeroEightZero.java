@@ -293,6 +293,17 @@ public class ZeroEightZero implements ConversionBase {
 					
 					conversionsDone[3] = true;
 				}
+				
+				break;
+				
+			case "0.9.0":
+				
+				if (!conversionsDone[5]) {
+					
+					object = ConversionUtility.convertUpToZeroNineZero(object,conversionType);
+					
+					conversionsDone[5] = true;
+				}
 			}
 			
 			objectArray[i] = object;
