@@ -10,7 +10,7 @@ import java.util.Scanner;
 import conversions.*;
 import level.*;
 import main.ProgramLogger.LogType;
-import objects.*;
+import objects.DoorObject;
 import util.Utility;
 
 public class Converter {
@@ -332,13 +332,22 @@ public class Converter {
 							Utility.booleanToString((boolean) object.objectData[5].getValue())+","+
 							Utility.booleanToString((boolean) object.objectData[6].getValue())+",";
 					
-					if (conversionType.gameVersionTo.equals("0.7.0")) {
+					switch (conversionType.gameVersionTo) {
+					
+					case "0.7.0":
 						
 						data += "STnone,STnone,"+object.objectData[7].getType()+object.objectData[7].getValue();
+						break;
 						
-					} else {
+					case "0.7.1","0.7.2","0.8.0":
 						
 						data += "IT0,"+object.objectData[7].getType()+object.objectData[7].getValue()+",BL0";
+						break;
+						
+					case "0.9.0":
+						
+						data += "IT0,"+object.objectData[7].getType()+object.objectData[7].getValue()+",BL0"+"BL0";
+						break;
 					}
 					
 					object = new DoorObject(data,conversionType);
@@ -469,20 +478,52 @@ public class Converter {
 			levelData = levelData.substring(nextIndex+1,levelData.length());
 			nextIndex = levelData.indexOf(',');
 			
-			String emptyArray = levelData.substring(currentIndex,nextIndex);
-			
-			ProgramLogger.logMessage("Empty Array: "+emptyArray+"\n",LogType.DEBUG);
-			
-			if (!emptyArray.equals("[]")) {
+			// Extra level properties exist in newer versions.
+			if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.8.0")) {
 				
-				ProgramLogger.logMessage("Couldn't find empty array in level code. Adding one"
-						+ " where it would be expected.",LogType.WARNING);
+				String levelAuthor = levelData.substring(currentIndex,nextIndex);
+				
+				ProgramLogger.logMessage("Level Author: "+levelAuthor,LogType.INFO);
 				System.out.println();
 				
-				emptyArray = "[]";
+				fromLevel.setLevelAuthor(levelAuthor);
+				
+				levelData = levelData.substring(nextIndex+1,levelData.length());
+				nextIndex = levelData.indexOf(',');
+				
+				String levelDescription = levelData.substring(currentIndex,nextIndex);
+				
+				ProgramLogger.logMessage("Level Description: "+levelDescription,LogType.INFO);
+				System.out.println();
+				
+				fromLevel.setLevelDescription(levelDescription);
+				
+				levelData = levelData.substring(nextIndex+1,levelData.length());
+				nextIndex = levelData.indexOf(',');
+				
+				String levelThumbnail = levelData.substring(currentIndex,nextIndex);
+				
+				ProgramLogger.logMessage("Level Thumbnail: "+levelThumbnail,LogType.INFO);
+				System.out.println();
+				
+				fromLevel.setLevelThumbnail(levelThumbnail);
+				
+				levelData = levelData.substring(nextIndex+1,levelData.length());
+				nextIndex = levelData.indexOf(']')+1;
+				
+			} else {
+				
+				// Set default Values.
+				fromLevel.setLevelAuthor("Unkown");
+				fromLevel.setLevelDescription("This%20level%20has%20no%20description.");
+				fromLevel.setLevelThumbnail("");
 			}
 			
-			fromLevel.setEmptyArray(emptyArray);
+			String levelHotBar = levelData.substring(currentIndex,nextIndex);
+			
+			ProgramLogger.logMessage("Level Hotbar and Pins Data: "+levelHotBar+"\n",LogType.INFO);
+			
+			fromLevel.setLevelHotBar(levelHotBar);
 			
 			levelData = levelData.substring(nextIndex+1,levelData.length());
 			
@@ -698,7 +739,22 @@ public class Converter {
 		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
 			
 			areaData = areaData.substring(nextIndex+1,areaData.length());
+		}
+		
+		switch (conversionType.gameVersionFrom) {
+		
+		case "0.7.0","0.7.1","0.7.2","0.8.0":
+			
 			nextIndex = areaData.indexOf('~');
+			break;
+		
+		case "0.9.0":
+			
+			nextIndex = areaData.indexOf(',');
+			break;
+		}
+		
+		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.6.9")) {
 			
 			temp = areaData.substring(currentIndex,nextIndex);
 			
@@ -710,6 +766,23 @@ public class Converter {
 			System.out.println();
 			
 			areaCode.setBGPallete(areaBGPallete);
+		}
+		
+		if (Utility.versionGreaterThanVersion(conversionType.gameVersionFrom,"0.8.9")) {
+			
+			areaData = areaData.substring(nextIndex+1,areaData.length());
+			nextIndex = areaData.indexOf('~');
+			
+			temp = areaData.substring(currentIndex,nextIndex);
+			
+			ProgramLogger.logMessage("Area Timer Data: "+temp,LogType.INFO);
+			
+			double areaTimer = Utility.parseFloat(temp);
+			
+			ProgramLogger.logMessage("Area Timer: "+areaTimer,LogType.INFO);
+			System.out.println();
+			
+			areaCode.setTimer(areaTimer);
 		}
 		
 		areaData = areaData.substring(nextIndex+1,areaData.length());
@@ -1031,7 +1104,7 @@ public class Converter {
 		AreaCode toArea = toLevel.getAreaCode(area);
 		
 		LevelObject[] objectArray = toArea.getObjects();
-		boolean[] conversionsDone = {false,false,false,false,false};
+		boolean[] conversionsDone = {false,false,false,false,false,false};
 		Object[] data;
 		
 		switch (conversionType.gameVersionFrom) {

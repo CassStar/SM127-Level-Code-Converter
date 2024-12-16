@@ -11,7 +11,8 @@ import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.4.0",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private static final String VERSION = "V0.4.1",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private final long MAX_FILE_SIZE = 1000000;
 	private Scanner input;
 	private String workingDirectory,parentDirectory;
 	
@@ -160,7 +161,7 @@ public class UpdateChecker {
 			ReadableByteChannel bytesChannel = Channels.newChannel(downloadURL.openStream());
 			
 			try (FileOutputStream outputStream = new FileOutputStream(downloadOutput)) {
-				outputStream.getChannel().transferFrom(bytesChannel,0,Long.MAX_VALUE);
+				outputStream.getChannel().transferFrom(bytesChannel,0,MAX_FILE_SIZE);
 			}
 			
 			ProgramLogger.logMessage("Finished downloading.",LogType.INFO);
