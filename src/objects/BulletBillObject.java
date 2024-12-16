@@ -42,11 +42,9 @@ public class BulletBillObject extends LevelObject {
 		chaseDirection = (int) objectData[10].getValue();
 		invincible = (boolean) objectData[11].getValue();
 		
-		try {
+		if (objectData.length > 11) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

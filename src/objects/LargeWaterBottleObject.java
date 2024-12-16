@@ -37,18 +37,15 @@ public class LargeWaterBottleObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 8:
+			
+			respawns = (boolean) objectData[7].getValue();
+		
+		case 7:
 			
 			pallete = (int) objectData[1].getValue();
-			respawns = (boolean) objectData[7].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure respawns has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				respawns = true;
-			}
 		}
 	}
 

@@ -8,9 +8,9 @@ import util.Utility;
 public class ArrowObject extends LevelObject {
 	
 	public int ID,pallete = 0;
-	public double[] position,scale,colour;
+	public double[] position,scale,colour,outlineColour;
 	public double rotation;
-	public boolean enabled,visible,showBehindPlayer,moves;
+	public boolean enabled,visible,showBehindPlayer,moves,rainbow;
 	
 	public ArrowObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -38,25 +38,24 @@ public class ArrowObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		showBehindPlayer = (boolean) objectData[7].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 12:
+			
+			rainbow = (boolean) objectData[10].getValue();
+			outlineColour = (double[]) objectData[11].getValue();
+			
+		case 10:
+			
+			moves = (boolean) objectData[9].getValue();
+			
+		case 9:
 			
 			colour = (double[]) objectData[8].getValue();
 			
-		} catch (ArrayIndexOutOfBoundsException e) {
-		}
-		
-		try {
+		case 8:
 			
 			pallete = (int) objectData[1].getValue();
-			moves = (boolean) objectData[8].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure moves has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				moves = true;
-			}
 		}
 	}
 

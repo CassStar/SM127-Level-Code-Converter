@@ -31,6 +31,7 @@ public class FirePillarObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -41,13 +42,6 @@ public class FirePillarObject extends LevelObject {
 		colour = (double[]) objectData[9].getValue();
 		reversed = (boolean) objectData[10].getValue();
 		offset = (double) Double.valueOf(String.valueOf(objectData[11].getValue()));
-		
-		try {
-			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
-		}
 	}
 
 }

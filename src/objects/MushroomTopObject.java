@@ -7,10 +7,10 @@ import util.Utility;
 
 public class MushroomTopObject extends LevelObject {
 	
-	public int ID,pallete = 0;
+	public int ID,pallete = 0,strongBouncePower;
 	public double[] position,scale,colour;
 	public double rotation;
-	public boolean enabled,visible;
+	public boolean enabled,visible,bouncy;
 	
 	public MushroomTopObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -37,18 +37,20 @@ public class MushroomTopObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 10:
+			
+			bouncy = (boolean) objectData[8].getValue();
+			strongBouncePower = (int) objectData[9].getValue();
+		
+		case 8:
 			
 			colour = (double[]) objectData[7].getValue();
-			
-		} catch (ArrayIndexOutOfBoundsException e) {
-		}
 		
-		try {
+		case 7:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

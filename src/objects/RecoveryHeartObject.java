@@ -31,6 +31,7 @@ public class RecoveryHeartObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -41,20 +42,10 @@ public class RecoveryHeartObject extends LevelObject {
 		hasCoolDown = (boolean) objectData[9].getValue();
 		coolDownTime = (int) objectData[10].getValue();
 		
-		try {
+		if (objectData.length > 11) {
 			
-			pallete = (int) objectData[1].getValue();
 			colour = (double[]) objectData[11].getValue();
 			rainbow = (boolean) objectData[12].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure colour and rainbow have values when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				colour = new double[] {1,0,0};
-				rainbow = false;
-			}
 		}
 	}
 

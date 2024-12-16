@@ -32,6 +32,7 @@ public class LavaObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -43,13 +44,6 @@ public class LavaObject extends LevelObject {
 		renderInFront = (boolean) objectData[10].getValue();
 		tag = String.valueOf(objectData[7].getValue());
 		tapMode = (boolean) objectData[12].getValue();
-		
-		try {
-			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
-		}
 	}
 
 }

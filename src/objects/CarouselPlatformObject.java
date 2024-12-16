@@ -43,11 +43,9 @@ public class CarouselPlatformObject extends LevelObject {
 		colour = (double[]) objectData[11].getValue();
 		startAngle = (double) Double.valueOf(String.valueOf(objectData[12].getValue()));
 		
-		try {
+		if (objectData.length > 12) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

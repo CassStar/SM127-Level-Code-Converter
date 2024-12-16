@@ -9,7 +9,7 @@ public class OnOffControlledMovingPlatformObject extends LevelObject {
 	
 	public int ID,pallete = 0,parts,moveType;
 	public double[] position,scale;
-	public double rotation,maxSpeed,startOffset;
+	public double rotation,maxSpeed,startOffset,unkownFloatValue;
 	public boolean enabled,visible,touchStart,unkownBooleanValue,inverted;
 	public double[][] path,pathDuplicate;
 	
@@ -33,6 +33,7 @@ public class OnOffControlledMovingPlatformObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -47,18 +48,15 @@ public class OnOffControlledMovingPlatformObject extends LevelObject {
 		unkownBooleanValue = (boolean) objectData[13].getValue();
 		inverted = (boolean) objectData[14].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 17:
 			
-			pallete = (int) objectData[1].getValue();
+			unkownFloatValue = (double) Double.valueOf(String.valueOf(objectData[16].getValue()));
+		
+		case 16:
+			
 			pathDuplicate = (double[][]) objectData[15].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure pathDuplicate has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				pathDuplicate = new double[][] {{0,0},{0,-64}};
-			}
 		}
 	}
 

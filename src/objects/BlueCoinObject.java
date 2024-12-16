@@ -39,11 +39,9 @@ public class BlueCoinObject extends LevelObject {
 		physics = (boolean) objectData[7].getValue();
 		velocity = (double[]) objectData[8].getValue();
 		
-		try {
+		if (objectData.length > 8) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

@@ -9,7 +9,7 @@ public class FluidControllerObject extends LevelObject {
 	
 	public int ID,pallete = 0;
 	public double[] position,scale;
-	public double rotation,moveSpeed,offset;
+	public double rotation,moveSpeed,offset,cycleTimer,cycleOffset;
 	public boolean enabled,visible,autoActivate,horizontal;
 	public String tag;
 	
@@ -32,6 +32,7 @@ public class FluidControllerObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -43,11 +44,10 @@ public class FluidControllerObject extends LevelObject {
 		offset = (double) Double.valueOf(String.valueOf(objectData[10].getValue()));
 		horizontal = (boolean) objectData[11].getValue();
 		
-		try {
+		if (objectData.length > 12) {
 			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
+			cycleTimer = (double) Double.valueOf(String.valueOf(objectData[12].getValue()));
+			cycleOffset = (double) Double.valueOf(String.valueOf(objectData[13].getValue()));
 		}
 	}
 

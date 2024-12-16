@@ -9,7 +9,7 @@ public class BulletBillBlasterObject extends LevelObject {
 	
 	public int ID,pallete = 0,chaseDirection;
 	public double[] position,scale,colour;
-	public double rotation,speed,waitTime;
+	public double rotation,speed,waitTime,offset;
 	public boolean enabled,visible,chase,invincible;
 	
 	public BulletBillBlasterObject(String data,ConversionType type) throws Exception {
@@ -43,11 +43,15 @@ public class BulletBillBlasterObject extends LevelObject {
 		invincible = (boolean) objectData[11].getValue();
 		chaseDirection = (int) objectData[12].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 14:
+			
+			offset = (double) Double.valueOf(String.valueOf(objectData[13].getValue()));
+			
+		case 13:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

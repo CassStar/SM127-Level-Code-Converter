@@ -5,15 +5,16 @@ import main.ConversionType;
 import types.Vector2Type;
 import util.Utility;
 
-public class SawBladeObject extends LevelObject {
+public class PrincessPeachNPCObject extends LevelObject {
 	
-	public int ID,pallete = 0,startOffset;
+	public int ID,pallete = 0,idleExpression,idleAction,speakingExpression,speakingAction,requiredShines;
 	public double[] position,scale;
+	public double rotation,walkSpeed;
+	public boolean enabled,visible,moveType,physicsEnabled,pathReference;
+	public String tagLink;
 	public double[][] path,pathDuplicate;
-	public double rotation,speed,unkownFloatValue;
-	public boolean enabled,visible,loops;
 	
-	public SawBladeObject(String data,ConversionType type) throws Exception {
+	public PrincessPeachNPCObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
 	}
@@ -40,13 +41,16 @@ public class SawBladeObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		path = (double[][]) objectData[7].getValue();
 		pathDuplicate = (double[][]) objectData[8].getValue();
-		speed = (double) Double.valueOf(String.valueOf(objectData[9].getValue()));
-		startOffset = (int) objectData[10].getValue();
-		loops = (boolean) objectData[11].getValue();
-		
-		if (objectData.length > 12) {
-			
-			unkownFloatValue = (double) Double.valueOf(String.valueOf(objectData[12].getValue()));
-		}
+		moveType = (boolean) objectData[9].getValue();
+		walkSpeed = (double) Double.valueOf(String.valueOf(objectData[10].getValue()));
+		physicsEnabled = (boolean) objectData[11].getValue();
+		idleExpression = (int) objectData[12].getValue();
+		idleAction = (int) objectData[13].getValue();
+		speakingExpression = (int) objectData[14].getValue();
+		speakingAction = (int) objectData[15].getValue();
+		pathReference = (boolean) objectData[16].getValue();
+		tagLink = String.valueOf(objectData[17].getValue());
+		requiredShines = (int) objectData[18].getValue();
 	}
+	
 }

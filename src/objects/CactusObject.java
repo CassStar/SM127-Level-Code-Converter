@@ -31,18 +31,12 @@ public class CactusObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		
-		try {
-			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
-		}
 	}
 
 }

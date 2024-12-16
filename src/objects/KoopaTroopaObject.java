@@ -40,18 +40,15 @@ public class KoopaTroopaObject extends LevelObject {
 		rainbow = (boolean) objectData[8].getValue();
 		troopaType = (boolean) objectData[9].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 11:
+			
+			shelled = (boolean) objectData[10].getValue();
+		
+		case 10:
 			
 			pallete = (int) objectData[1].getValue();
-			shelled = (boolean) objectData[10].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure shelled has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				shelled = false;
-			}
 		}
 	}
 

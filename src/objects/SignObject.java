@@ -39,19 +39,16 @@ public class SignObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		text = String.valueOf(objectData[7].getValue());
 		
-		try {
+		switch(objectData.length) {
+		
+		case 10:
 			
 			openMenu = (boolean) objectData[8].getValue();
 			onWall = (boolean) objectData[9].getValue();
-			
-		} catch (ArrayIndexOutOfBoundsException e) {
-		}
 		
-		try {
+		case 8:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

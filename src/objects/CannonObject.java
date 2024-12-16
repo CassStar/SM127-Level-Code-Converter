@@ -9,7 +9,7 @@ public class CannonObject extends LevelObject {
 	
 	public int ID,pallete = 0,launchPower,minRotation,maxRotation;
 	public double[] position,scale;
-	public double rotation;
+	public double rotation,targetZoom;
 	public boolean enabled,visible,facesRight;
 	
 	public CannonObject(String data,ConversionType type) throws Exception {
@@ -41,11 +41,15 @@ public class CannonObject extends LevelObject {
 		maxRotation = (int) objectData[9].getValue();
 		facesRight = (boolean) objectData[10].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 12:
+			
+			targetZoom = (double) Double.valueOf(String.valueOf(objectData[11].getValue()));
+		
+		case 11:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

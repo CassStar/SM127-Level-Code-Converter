@@ -31,6 +31,7 @@ public class CheepCheepObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -38,13 +39,6 @@ public class CheepCheepObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		colour = (double[]) objectData[7].getValue();
 		rainbow = (boolean) objectData[8].getValue();
-		
-		try {
-			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
-		}
 	}
 
 }

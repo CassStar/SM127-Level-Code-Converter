@@ -39,19 +39,15 @@ public class EnchantedGearObject extends LevelObject {
 		duration = (double) Double.valueOf(String.valueOf(objectData[7].getValue()));
 		canRespawn = (boolean) objectData[8].getValue();
 		
-		try {
+		switch (objectData.length) {
+		
+		case 10:
 			
 			powerupMusic = (boolean) objectData[9].getValue();
-			
-		} catch (ArrayIndexOutOfBoundsException e) {
-			
-		}
 		
-		try {
+		case 9:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

@@ -40,11 +40,9 @@ public class FluddNozzleObject extends LevelObject {
 		velocity = (double[]) objectData[7].getValue();
 		nozzleType = String.valueOf(objectData[8].getValue());
 		
-		try {
+		if (objectData.length > 8) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

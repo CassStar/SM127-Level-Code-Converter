@@ -5,14 +5,14 @@ import main.ConversionType;
 import types.Vector2Type;
 import util.Utility;
 
-public class GreenDemonObject extends LevelObject {
+public class PropellerObject extends LevelObject {
 	
-	public int ID,pallete = 0;
+	public int ID,pallete = 0,propellerSpeed;
 	public double[] position,scale;
-	public double rotation,chaseSpeed;
-	public boolean enabled,visible,chase;
+	public double rotation;
+	public boolean enabled,visible;
 	
-	public GreenDemonObject(String data,ConversionType type) throws Exception {
+	public PropellerObject(String data,ConversionType type) throws Exception {
 		super(data,type);
 		setupValues();
 	}
@@ -31,18 +31,13 @@ public class GreenDemonObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		chase = (boolean) objectData[7].getValue();
-		chaseSpeed = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
-		
-		if (objectData.length > 8) {
-			
-			pallete = (int) objectData[1].getValue();
-		}
+		propellerSpeed = (int) objectData[7].getValue();
 	}
-
+	
 }

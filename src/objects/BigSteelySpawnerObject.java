@@ -39,11 +39,9 @@ public class BigSteelySpawnerObject extends LevelObject {
 		spawnInterval = (double) Double.valueOf(String.valueOf(objectData[7].getValue()));
 		steelyDespawnTimer = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		
-		try {
+		if (objectData.length > 8) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

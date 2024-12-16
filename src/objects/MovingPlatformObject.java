@@ -9,7 +9,7 @@ public class MovingPlatformObject extends LevelObject {
 	
 	public int ID,pallete = 0,parts,moveType;
 	public double[] position,scale,colour;
-	public double rotation,maxSpeed,startOffset;
+	public double rotation,maxSpeed,startOffset,unkownFloatValue;
 	public boolean enabled,visible,touchStart;
 	public double[][] path,pathDuplicate;
 	
@@ -45,18 +45,19 @@ public class MovingPlatformObject extends LevelObject {
 		colour = (double[]) objectData[12].getValue();
 		startOffset = (double) Double.valueOf(String.valueOf(objectData[13].getValue()));
 		
-		try {
+		switch (objectData.length) {
+		
+		case 16:
+			
+			unkownFloatValue = (double) Double.valueOf(String.valueOf(objectData[15].getValue()));
+		
+		case 15:
+			
+			pathDuplicate = (double[][]) objectData[14].getValue();
+		
+		case 14:
 			
 			pallete = (int) objectData[1].getValue();
-			pathDuplicate = (double[][]) objectData[14].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure pathDuplicate has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				pathDuplicate = new double[][] {{0,0},{0,-64}};
-			}
 		}
 	}
 

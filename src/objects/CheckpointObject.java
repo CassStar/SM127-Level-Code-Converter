@@ -10,7 +10,7 @@ public class CheckpointObject extends LevelObject {
 	public int ID,pallete = 0,spawnYOffset;
 	public double[] position,scale;
 	public double rotation;
-	public boolean enabled,visible,saveWaterLevel;
+	public boolean enabled,visible,saveWaterLevel,saveSwitchState;
 	
 	public CheckpointObject(String data,ConversionType type) throws Exception {
 		super(data,type);
@@ -31,6 +31,7 @@ public class CheckpointObject extends LevelObject {
 	void setupValues() {
 		
 		ID = objectID;
+		pallete = (int) objectData[1].getValue();
 		position = (double[]) objectData[2].getValue();
 		scale = (double[]) objectData[3].getValue();
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
@@ -39,11 +40,9 @@ public class CheckpointObject extends LevelObject {
 		saveWaterLevel = (boolean) objectData[7].getValue();
 		spawnYOffset = (int) objectData[8].getValue();
 		
-		try {
+		if (objectData.length > 9) {
 			
-			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
+			saveSwitchState = (boolean) objectData[9].getValue();
 		}
 	}
 

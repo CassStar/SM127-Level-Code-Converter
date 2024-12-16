@@ -10,7 +10,7 @@ public class DoorObject extends LevelObject {
 	public int ID,pallete = 0,areaID;
 	public double[] position,scale;
 	public double rotation;
-	public boolean enabled,visible,teleportMode;
+	public boolean enabled,visible,teleportMode,forceFadeOut;
 	public String tag,destinationTag;
 	
 	public DoorObject(String data,ConversionType type) throws Exception {
@@ -38,33 +38,36 @@ public class DoorObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		try {
+		switch (objectData.length) {
+		
+		case 8:
+			
+			tag = String.valueOf(objectData[7].getValue());
+			destinationTag = String.valueOf(objectData[8].getValue());
+			break;
+			
+		case 9:
 			
 			pallete = (int) objectData[1].getValue();
-			areaID = (int) objectData[7].getValue();
-			tag = String.valueOf(objectData[8].getValue());
+			tag = String.valueOf(objectData[7].getValue());
+			destinationTag = String.valueOf(objectData[8].getValue());
+			break;
+		
+		case 10:
 			
-		} catch (Exception e) {
+			pallete = (int) objectData[1].getValue();
 			
-			if (objectData.length > 9 &&
-					String.valueOf(objectData[7].getType()).equals("ST") &&
-					String.valueOf(objectData[8].getType()).equals("ST") &&
-					String.valueOf(objectData[9].getType()).equals("ST")) {
+			try {
 				
-				tag = String.valueOf(objectData[9].getValue());
+				areaID = (int) objectData[7].getValue();
+				teleportMode = (boolean) objectData[9].getValue();
 				
-			} else {
+			} catch (Exception e) {
 				
 				tag = String.valueOf(objectData[7].getValue());
-				destinationTag = String.valueOf(objectData[8].getValue());
-				
-				try {
-					
-					teleportMode = (boolean) objectData[9].getValue();
-					
-				} catch (ArrayIndexOutOfBoundsException | ClassCastException e2) {
-				}
 			}
+			
+			destinationTag = String.valueOf(objectData[8].getValue());
 		}
 	}
 

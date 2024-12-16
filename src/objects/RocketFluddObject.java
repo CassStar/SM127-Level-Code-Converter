@@ -37,18 +37,15 @@ public class RocketFluddObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 8:
+			
+			activated = (boolean) objectData[7].getValue();
+		
+		case 7:
 			
 			pallete = (int) objectData[1].getValue();
-			activated = (boolean) objectData[7].getValue();
-			
-		} catch (Exception e) {
-			
-			// Making sure activated has a value when converting levels made in 0.8.0
-			if (conversionType.gameVersionFrom.equals("0.8.0")) {
-				
-				activated = true;
-			}
 		}
 	}
 

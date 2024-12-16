@@ -39,11 +39,9 @@ public class NoteblockObject extends LevelObject {
 		parts = (int) objectData[7].getValue();
 		strongBouncePower = (int) objectData[8].getValue();
 		
-		try {
+		if (objectData.length > 8) {
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 

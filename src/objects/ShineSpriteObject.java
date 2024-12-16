@@ -7,7 +7,7 @@ import util.Utility;
 
 public class ShineSpriteObject extends LevelObject {
 	
-	public int ID,pallete = 0,shinePlacedIndex,sortIndex;
+	public int ID,pallete = 0,shinePlacedIndex,sortIndex,requiredPurples;
 	public double[] position,scale,colour;
 	public double rotation;
 	public boolean enabled,visible,showInMenu,activated,redCoinsActivate,shineShardsActivate,doKickOut;
@@ -48,11 +48,15 @@ public class ShineSpriteObject extends LevelObject {
 		doKickOut = (boolean) objectData[15].getValue();
 		sortIndex = (int) objectData[16].getValue();
 		
-		try {
+		switch(objectData.length) {
+		
+		case 18:
+			
+			requiredPurples = (int) objectData[17].getValue();
+		
+		case 17:
 			
 			pallete = (int) objectData[1].getValue();
-			
-		} catch (Exception e) {
 		}
 	}
 
