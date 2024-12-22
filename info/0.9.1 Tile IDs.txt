@@ -1,0 +1,143 @@
+ID	Tile Type				Max Pallete Value
+
+000	Air Block(No Tile)				0
+
+010	Full-Tile Coloured Brick			8
+012	Up-Right Coloured Brick Stairs			8
+013	Up-Left Coloured Brick Stairs			8
+
+020	Full-Tile Grass					5
+021	Half-Tile Grass					5
+022	Up-Right Slope Grass				5
+023	Up-Left Slope Grass				5
+
+030	Full-Tile Green Brick				0
+032	Up-Right Green Brick Stairs			0
+033	Up-Left Green Brick Stairs			0
+
+040	Full-Tile Red Brick				0
+042	Up-Right Red Brick Stairs			0
+043	Up-Left Red Brick Stairs			0
+
+050	Full-Tile Yellow Brick				0
+052	Up-Right Yellow Brick Stairs			0
+053	Up-Left Yellow Brick Stairs			0
+
+060	Full-Tile Invisible Block			0
+
+070	Full-Tile Snow					5
+071	Half-Tile Snow					5
+072	Up-Right Slope Snow				5
+073	Up-Left Slope Snow				5
+
+080	Full-Tile Old Cave				0
+081	Half-Tile Old Cave				0
+
+090	Glass Pane Block				7
+
+100	Full-Tile Wooden Cabin				7
+102	Up-Right Cabin Stairs				7
+103	Up-Left Cabin Stairs				7
+
+110	Coloured Gem Block				8
+120	Yellow Gem Block				0
+130	Green Gem Block					0
+140	Blue Gem Block					0
+
+150	Full-Tile Light Stone Brick			6
+152	Up-Right Light Stone Brick Stairs		6
+153	Up-Left Light Stone Brick Stairs		6
+
+160	Full-Tile Rough Stone Brick			7
+162	Up-Right Rough Stone Brick Stairs		7
+163	Up-Left Rough Stone Brick Stairs		7
+
+170	Full-Tile Magic Block				7
+172	Up-Right Magic Block Stairs			7
+173	Up-Left Magic Block Stairs			7
+
+180	Full-Tile Warped Ground				3
+181	Half-Tile Warped Ground				3
+182	Up-Right Slope Warped Ground			3
+183	Up-Left Slope Warped Ground			3
+
+190	Full-Tile Granite Block				0
+
+200	Full-Tile Cracked Stone Block			6
+
+210	Full-Tile Solid Colour Block			7
+212	Up-Right Slope Solid Colour Block		7
+213	Up-Left Slope Solid Colour Block		7
+
+220	Full-Tile CheckerBoard Block			9
+
+230	Full-Tile Carpet Block				7
+232	Up-Right Carpet Block				7
+233	Up-Left Carpet Block				7
+
+240	Full-Tile Wooden Plank Block			7
+242	Up-Right Wooden Plank Block			7
+243	Up-Left Wooden Plank Block			7
+
+250	Full-Tile Castle Brick				7
+
+260	Full-Tile Castle Roof				8
+262	Up-Right Slope Castle Roof			8
+263	Up-Left Slope Castle Roof			8
+
+270	Full-Tile Sand					4
+271	Half-Tile Sand					4
+272	Up-Right Slope Sand				4
+273	Up-Left Slope Sand				4
+
+280	Full-Tile SandStone				6
+282	Up-Right SandStone Stairs			6
+283	Up-Left SandStone Stairs			6
+
+290	Full-Tile Volcano				5
+291	Half-Tile Volcano				5
+292	Up-Right Slope Volcano				5
+293	Up-Left Slope Volcano				5
+
+300	Full-Tile Castle Pillar Block			6
+
+310	Full-Tile Volcanic Brick			8
+312	Up-Right Volcanic Brick Stairs			8
+313	Up-Left Volcanic Brick Stairs			8
+
+320	Full-Tile Dark Stone Brick			8
+322	Up-Right Dark Stone Brick Stairs		8
+323	Up-Left Dark Stone Brick Stairs			8
+
+330	Cabin Window Block				3
+
+340	Full-Tile YI Grass				5
+341	Half-Tile YI Grass				5
+342	Up-Right Slope YI Grass				5
+343	Up-Left Slope YI Grass				5
+
+350	Full-Tile New Cave				6
+351	Half-Tile New Cave				6
+352	Up-Right Slope New Cave				6
+353	Up-Left Slope New Cave				6
+
+360	Bookcase Block					9
+
+370	Full-Tile Stone Fence				9
+371	Half-Tile Stone Fence				9
+372	Up-Right Stone Fence Slope			9
+373	Up-Left Stone Fence Slope			9
+
+380	Full-Tile Tree Block				8
+381	Half-Tile Tree Block				8
+382	Up-Right Tree Slope Block			8
+383	Up-Left Tree Slope Block			8
+
+390	Full-Tile Cloud Block				9
+391	Half-Tile Cloud Block				9
+
+400	Full-Tile Wooden Fence				7
+402	Up-Right Wooden Fence Slope			7
+403	Up-Left Wooden Fence Slope			7
+
+410+	Air Block(No Tile)				0
