@@ -3,7 +3,7 @@
 What it Does:
 
 	This program converts SM127 level codes between game versions 0.6.0, 0.6.1, 0.7.0, 0.7.1, 0.7.2,
-		0.8.0, and 0.9.0
+		0.8.0, 0.9.0, and 0.9.1
 		You can choose to "convert" level codes to the same versions they were made in, this won't
 		actually convert anything, but will let you change the level to consist of only one area
 
