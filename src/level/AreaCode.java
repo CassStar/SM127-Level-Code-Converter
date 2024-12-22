@@ -783,6 +783,14 @@ public class AreaCode {
 		case 139:
 			
 			return new BobOmbNPCObject(data,levelCode.conversionType);
+			
+		case 140:
+			
+			return new DryBonesObject(data,levelCode.conversionType);
+			
+		case 141:
+			
+			return new MossyRockBunchObject(data,levelCode.conversionType);
 				
 		default:
 			
@@ -1500,6 +1508,12 @@ public class AreaCode {
 			
 			areaData.append(",IT");
 			areaData.append(BGPallete);
+		}
+		
+		if (Utility.versionGreaterThanVersion(levelCode.conversionType.gameVersionTo,"0.8.9")) {
+			
+			areaData.append(",FL");
+			areaData.append(timer);
 		}
 		
 		areaData.append("~");
