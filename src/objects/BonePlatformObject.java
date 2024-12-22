@@ -8,7 +8,7 @@ import util.Utility;
 public class BonePlatformObject extends LevelObject {
 	
 	public int ID,pallete = 0,parts;
-	public double[] position,scale;
+	public double[] position,scale,colour;
 	public double rotation;
 	public boolean enabled,visible;
 	
@@ -38,9 +38,16 @@ public class BonePlatformObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		parts = (int) objectData[7].getValue();
 		
-		if (objectData.length > 7) {
+		switch(objectData.length) {
+		
+		case 9:
+			
+			colour = (double[]) objectData[8].getValue();
+		
+		case 8:
 			
 			pallete = (int) objectData[1].getValue();
+			
 		}
 	}
 
