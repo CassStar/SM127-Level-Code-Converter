@@ -290,6 +290,31 @@ public class ConversionUtility {
 		return object;
 	}
 	
+	public static LevelObject convertDownToZeroNineZero(LevelObject object,ConversionType conversionType) throws Exception {
+		
+		if (object instanceof BonePlatformObject) {
+			
+			// Remove last value.
+			object = new BonePlatformObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",CL")),conversionType);
+			
+		} else if (object instanceof ConditionLockedDoorObject) {
+			
+			// Remove last two values.
+			object = new ConditionLockedDoorObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",ST")),conversionType);
+			
+		} else if (object instanceof PearlPlatformObject) {
+			
+			// Remove last value.
+			object = new PearlPlatformObject(object.stringData.substring(
+					0,object.stringData.lastIndexOf(",CL")),conversionType);
+			
+		}
+		
+		return object;
+	}
+	
 	public static LevelObject convertUpToZeroSixOne(LevelObject object,ConversionType conversionType) throws Exception {
 		
 		if (object instanceof EnchantedGearObject) {
@@ -495,7 +520,30 @@ public class ConversionUtility {
 		} else if (object instanceof ShineSpriteObject) {
 			
 			// Add last value.
-			object = new ShineSpriteObject(object.stringData+"IT0",conversionType);
+			object = new ShineSpriteObject(object.stringData+",IT0",conversionType);
+			
+		}
+		
+		return object;
+	}
+	
+	public static LevelObject convertUpToZeroNineOne(LevelObject object,ConversionType conversionType) throws Exception {
+		
+		if (object instanceof BonePlatformObject) {
+			
+			// Add last value.
+			object = new BonePlatformObject(object.stringData+",CL1x1x1x1",conversionType);
+			
+		} else if (object instanceof ConditionLockedDoorObject) {
+			
+			// Add last two values.
+			object = new ConditionLockedDoorObject(object.stringData+
+					",STSorry%21%20You%20need%20%7bnum%7d%20%7bcol%7d%20to%20open%20this%20door%21,BL0",conversionType);
+			
+		} else if (object instanceof PearlPlatformObject) {
+			
+			// Add last value.
+			object = new PearlPlatformObject(object.stringData+",CL1x1x1x1",conversionType);
 			
 		}
 		

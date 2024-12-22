@@ -451,8 +451,9 @@ public class Utility {
 			ProgramLogger.logMessage("Found invalid prefix while parsing Dialogue data type. "
 					+ "Expected: SA Got: "+dataType,LogType.ERROR);
 			
-			// Format: ExpressionID,ActionID,FollowUpTag,%3b,Text,: (if another dialogue box follows), pattern repeats...
-			return new String[] {"01","00","","%3b","This%20is%20a%20dialogue%20object.",":","01","00","",
+			// Format: UnkownID,NPCExpressionID,NPCActionID,PlayerExpressionID,FollowUpTag,%3b,Text,
+			//: (if another dialogue box follows), pattern repeats...
+			return new String[] {"0","1","0","0","","%3b","This%20is%20a%20dialogue%20object.",":","0","1","0","0","",
 					"3b","Try%20putting%20this%20on%20top%20of%20an%20NPC%20and%20see%20what%20happens%21"};
 		}
 		
@@ -468,57 +469,61 @@ public class Utility {
 			}
 		}
 		
-		String[] arrayData = new String[5+numberOfColons*6];
+		String[] arrayData = new String[7+numberOfColons*8];
 		
 		// Expression and Action IDs.
-		arrayData[0] = data.substring(0,2);
-		arrayData[1] = data.substring(2,4);
+		arrayData[0] = data.substring(0,1);
+		arrayData[1] = data.substring(1,2);
+		arrayData[2] = data.substring(2,3);
+		arrayData[3] = data.substring(3,4);
 		
 		int textStartIndex = data.indexOf("%3b");
 		
 		// Follow up Tag.
-		arrayData[2] = data.substring(4,textStartIndex);
+		arrayData[4] = data.substring(4,textStartIndex);
 		
 		// Text start indicator.
-		arrayData[3] = data.substring(textStartIndex,textStartIndex+3);
+		arrayData[5] = data.substring(textStartIndex,textStartIndex+3);
 		
 		// Dialogue Text.
 		try {
-			arrayData[4] = data.substring(textStartIndex+3,data.indexOf(':'));
-			arrayData[5] = ":";
+			arrayData[6] = data.substring(textStartIndex+3,data.indexOf(':'));
+			arrayData[7] = ":";
 			
 			data = data.substring(data.indexOf(':')+1);
 			
 		} catch (IndexOutOfBoundsException e) {
 			
-			arrayData[4] = data.substring(textStartIndex+3);
+			arrayData[6] = data.substring(textStartIndex+3);
 		}
 		
 		// Loop over the remaining dialogue boxes.
 		for (int i = 6;i < arrayData.length;i += 6) {
 			
 			// Expression and Action IDs.
-			arrayData[i] = data.substring(0,2);
-			arrayData[i+1] = data.substring(2,4);
+			arrayData[i] = data.substring(0,1);
+			arrayData[i+1] = data.substring(1,2);
+			arrayData[i+2] = data.substring(2,3);
+			arrayData[i+3] = data.substring(3,4);
 			
 			textStartIndex = data.indexOf("%3b");
 			
 			// Follow up Tag.
-			arrayData[i+2] = data.substring(4,textStartIndex);
+			arrayData[i+4] = data.substring(4,textStartIndex);
 			
 			// Text start indicator.
-			arrayData[i+3] = data.substring(textStartIndex,textStartIndex+3);
+			arrayData[i+5] = data.substring(textStartIndex,textStartIndex+3);
 			
 			// Dialogue Text.
 			try {
-				arrayData[i+4] = data.substring(textStartIndex+3,data.indexOf(':'));
-				arrayData[i+5] = ":";
+				arrayData[i+6] = data.substring(textStartIndex+3,data.indexOf(':'));
+				arrayData[i+7] = ":";
 				
 				data = data.substring(data.indexOf(':')+1);
 				
 			} catch (IndexOutOfBoundsException e) {
 				
-				arrayData[i+4] = data.substring(textStartIndex+3);
+				arrayData[i+6] = data.substring(textStartIndex+3);
 			}
 		}
 		
