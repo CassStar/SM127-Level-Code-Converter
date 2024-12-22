@@ -72,6 +72,15 @@ public class ZeroSixZero implements ConversionBase {
 			
 			switch (conversionType.gameVersionTo) {
 			
+			case "0.9.1":
+				
+				if (!conversionsDone[6]) {
+					
+					object = ConversionUtility.convertUpToZeroNineOne(object,conversionType);
+					
+					conversionsDone[6] = true;
+				}
+			
 			case "0.9.0":
 				
 				if (!conversionsDone[5]) {

@@ -6,16 +6,15 @@ import level.*;
 import main.ConversionType;
 import objects.*;
 import util.ConversionUtility;
-import util.Utility;
 
-public class ZeroNineZero implements ConversionBase {
+public class ZeroNineOne implements ConversionBase {
 	
 	int numberOfWarpPipes;
-	String thisGameVersion = "0.9.0";
+	String thisGameVersion = "0.9.1";
 	ArrayList<LevelObject> postConversionAdditions;
 	ConversionType conversionType;
 	
-	public ZeroNineZero(int numberOfWarpPipes,ArrayList<LevelObject> postConversionAdditions,ConversionType conversionType) {
+	public ZeroNineOne(int numberOfWarpPipes,ArrayList<LevelObject> postConversionAdditions,ConversionType conversionType) {
 		
 		this.conversionType = conversionType;
 		this.numberOfWarpPipes = numberOfWarpPipes;
@@ -24,19 +23,6 @@ public class ZeroNineZero implements ConversionBase {
 	
 	@Override
 	public AreaCode convertBackerBG(AreaCode fromArea,AreaCode toArea) {
-		
-		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
-			
-			switch(fromArea.getBackerBG()) {
-			
-			// Brown and Black Gradient
-			case 12:
-				
-				// Set Backer BG to Blue and Black Gradient
-				toArea.setBackerBG(9);
-				break;
-			}
-		}
 		
 		return toArea;
 	}
@@ -49,40 +35,6 @@ public class ZeroNineZero implements ConversionBase {
 	
 	@Override
 	public AreaCode convertMusicIDs(AreaCode fromArea,AreaCode toArea) {
-		
-		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
-			
-			switch(fromArea.getMusicID()) {
-			
-			// File Select (63)
-			case 67:
-				
-				// Set MusicID to Main Menu
-				toArea.setMusicID(31);
-				break;
-				
-			// Level Designer Portal
-			case 68:
-				
-				// Set MusicID to Cosmic Cove Galaxy
-				toArea.setMusicID(42);
-				break;
-				
-			// Excess Express at Day
-			case 69:
-				
-				// Set MusicID to Excess Express at Dusk
-				toArea.setMusicID(30);
-				break;
-				
-			// Excess Express at Night
-			case 70:
-				
-				// Set MusicID to Excess Express at Dusk
-				toArea.setMusicID(30);
-				break;
-			}
-		}
 		
 		return toArea;
 	}
@@ -168,15 +120,13 @@ public class ZeroNineZero implements ConversionBase {
 					conversionsDone[4] = true;
 				}
 				
-				break;
+			case "0.9.0":
 				
-			case "0.9.1":
-				
-				if (!conversionsDone[6]) {
+				if (!conversionsDone[5]) {
 					
-					object = ConversionUtility.convertUpToZeroNineOne(object,conversionType);
+					object = ConversionUtility.convertDownToZeroNineZero(object,conversionType);
 					
-					conversionsDone[6] = true;
+					conversionsDone[5] = true;
 				}
 			}
 			
