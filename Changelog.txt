@@ -1,2 +1,1 @@
-Added support for converting levels made in 0.9.0
-Fixed a bug where tile properties weren't being properly set, the level re-arranger functionality has also been fixed as a result (for real this time)
+Added support for converting levels made in 0.9.1
