@@ -9,14 +9,14 @@ public class ConversionType {
 	public int[] maxBackerBG,maxFronterBG,maxMusicID,maxObjectID,maxTileID;
 	public String gameVersionFrom,gameVersionTo,codeVersionFrom,codeVersionTo;
 	
-	int[] allMaxBackerBG = {5,5,6,7,7,12,13};
-	int[] allMaxFronterBG = {5,7,14,14,14,22,22};
-	int[] allMaxMusicID = {37,39,62,65,66,67,71};
-	int[] allMaxObjectID = {68,69,90,96,97,125,139};
-	int[] allMaxTileID = {210,250,350,360,360,410,410};
+	int[] allMaxBackerBG = {5,5,6,7,7,12,13,13};
+	int[] allMaxFronterBG = {5,7,14,14,14,22,22,22};
+	int[] allMaxMusicID = {37,39,62,65,66,67,71,71};
+	int[] allMaxObjectID = {68,69,90,96,97,125,139,141};
+	int[] allMaxTileID = {210,250,350,360,360,410,410,410};
 	
-	String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2","0.8.0","0.9.0"};
-	String[] validCodeVersions = {"0.4.5","0.4.5","0.4.8","0.4.9","0.4.9","0.4.9","0.5.0"};
+	String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2","0.8.0","0.9.0","0.9.1"};
+	String[] validCodeVersions = {"0.4.5","0.4.5","0.4.8","0.4.9","0.4.9","0.4.9","0.5.0","0.5.1"};
 	
 	public ConversionType(boolean fromGameVersion,String versionFrom,String versionTo) {
 		

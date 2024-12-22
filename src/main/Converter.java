@@ -28,7 +28,8 @@ public class Converter {
 	String[] fileNames;
 	Path directoryPath,inputDirectory,outputDirectory,logDirectory;
 	ConversionType conversionType;
-	ConversionBase fromZeroSixZero,fromZeroSixOne,fromZeroSevenZero,fromZeroSevenOne,fromZeroSevenTwo,fromZeroEightZero;
+	ConversionBase fromZeroSixZero,fromZeroSixOne,fromZeroSevenZero,fromZeroSevenOne,fromZeroSevenTwo,fromZeroEightZero,fromZeroNineZero,
+	fromZeroNineOne;
 	LevelCode fromLevel,toLevel;
 	
 	// File handler used to handle file input and output operations.
@@ -292,6 +293,8 @@ public class Converter {
 		fromZeroSevenOne = new ZeroSevenOne(numberOfWarpPipes,postConversionAdditions,conversionType);
 		fromZeroSevenTwo = new ZeroSevenTwo(numberOfWarpPipes,postConversionAdditions,conversionType);
 		fromZeroEightZero = new ZeroEightZero(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroNineZero = new ZeroNineZero(numberOfWarpPipes,postConversionAdditions,conversionType);
+		fromZeroNineOne = new ZeroNineOne(numberOfWarpPipes,postConversionAdditions,conversionType);
 		
 		for (int i = 0;i < toLevel.getNumberOfAreas();i++) {
 			
@@ -748,7 +751,7 @@ public class Converter {
 			nextIndex = areaData.indexOf('~');
 			break;
 		
-		case "0.9.0":
+		case "0.9.0","0.9.1":
 			
 			nextIndex = areaData.indexOf(',');
 			break;
@@ -961,6 +964,10 @@ public class Converter {
 		
 		switch(conversionType.gameVersionFrom) {
 		
+		case "0.9.0","0.9.1":
+			
+			toArea = fromZeroNineZero.convertBackerBG(fromArea,toArea);
+		
 		case "0.8.0":
 			
 			toArea = fromZeroEightZero.convertBackerBG(fromArea,toArea);
@@ -999,7 +1006,7 @@ public class Converter {
 		
 		switch(conversionType.gameVersionFrom) {
 		
-		case "0.8.0":
+		case "0.9.0","0.9.1","0.8.0":
 			
 			toArea = fromZeroEightZero.convertFronterBG(fromArea,toArea);
 		
@@ -1030,6 +1037,10 @@ public class Converter {
 		}
 		
 		switch (conversionType.gameVersionFrom) {
+		
+		case "0.9.0","0.9.1":
+			
+			toArea = fromZeroNineZero.convertMusicIDs(fromArea,toArea);
 		
 		case "0.8.0":
 			
@@ -1070,7 +1081,7 @@ public class Converter {
 		
 		switch (conversionType.gameVersionFrom) {
 		
-		case "0.8.0":
+		case "0.9.0","0.9.1","0.8.0":
 			
 			tileArray = fromZeroEightZero.convertTiles(toArea,tileArray);
 		
@@ -1104,10 +1115,24 @@ public class Converter {
 		AreaCode toArea = toLevel.getAreaCode(area);
 		
 		LevelObject[] objectArray = toArea.getObjects();
-		boolean[] conversionsDone = {false,false,false,false,false,false};
+		boolean[] conversionsDone = {false,false,false,false,false,false,false,false};
 		Object[] data;
 		
 		switch (conversionType.gameVersionFrom) {
+		
+		case "0.9.1":
+			
+			data = fromZeroNineOne.convertObjects(toArea,objectArray,conversionsDone);
+			
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
+		
+		case "0.9.0":
+			
+			data = fromZeroNineZero.convertObjects(toArea,objectArray,conversionsDone);
+			
+			objectArray = (LevelObject[]) data[0];
+			conversionsDone = (boolean[]) data[1];
 		
 		case "0.8.0":
 			
