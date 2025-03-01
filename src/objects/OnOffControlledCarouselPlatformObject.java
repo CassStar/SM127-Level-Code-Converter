@@ -7,7 +7,8 @@ import util.Utility;
 
 public class OnOffControlledCarouselPlatformObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts,platformCount;
+	public int ID,pallete = 0;
+	public long parts,platformCount;
 	public double[] position,scale;
 	public double rotation,speed,radius,startAngle;
 	public boolean enabled,visible,unkownBooleanValue,inverted;
@@ -38,10 +39,10 @@ public class OnOffControlledCarouselPlatformObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
+		parts = (long) objectData[7].getValue();
 		speed = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		radius = (double) Double.valueOf(String.valueOf(objectData[9].getValue()));
-		platformCount = (int) objectData[10].getValue();
+		platformCount = (long) objectData[10].getValue();
 		startAngle = (double) Double.valueOf(String.valueOf(objectData[11].getValue()));
 		unkownBooleanValue = (boolean) objectData[12].getValue();
 		inverted = (boolean) objectData[13].getValue();

@@ -2,18 +2,22 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
-import types.Vector2Type;
+import types.*;
 import util.Utility;
 
 public class CheckpointObject extends LevelObject {
 	
-	public int ID,pallete = 0,spawnYOffset;
-	public double[] position,scale;
-	public double rotation;
-	public boolean enabled,visible,saveWaterLevel,saveSwitchState;
+	public int ID,pallete = 0;
+	public long spawnYOffset = 0;
+	public double[] position = {0,0},scale = {1,1};
+	public double rotation = 0;
+	public boolean enabled = true,visible = true,saveWaterLevel = true,saveSwitchState = true;
 	
 	public CheckpointObject(String data,ConversionType type) throws Exception {
 		super(data,type);
+		
+		defaultValues = new Object[] {ID,pallete,position,scale,rotation,enabled,visible,saveWaterLevel,spawnYOffset,saveSwitchState};
+		
 		setupValues();
 	}
 	
@@ -25,24 +29,34 @@ public class CheckpointObject extends LevelObject {
 	protected void setPosition(double[] position) {
 		
 		this.position = position.clone();
-		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+		objectData[2] = new Vector2Type(Utility.vector2ToString(this.position,false));
 	}
 	
 	void setupValues() {
 		
+		objectData = Utility.ensureMinimumLength(objectData,9);
+		
 		ID = objectID;
-		pallete = (int) objectData[1].getValue();
-		position = (double[]) objectData[2].getValue();
-		scale = (double[]) objectData[3].getValue();
-		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
-		enabled = (boolean) objectData[5].getValue();
-		visible = (boolean) objectData[6].getValue();
-		saveWaterLevel = (boolean) objectData[7].getValue();
-		spawnYOffset = (int) objectData[8].getValue();
+		pallete = (objectData[1] == null) ? pallete:(int) objectData[1].getValue();
+		position = (objectData[2] == null) ? position:(double[]) objectData[2].getValue();
+		scale = (objectData[3] == null) ? scale:(double[]) objectData[3].getValue();
+		rotation = (objectData[4] == null) ? rotation:(double) Double.valueOf(String.valueOf(objectData[4].getValue()));
+		enabled = (objectData[5] == null) ? enabled:(boolean) objectData[5].getValue();
+		visible = (objectData[6] == null) ? visible:(boolean) objectData[6].getValue();
+		saveWaterLevel = (objectData[7] == null) ? saveWaterLevel:(boolean) objectData[7].getValue();
+		spawnYOffset = (objectData[8] == null) ? spawnYOffset:(long) objectData[8].getValue();
+		
+		if (objectData[2] == null) { objectData[2] = new Vector2Type(Utility.vector2ToString(position,false));}
+		if (objectData[3] == null) { objectData[3] = new Vector2Type(Utility.vector2ToString(scale,false));}
+		if (objectData[4] == null) { objectData[4] = new FloatType(Utility.floatToString(rotation));}
+		if (objectData[5] == null) { objectData[5] = new BooleanType(Utility.booleanToString(enabled));}
+		if (objectData[6] == null) { objectData[6] = new BooleanType(Utility.booleanToString(visible));}
+		if (objectData[7] == null) { objectData[7] = new BooleanType(Utility.booleanToString(saveWaterLevel));}
+		if (objectData[8] == null) { objectData[8] = new IntegerType(Utility.integerToString(spawnYOffset));}
 		
 		if (objectData.length > 9) {
 			
-			saveSwitchState = (boolean) objectData[9].getValue();
+			saveSwitchState = (objectData[9] == null) ? saveSwitchState:(boolean) objectData[9].getValue();
 		}
 	}
 

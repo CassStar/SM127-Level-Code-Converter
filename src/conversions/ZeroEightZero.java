@@ -28,7 +28,9 @@ public class ZeroEightZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getBackerBG()) {
+			int backerBG = (int) fromArea.getBackerBG();
+			
+			switch(backerBG) {
 			
 			// Underwater (Light streaming in top, plants and rocks on bottom)
 			case 7:
@@ -75,7 +77,9 @@ public class ZeroEightZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getFronterBG()) {
+			int fronterBG = (int) fromArea.getFronterBG();
+			
+			switch(fronterBG) {
 			
 			// Yoshi's Island Styled Forest
 			case 14:
@@ -131,7 +135,9 @@ public class ZeroEightZero implements ConversionBase {
 			// Underwater Rocks and Coral
 			case 21:
 				
-				switch(fromArea.getBGPallete()) {
+				int bgPallete = (int) fromArea.getBGPallete();
+				
+				switch(bgPallete) {
 				
 				// Blue-Coloured palette.
 				case 4:
@@ -162,7 +168,9 @@ public class ZeroEightZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getMusicID()) {
+			int musicID = (int) fromArea.getMusicID();
+			
+			switch(musicID) {
 			
 			// Metallic Mario (Legacy)
 			case 65:

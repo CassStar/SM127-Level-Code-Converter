@@ -2,19 +2,23 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
-import types.Vector2Type;
+import types.*;
 import util.Utility;
 
 public class WarpPipeTopObject extends LevelObject {
 	
-	public int ID,pallete = 0,areaID;
-	public double[] position,scale,colour,destination;
-	public double rotation;
-	public boolean enabled,visible,teleportMode,forceFadeOut;
-	public String tag;
+	public int ID,pallete = 0;
+	public long areaID = 0;
+	public double[] position = {0,0},scale = {1,1},colour = {0,1,0,1},destination = {0,0};
+	public double rotation = 0;
+	public boolean enabled = true,visible = true,teleportMode = true,forceFadeOut = false;
+	public String tag = "default_teleporter";
 	
 	public WarpPipeTopObject(String data,ConversionType type) throws Exception {
 		super(data,type);
+		
+		defaultValues = new Object[] {ID,pallete,position,scale,rotation,enabled,visible,areaID,tag,colour,teleportMode,forceFadeOut};
+		
 		setupValues();
 	}
 	
@@ -26,42 +30,46 @@ public class WarpPipeTopObject extends LevelObject {
 	protected void setPosition(double[] position) {
 		
 		this.position = position.clone();
-		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+		objectData[2] = new Vector2Type(Utility.vector2ToString(this.position,false));
 	}
 	
 	void setupValues() {
 		
+		objectData = Utility.ensureMinimumLength(objectData,8);
+		
 		ID = objectID;
-		position = (double[]) objectData[2].getValue();
-		scale = (double[]) objectData[3].getValue();
-		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
-		enabled = (boolean) objectData[5].getValue();
-		visible = (boolean) objectData[6].getValue();
-		areaID = (int) objectData[7].getValue();
+		pallete = (objectData[1] == null) ? pallete:(int) objectData[1].getValue();
+		position = (objectData[2] == null) ? position:(double[]) objectData[2].getValue();
+		scale = (objectData[3] == null) ? scale:(double[]) objectData[3].getValue();
+		rotation = (objectData[4] == null) ? rotation:(double) Double.valueOf(String.valueOf(objectData[4].getValue()));
+		enabled = (objectData[5] == null) ? enabled:(boolean) objectData[5].getValue();
+		visible = (objectData[6] == null) ? visible:(boolean) objectData[6].getValue();
+		areaID = (objectData[7] == null) ? areaID:(long) objectData[7].getValue();
+		
+		if (objectData[2] == null) { objectData[2] = new Vector2Type(Utility.vector2ToString(position,false));}
+		if (objectData[3] == null) { objectData[3] = new Vector2Type(Utility.vector2ToString(scale,false));}
+		if (objectData[4] == null) { objectData[4] = new FloatType(Utility.floatToString(rotation));}
+		if (objectData[5] == null) { objectData[5] = new BooleanType(Utility.booleanToString(enabled));}
+		if (objectData[6] == null) { objectData[6] = new BooleanType(Utility.booleanToString(visible));}
+		if (objectData[7] == null) { objectData[7] = new IntegerType(Utility.integerToString(areaID));}
 		
 		switch (objectData.length) {
 		
 		case 12:
 			
-			forceFadeOut = (boolean) objectData[11].getValue();
+			forceFadeOut = (objectData[11] == null) ? forceFadeOut:(boolean) objectData[11].getValue();
 		
 		case 11:
 			
-			pallete = (int) objectData[1].getValue();
-			tag = String.valueOf(objectData[8].getValue());
-			colour = (double[]) objectData[9].getValue();
-			teleportMode = (boolean) objectData[10].getValue();
+			tag = (objectData[8] == null) ? tag:String.valueOf(objectData[8].getValue());
+			colour = (objectData[9] == null) ? colour:(double[]) objectData[9].getValue();
+			teleportMode = (objectData[10] == null) ? teleportMode:(boolean) objectData[10].getValue();
 			break;
 		
 		case 10:
 			
-			pallete = (int) objectData[1].getValue();
-			break;
-		
-		case 9:
-			
-			destination = (double[]) objectData[8].getValue();
-			teleportMode = (boolean) objectData[9].getValue();
+			destination = (objectData[8] == null) ? destination:(double[]) objectData[8].getValue();
+			teleportMode = (objectData[9] == null) ? teleportMode:(boolean) objectData[9].getValue();
 			break;
 		}
 	}

@@ -34,16 +34,21 @@ public class Curve2DType implements DataType {
 		
 		for (int i = 0;i < value.length;i++) {
 			
-			output = output.append(Utility.doubleToString(value[i][0]));
-			output = output.append("x");
-			output = output.append(Utility.doubleToString(value[i][1]));
-			output = output.append("XX");
-			
-			if (value[i].length > 2) {
+			for (int j = 0;j < value[i].length;j += 2) {
 				
-				output = output.append(Utility.doubleToString(value[i][2]));
+				output = output.append(Utility.doubleToString(value[i][j]));
 				output = output.append("x");
-				output = output.append(Utility.doubleToString(value[i][3]));
+				output = output.append(Utility.doubleToString(value[i][j+1]));
+				output = output.append("X");
+			}
+			
+			if (value[i].length < 3) {
+				
+				output = output.append("X");
+				
+			} else if (value[i].length == 6) {
+				
+				output = output.deleteCharAt(output.length()-1);
 			}
 			
 			output = output.append(":");

@@ -7,7 +7,8 @@ import util.Utility;
 
 public class FloatingDuckPlatformObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts,strongBouncePower;
+	public int ID,pallete = 0;
+	public long strongBouncePower;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible,physicsEnabled;
@@ -37,8 +38,7 @@ public class FloatingDuckPlatformObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
-		strongBouncePower = (int) objectData[8].getValue();
-		physicsEnabled = (boolean) objectData[9].getValue();
+		strongBouncePower = (long) objectData[7].getValue();
+		physicsEnabled = (boolean) objectData[8].getValue();
 	}
 }

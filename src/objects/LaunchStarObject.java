@@ -7,7 +7,8 @@ import util.Utility;
 
 public class LaunchStarObject extends LevelObject {
 	
-	public int ID,pallete = 0,speed;
+	public int ID,pallete = 0;
+	public long speed;
 	public double[] position,scale;
 	public double[][] path,pathDuplicate;
 	public double rotation;
@@ -40,6 +41,6 @@ public class LaunchStarObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		path = (double[][]) objectData[7].getValue();
 		pathDuplicate = (double[][]) objectData[8].getValue();
-		speed = (int) objectData[9].getValue();
+		speed = (long) objectData[9].getValue();
 	}
 }

@@ -7,7 +7,8 @@ import util.Utility;
 
 public class RainbowBrickBlockObject extends LevelObject {
 	
-	public int ID,pallete = 0,coins;
+	public int ID,pallete = 0;
+	public long coins;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible;
@@ -36,7 +37,7 @@ public class RainbowBrickBlockObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		coins = (int) objectData[7].getValue();
+		coins = (long) objectData[7].getValue();
 		
 		if (objectData.length > 7) {
 			

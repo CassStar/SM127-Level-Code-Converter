@@ -7,7 +7,8 @@ import util.Utility;
 
 public class ZoomTriggerObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts;
+	public int ID,pallete = 0;
+	public long parts;
 	public double[] position,scale;
 	public double rotation,targetZoom,zoomTime;
 	public boolean enabled,visible;
@@ -39,7 +40,7 @@ public class ZoomTriggerObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		targetZoom = (double) Double.valueOf(String.valueOf(objectData[7].getValue()));
 		zoomTime = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
-		parts = (int) objectData[9].getValue();
+		parts = (long) objectData[9].getValue();
 		
 	}
 	

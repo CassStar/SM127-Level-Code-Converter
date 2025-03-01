@@ -7,7 +7,8 @@ import util.Utility;
 
 public class SeesawPlatformObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts;
+	public int ID,pallete = 0;
+	public long parts;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible;
@@ -36,7 +37,7 @@ public class SeesawPlatformObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
+		parts = (long) objectData[7].getValue();
 		
 		if (objectData.length > 7) {
 			

@@ -2,6 +2,7 @@ package level;
 
 import java.util.ArrayList;
 
+import main.Converter;
 import main.ProgramLogger;
 import main.ProgramLogger.LogType;
 import objects.*;
@@ -13,7 +14,7 @@ import util.Utility;
 public class AreaCode {
 	
 	String areaData,musicData;
-	int backerBG,fronterBG,musicID,BGPallete;
+	long backerBG,fronterBG,musicID,BGPallete;
 	int[] tileTypeSeperationIndexes;
 	double gravity,timer;
 	double[] dimensions;
@@ -49,44 +50,44 @@ public class AreaCode {
 		dimensions = value.clone();
 	}
 	
-	public int getBackerBG() {
+	public long getBackerBG() {
 		
-		return Integer.valueOf(backerBG);
+		return Long.valueOf(backerBG);
 	}
 	
-	public void setBackerBG(int value) {
+	public void setBackerBG(long value) {
 		
-		backerBG = Integer.valueOf(value);
+		backerBG = Long.valueOf(value);
 	}
 	
-	public int getFronterBG() {
+	public long getFronterBG() {
 		
-		return Integer.valueOf(fronterBG);
+		return Long.valueOf(fronterBG);
 	}
 	
-	public void setFronterBG(int value) {
+	public void setFronterBG(long value) {
 		
-		fronterBG = Integer.valueOf(value);
+		fronterBG = Long.valueOf(value);
 	}
 	
-	public int getBGPallete() {
+	public long getBGPallete() {
 		
-		return Integer.valueOf(BGPallete);
+		return Long.valueOf(BGPallete);
 	}
 	
-	public void setBGPallete(int value) {
+	public void setBGPallete(long value) {
 		
-		BGPallete = Integer.valueOf(value);
+		BGPallete = Long.valueOf(value);
 	}
 	
-	public int getMusicID() {
+	public long getMusicID() {
 		
-		return Integer.valueOf(musicID);
+		return Long.valueOf(musicID);
 	}
 	
-	public void setMusicID(int value) {
+	public void setMusicID(long value) {
 		
-		musicID = Integer.valueOf(value);
+		musicID = Long.valueOf(value);
 	}
 	
 	String getMusicData() {
@@ -226,11 +227,11 @@ public class AreaCode {
 		
 		case 0:
 			
-			return new MarioSpawnObject(data,levelCode.conversionType);
+			return new SpawnPlayer1Object(data,levelCode.conversionType);
 		
 		case 1:
 			
-			return new YellowCoinObject(data,levelCode.conversionType);
+			return new CoinYellowObject(data,levelCode.conversionType);
 			
 		case 2:
 			
@@ -238,15 +239,15 @@ public class AreaCode {
 			
 		case 3:
 			
-			return new MetalPlatformObject(data,levelCode.conversionType);
+			return new PlatformMetalObject(data,levelCode.conversionType);
 			
 		case 4:
 			
-			return new SM64TreeObject(data,levelCode.conversionType);
+			return new TreeSM64Object(data,levelCode.conversionType);
 			
 		case 5:
 			
-			return new LuigiSpawnObject(data,levelCode.conversionType);
+			return new SpawnPlayer2Object(data,levelCode.conversionType);
 			
 		case 6:
 			
@@ -262,23 +263,23 @@ public class AreaCode {
 			
 		case 9:
 			
-			return new CloudPlatformObject(data,levelCode.conversionType);
+			return new PlatformCloudObject(data,levelCode.conversionType);
 			
 		case 10:
 			
-			return new FallingLogObject(data,levelCode.conversionType);
+			return new LogFallingObject(data,levelCode.conversionType);
 			
 		case 11:
 			
-			return new LargeBushesObject(data,levelCode.conversionType);
+			return new BushesLargeObject(data,levelCode.conversionType);
 			
 		case 12:
 			
-			return new SmallBushesObject(data,levelCode.conversionType);
+			return new BushesSmallObject(data,levelCode.conversionType);
 			
 		case 13:
 			
-			return new BonePlatformObject(data,levelCode.conversionType);
+			return new PlatformBoneObject(data,levelCode.conversionType);
 			
 		case 14:
 			
@@ -290,19 +291,19 @@ public class AreaCode {
 			
 		case 16:
 			
-			return new TwistedTreeTopObject(data,levelCode.conversionType);
+			return new TreeTwistedTopObject(data,levelCode.conversionType);
 			
 		case 17:
 			
-			return new TwistedTreeBodyObject(data,levelCode.conversionType);
+			return new TreeTwistedBodyObject(data,levelCode.conversionType);
 			
 		case 18:
 			
-			return new TwistedTreeAngleObject(data,levelCode.conversionType);
+			return new TreeTwistedAngleObject(data,levelCode.conversionType);
 			
 		case 19:
 			
-			return new HoverFluddObject(data,levelCode.conversionType);
+			return new FluddHoverObject(data,levelCode.conversionType);
 			
 		case 20:
 			
@@ -310,11 +311,11 @@ public class AreaCode {
 			
 		case 21:
 			
-			return new SmallWaterBottleObject(data,levelCode.conversionType);
+			return new WaterBottleSmallObject(data,levelCode.conversionType);
 			
 		case 22:
 			
-			return new LargeWaterBottleObject(data,levelCode.conversionType);
+			return new WaterBottleLargeObject(data,levelCode.conversionType);
 			
 		case 23:
 			
@@ -322,7 +323,7 @@ public class AreaCode {
 			
 		case 24:
 			
-			return new SmallSnowyTreeObject(data,levelCode.conversionType);
+			return new TreeSnowySmallObject(data,levelCode.conversionType);
 			
 		case 25:
 			
@@ -346,7 +347,7 @@ public class AreaCode {
 			
 		case 30:
 			
-			return new RedCoinObject(data,levelCode.conversionType);
+			return new CoinRedObject(data,levelCode.conversionType);
 			
 		case 31:
 			
@@ -354,19 +355,19 @@ public class AreaCode {
 			
 		case 32:
 			
-			return new SnowyPlatformObject(data,levelCode.conversionType);
+			return new PlatformSnowyObject(data,levelCode.conversionType);
 			
 		case 33:
 			
-			return new BreakableBlockObject(data,levelCode.conversionType);
+			return new BlockBreakableObject(data,levelCode.conversionType);
 			
 		case 34:
 			
-			return new EnchantedGearObject(data,levelCode.conversionType);
+			return new PowerUpEnchantedGearObject(data,levelCode.conversionType);
 			
 		case 35:
 			
-			return new MetalBrickBlockObject(data,levelCode.conversionType);
+			return new BlockBrickMetalObject(data,levelCode.conversionType);
 			
 		case 36:
 			
@@ -378,31 +379,31 @@ public class AreaCode {
 			
 		case 38:
 			
-			return new RocketFluddObject(data,levelCode.conversionType);
+			return new FluddRocketObject(data,levelCode.conversionType);
 			
 		case 39:
 			
-			return new TurboFluddObject(data,levelCode.conversionType);
+			return new FluddTurboObject(data,levelCode.conversionType);
 			
 		case 40:
 			
-			return new BlueCoinObject(data,levelCode.conversionType);
+			return new CoinBlueObject(data,levelCode.conversionType);
 			
 		case 41:
 			
-			return new RainbowStarObject(data,levelCode.conversionType);
+			return new PowerUpRainbowStarObject(data,levelCode.conversionType);
 			
 		case 42:
 			
-			return new RainbowBrickBlockObject(data,levelCode.conversionType);
+			return new BlockBrickRainbowObject(data,levelCode.conversionType);
 			
 		case 43:
 			
-			return new GhostPepperObject(data,levelCode.conversionType);
+			return new PowerUpGhostPepperObject(data,levelCode.conversionType);
 			
 		case 44:
 			
-			return new IronBarsObject(data,levelCode.conversionType);
+			return new BarsIronObject(data,levelCode.conversionType);
 			
 		case 45:
 			
@@ -414,7 +415,7 @@ public class AreaCode {
 			
 		case 47:
 			
-			return new SeesawPlatformObject(data,levelCode.conversionType);
+			return new PlatformSeesawObject(data,levelCode.conversionType);
 			
 		case 48:
 			
@@ -422,15 +423,15 @@ public class AreaCode {
 			
 		case 49:
 			
-			return new MovingPlatformObject(data,levelCode.conversionType);
+			return new PlatformMovingObject(data,levelCode.conversionType);
 			
 		case 50:
 			
-			return new CarouselPlatformObject(data,levelCode.conversionType);
+			return new PlatformCarouselObject(data,levelCode.conversionType);
 			
 		case 51:
 			
-			return new PearlPlatformObject(data,levelCode.conversionType);
+			return new PlatformPearlObject(data,levelCode.conversionType);
 		
 		case 52:
 			
@@ -442,63 +443,63 @@ public class AreaCode {
 			
 		case 54:
 			
-			return new SmallCaveTreeObject(data,levelCode.conversionType);
+			return new TreeCaveSmallObject(data,levelCode.conversionType);
 			
 		case 55:
 			
-			return new LargeCaveTreeObject(data,levelCode.conversionType);
+			return new TreeCaveLargeObject(data,levelCode.conversionType);
 			
 		case 56:
 			
-			return new WoodenPlatformObject(data,levelCode.conversionType);
+			return new PlatformWoodenObject(data,levelCode.conversionType);
 			
 		case 57:
 			
-			return new SuperFeatherObject(data,levelCode.conversionType);
+			return new PowerUpSuperFeatherObject(data,levelCode.conversionType);
 			
 		case 58:
 			
-			return new NoteblockObject(data,levelCode.conversionType);
+			return new BlockNoteObject(data,levelCode.conversionType);
 			
 		case 59:
 			
-			return new LargeSnowyTreeObject(data,levelCode.conversionType);
+			return new TreeSnowyLargeObject(data,levelCode.conversionType);
 			
 		case 60:
 			
-			return new ShortSnowyPillarObject(data,levelCode.conversionType);
+			return new PillarSnowyShortObject(data,levelCode.conversionType);
 			
 		case 61:
 			
-			return new TallSnowyPillarObject(data,levelCode.conversionType);
+			return new PillarSnowyTallObject(data,levelCode.conversionType);
 			
 		case 62:
 			
-			return new SmallPineTreeObject(data,levelCode.conversionType);
+			return new TreePineSmallObject(data,levelCode.conversionType);
 			
 		case 63:
 			
-			return new LargePineTreeObject(data,levelCode.conversionType);
+			return new TreePineLargeObject(data,levelCode.conversionType);
 			
 		case 64:
 			
-			return new CavePlantObject(data,levelCode.conversionType);
+			return new PlantCaveObject(data,levelCode.conversionType);
 			
 		case 65:
 			
-			return new TallCaveSporeObject(data,levelCode.conversionType);
+			return new SporeCaveTallObject(data,levelCode.conversionType);
 			
 		case 66:
 			
-			return new ShortCaveSporeObject(data,levelCode.conversionType);
+			return new SporeCaveShortObject(data,levelCode.conversionType);
 			
 		case 67:
 			
-			return new SnowyLogObject(data,levelCode.conversionType);
+			return new LogSnowyObject(data,levelCode.conversionType);
 			
 		case 68:
 			
-			return new CastleWindowObject(data,levelCode.conversionType);
+			return new WindowCastleObject(data,levelCode.conversionType);
 			
 		case 69:
 			
@@ -518,7 +519,7 @@ public class AreaCode {
 			
 		case 73:
 			
-			return new LargeStoneObject(data,levelCode.conversionType);
+			return new StoneLargeObject(data,levelCode.conversionType);
 			
 		case 74:
 			
@@ -530,7 +531,7 @@ public class AreaCode {
 			
 		case 76:
 			
-			return new SmallBeachTreeObject(data,levelCode.conversionType);
+			return new TreeBeachSmallObject(data,levelCode.conversionType);
 			
 		case 77:
 			
@@ -542,15 +543,15 @@ public class AreaCode {
 			
 		case 79:
 			
-			return new PSwitchBlockObject(data,levelCode.conversionType);
+			return new BlockPSwitchObject(data,levelCode.conversionType);
 			
 		case 80:
 			
-			return new PSwitchObject(data,levelCode.conversionType);
+			return new ButtonPObject(data,levelCode.conversionType);
 			
 		case 81:
 			
-			return new FluidControllerObject(data,levelCode.conversionType);
+			return new ControllerFluidObject(data,levelCode.conversionType);
 			
 		case 82:
 			
@@ -558,11 +559,11 @@ public class AreaCode {
 			
 		case 83:
 			
-			return new FirePillarObject(data,levelCode.conversionType);
+			return new PillarFireObject(data,levelCode.conversionType);
 			
 		case 84:
 			
-			return new CharredTreeObject(data,levelCode.conversionType);
+			return new TreeCharredObject(data,levelCode.conversionType);
 			
 		case 85:
 			
@@ -570,51 +571,51 @@ public class AreaCode {
 			
 		case 86:
 			
-			return new LargeBeachTreeObject(data,levelCode.conversionType);
+			return new TreeBeachLargeObject(data,levelCode.conversionType);
 			
 		case 87:
 			
-			return new RoundBuildingWindowObject(data,levelCode.conversionType);
+			return new WindowRoundBuildingObject(data,levelCode.conversionType);
 			
 		case 88:
 			
-			return new SpikeTrapObject(data,levelCode.conversionType);
+			return new TrapSpikeObject(data,levelCode.conversionType);
 			
 		case 89:
 			
-			return new PipeBodySegmentObject(data,levelCode.conversionType);
+			return new WarpPipeBodyObject(data,levelCode.conversionType);
 			
 		case 90:
 			
-			return new PipeMetalConnectorObject(data,levelCode.conversionType);
+			return new WarpPipeConnectorObject(data,levelCode.conversionType);
 			
 		case 91:
 			
-			return new RecoveryHeartObject(data,levelCode.conversionType);
+			return new HeartSpinningObject(data,levelCode.conversionType);
 			
 		case 92:
 			
-			return new OnOffSwitchObject(data,levelCode.conversionType);
+			return new BlockOnOffObject(data,levelCode.conversionType);
 			
 		case 93:
 			
-			return new OnOffControlledBlockObject(data,levelCode.conversionType);
+			return new BlockOnOffControlledObject(data,levelCode.conversionType);
 		
 		case 94:
 			
-			return new OnOffControlledMovingPlatformObject(data,levelCode.conversionType);
+			return new PlatformOnOffControlledMovingObject(data,levelCode.conversionType);
 			
 		case 95:
 			
-			return new OnOffButtonObject(data,levelCode.conversionType);
+			return new ButtonOnOffObject(data,levelCode.conversionType);
 			
 		case 96:
 			
-			return new OnOffControlledCarouselPlatformObject(data,levelCode.conversionType);
+			return new PlatformOnOffControlledCarouselObject(data,levelCode.conversionType);
 			
 		case 97:
 			
-			return new MediumCoralObject(data,levelCode.conversionType);
+			return new CoralMediumObject(data,levelCode.conversionType);
 			
 		case 98:
 			
@@ -630,15 +631,15 @@ public class AreaCode {
 			
 		case 101:
 			
-			return new LargeCoralObject(data,levelCode.conversionType);
+			return new CoralLargeObject(data,levelCode.conversionType);
 			
 		case 102:
 			
-			return new SmallCoralObject(data,levelCode.conversionType);
+			return new CoralSmallObject(data,levelCode.conversionType);
 			
 		case 103:
 			
-			return new RadialQuarterSpiderWebObject(data,levelCode.conversionType);
+			return new SpiderWebRadialQuarterObject(data,levelCode.conversionType);
 			
 		case 104:
 			
@@ -646,23 +647,23 @@ public class AreaCode {
 			
 		case 105:
 			
-			return new SmallCrystalObject(data,levelCode.conversionType);
+			return new CrystalSmallObject(data,levelCode.conversionType);
 			
 		case 106:
 			
-			return new MediumCrystalObject(data,levelCode.conversionType);
+			return new CrystalMediumObject(data,levelCode.conversionType);
 			
 		case 107:
 			
-			return new LargeCrystalObject(data,levelCode.conversionType);
+			return new CrystalLargeObject(data,levelCode.conversionType);
 			
 		case 108:
 			
-			return new LaunchStarObject(data,levelCode.conversionType);
+			return new StarLaunchObject(data,levelCode.conversionType);
 			
 		case 109:
 			
-			return new SlingStarObject(data,levelCode.conversionType);
+			return new StarSlingObject(data,levelCode.conversionType);
 			
 		case 110:
 			
@@ -670,15 +671,15 @@ public class AreaCode {
 			
 		case 111:
 			
-			return new DeathPlaneObject(data,levelCode.conversionType);
+			return new ControllerDeathObject(data,levelCode.conversionType);
 			
 		case 112:
 			
-			return new WarpZoneObject(data,levelCode.conversionType);
+			return new ControllerWarpObject(data,levelCode.conversionType);
 			
 		case 113:
 			
-			return new ConditionLockedDoorObject(data,levelCode.conversionType);
+			return new DoorConditionLockedObject(data,levelCode.conversionType);
 			
 		case 114:
 			
@@ -686,23 +687,23 @@ public class AreaCode {
 			
 		case 115:
 			
-			return new RadialHalfSpiderWebObject(data,levelCode.conversionType);
+			return new SpiderWebRadialHalfObject(data,levelCode.conversionType);
 			
 		case 116:
 			
-			return new CornerSpiderWebObject(data,levelCode.conversionType);
+			return new SpiderWebCornerObject(data,levelCode.conversionType);
 			
 		case 117:
 			
-			return new LengthWiseSpiderWebObject(data,levelCode.conversionType);
+			return new SpiderWebLengthWiseObject(data,levelCode.conversionType);
 			
 		case 118:
 			
-			return new FlowerPlatformObject(data,levelCode.conversionType);
+			return new PlatformFlowerObject(data,levelCode.conversionType);
 			
 		case 119:
 			
-			return new VineBuddedEndObject(data,levelCode.conversionType);
+			return new VineEndBuddedObject(data,levelCode.conversionType);
 			
 		case 120:
 			
@@ -710,39 +711,39 @@ public class AreaCode {
 			
 		case 121:
 			
-			return new SpikyVineObject(data,levelCode.conversionType);
+			return new VineSpikyObject(data,levelCode.conversionType);
 			
 		case 122:
 			
-			return new VineQuarterCircleCurveObject(data,levelCode.conversionType);
+			return new VineCurveQuarterCircleObject(data,levelCode.conversionType);
 		
 		case 123:
 			
-			return new VineCurledEndObject(data,levelCode.conversionType);
+			return new VineEndCurledObject(data,levelCode.conversionType);
 			
 		case 124:
 			
-			return new WoodenTopFloatingPlatformObject(data,levelCode.conversionType);
+			return new PlatformFloatingWoodenTopObject(data,levelCode.conversionType);
 			
 		case 125:
 			
-			return new FloatingDuckPlatformObject(data,levelCode.conversionType);
+			return new PlatformFloatingDuckObject(data,levelCode.conversionType);
 			
 		case 126:
 			
-			return new ZoomTriggerObject(data,levelCode.conversionType);
+			return new ControllerZoomObject(data,levelCode.conversionType);
 			
 		case 127:
 			
-			return new ToadNPCObject(data,levelCode.conversionType);
+			return new NPCToadObject(data,levelCode.conversionType);
 			
 		case 128:
 			
-			return new DialogueControllerObject(data,levelCode.conversionType);
+			return new ControllerDialogueObject(data,levelCode.conversionType);
 			
 		case 129:
 			
-			return new WindAreaObject(data,levelCode.conversionType);
+			return new AreaWindObject(data,levelCode.conversionType);
 			
 		case 130:
 			
@@ -750,11 +751,11 @@ public class AreaCode {
 			
 		case 131:
 			
-			return new BoneGoonieObject(data,levelCode.conversionType);
+			return new GoonieBoneObject(data,levelCode.conversionType);
 			
 		case 132:
 			
-			return new GoggleCheepObject(data,levelCode.conversionType);
+			return new CheepGoggleObject(data,levelCode.conversionType);
 			
 		case 133:
 			
@@ -774,15 +775,15 @@ public class AreaCode {
 			
 		case 137:
 			
-			return new PrincessPeachNPCObject(data,levelCode.conversionType);
+			return new NPCPrincessPeachObject(data,levelCode.conversionType);
 			
 		case 138:
 			
-			return new YoshiNPCObject(data,levelCode.conversionType);
+			return new NPCYoshiObject(data,levelCode.conversionType);
 			
 		case 139:
 			
-			return new BobOmbNPCObject(data,levelCode.conversionType);
+			return new NPCBobOmbObject(data,levelCode.conversionType);
 			
 		case 140:
 			
@@ -790,12 +791,12 @@ public class AreaCode {
 			
 		case 141:
 			
-			return new MossyRockBunchObject(data,levelCode.conversionType);
+			return new StoneMossyObject(data,levelCode.conversionType);
 				
 		default:
 			
 			ProgramLogger.logMessage("Invalid ID for object detected! Converting object to Turbo Fludd object.",LogType.WARNING);
-			return new TurboFluddObject(data,levelCode.conversionType);
+			return new FluddTurboObject(data,levelCode.conversionType);
 		}
 	}
 	
@@ -1483,7 +1484,7 @@ public class AreaCode {
 		
 		StringBuilder areaData = new StringBuilder("[");
 		
-		areaData.append(Utility.vector2DToString(dimensions,true));
+		areaData.append(Utility.vector2ToString(dimensions,true));
 		areaData.append(",IT");
 		areaData.append(backerBG);
 		areaData.append(",IT");
@@ -1497,7 +1498,11 @@ public class AreaCode {
 			
 		} else {
 			
-			areaData.append("ST");
+			if (!musicData.startsWith("ST")) {
+				
+				areaData.append("ST");
+			}
+			
 			areaData.append(musicData);
 		}
 		
@@ -1573,8 +1578,25 @@ public class AreaCode {
 		
 		for (LevelObject object:objects) {
 			
+			boolean toggleOptimize = false;
+			
+			if (object instanceof ShineSpriteObject || object instanceof StarCoinObject) {
+				
+				toggleOptimize = true;
+			}
+			
+			if (toggleOptimize) {
+				
+				Converter.setOptimizeObjectCode(false);
+			}
+			
 			data.append(object.toString());
 			data.append('|');
+			
+			if (toggleOptimize) {
+				
+				Converter.setOptimizeObjectCode(true);
+			}
 		}
 		
 		data = data.deleteCharAt(data.length()-1);

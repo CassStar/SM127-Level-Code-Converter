@@ -28,7 +28,9 @@ public class ZeroSevenZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getBackerBG()) {
+			int backerBG = (int) fromArea.getBackerBG();
+			
+			switch(backerBG) {
 			
 			// Clouds Against a Red-Coloured Background
 			case 5:
@@ -50,12 +52,15 @@ public class ZeroSevenZero implements ConversionBase {
 			// Setting palette to zero, since versions lower than 0.7.0 don't have BG palettes.
 			toArea.setBGPallete(0);
 			
-			switch(fromArea.getFronterBG()) {
+			int fronterBG = (int) fromArea.getFronterBG();
+			int bgPallete = (int) fromArea.getBGPallete();
+			
+			switch(fronterBG) {
 			
 			// Green Hills With Blue Trees
 			case 1:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Light Blue Hills With Blue Trees
 				// Pale Pink Hills With Dark Red Trees
@@ -91,7 +96,7 @@ public class ZeroSevenZero implements ConversionBase {
 			// Green Hills Surrounded by Tropical Setting
 			case 8:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Normal Pallete
 				case 0:
@@ -127,7 +132,7 @@ public class ZeroSevenZero implements ConversionBase {
 			// Magma Caverns
 			case 9:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Frozen Caverns
 				case 3:
@@ -150,7 +155,7 @@ public class ZeroSevenZero implements ConversionBase {
 			// Stone Block Structure
 			case 10:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Dark Stone Block Structure
 				case 2:
@@ -173,7 +178,7 @@ public class ZeroSevenZero implements ConversionBase {
 			// Large Blue Pine Trees
 			case 11:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Normal Pallete
 				case 0:
@@ -202,7 +207,7 @@ public class ZeroSevenZero implements ConversionBase {
 			// Large Green Hills With Green Trees
 			case 13:
 				
-				switch(fromArea.getBGPallete()) {
+				switch(bgPallete) {
 				
 				// Large Snowy Hills With Snowy Trees
 				// Large Pale Pink Hills With Dark Red Trees
@@ -240,7 +245,9 @@ public class ZeroSevenZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getMusicID()) {
+			int musicID = (int) fromArea.getMusicID();
+			
+			switch(musicID) {
 			
 			// Ice Ice Outpost
 			case 39:

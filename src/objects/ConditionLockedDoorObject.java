@@ -7,7 +7,8 @@ import util.Utility;
 
 public class ConditionLockedDoorObject extends LevelObject {
 	
-	public int ID,pallete = 0,areaID,requiredAmount;
+	public int ID,pallete = 0;
+	public long areaID,requiredAmount;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible,teleportMode,doorType;
@@ -38,11 +39,11 @@ public class ConditionLockedDoorObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		areaID = (int) objectData[7].getValue();
+		areaID = (long) objectData[7].getValue();
 		destinationTag = String.valueOf(objectData[8].getValue());
 		teleportMode = (boolean) objectData[9].getValue();
 		collectible = String.valueOf(objectData[10].getValue());
-		requiredAmount = (int) objectData[11].getValue();
+		requiredAmount = (long) objectData[11].getValue();
 		
 		if (objectData.length > 13) {
 			

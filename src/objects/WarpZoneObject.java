@@ -7,7 +7,8 @@ import util.Utility;
 
 public class WarpZoneObject extends LevelObject {
 	
-	public int ID,pallete = 0,areaDestination,parts;
+	public int ID,pallete = 0;
+	public long areaDestination,parts;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible,teleportMode,vertical,stopsCamera,forceFadeOut;
@@ -38,11 +39,11 @@ public class WarpZoneObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		areaDestination = (int) objectData[7].getValue();
+		areaDestination = (long) objectData[7].getValue();
 		destinationTag = String.valueOf(objectData[8].getValue());
 		teleportMode = (boolean) objectData[9].getValue();
 		vertical = (boolean) objectData[10].getValue();
-		parts = (int) objectData[11].getValue();
+		parts = (long) objectData[11].getValue();
 		stopsCamera = (boolean) objectData[12].getValue();
 		
 		if (objectData.length > 13) {

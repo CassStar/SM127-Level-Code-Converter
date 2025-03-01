@@ -27,7 +27,9 @@ public class ZeroNineZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getBackerBG()) {
+			int backerBG = (int) fromArea.getBackerBG();
+			
+			switch(backerBG) {
 			
 			// Brown and Black Gradient
 			case 12:
@@ -52,7 +54,9 @@ public class ZeroNineZero implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getMusicID()) {
+			int musicID = (int) fromArea.getMusicID();
+			
+			switch(musicID) {
 			
 			// File Select (63)
 			case 67:

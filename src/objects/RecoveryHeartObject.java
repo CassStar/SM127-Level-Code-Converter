@@ -7,7 +7,8 @@ import util.Utility;
 
 public class RecoveryHeartObject extends LevelObject {
 	
-	public int ID,pallete = 0,minHealthPerSecond,coolDownTime;
+	public int ID,pallete = 0;
+	public long minHealthPerSecond,coolDownTime;
 	public double[] position,scale,colour;
 	public double rotation,healDuration;
 	public boolean enabled,visible,hasCoolDown,rainbow;
@@ -37,10 +38,10 @@ public class RecoveryHeartObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		minHealthPerSecond = (int) objectData[7].getValue();
+		minHealthPerSecond = (long) objectData[7].getValue();
 		healDuration = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		hasCoolDown = (boolean) objectData[9].getValue();
-		coolDownTime = (int) objectData[10].getValue();
+		coolDownTime = (long) objectData[10].getValue();
 		
 		if (objectData.length > 11) {
 			

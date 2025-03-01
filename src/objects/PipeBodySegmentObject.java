@@ -7,7 +7,8 @@ import util.Utility;
 
 public class PipeBodySegmentObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts;
+	public int ID,pallete = 0;
+	public long parts;
 	public double[] position,scale,colour;
 	public double rotation;
 	public boolean enabled,visible;
@@ -38,7 +39,7 @@ public class PipeBodySegmentObject extends LevelObject {
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
 		colour = (double[]) objectData[7].getValue();
-		parts = (int) objectData[8].getValue();
+		parts = (long) objectData[8].getValue();
 	}
 
 }

@@ -7,7 +7,8 @@ import util.Utility;
 
 public class DialogueControllerObject extends LevelObject {
 	
-	public int ID,pallete = 0,autoStart,displayMode;
+	public int ID,pallete = 0;
+	public long autoStart,displayMode;
 	public double[] position,scale;
 	public double rotation,targetZoom;
 	public boolean enabled,visible,interactable;
@@ -41,10 +42,10 @@ public class DialogueControllerObject extends LevelObject {
 		visible = (boolean) objectData[6].getValue();
 		dialogue = (String[]) objectData[7].getValue();
 		characterName = String.valueOf(objectData[8].getValue());
-		autoStart = (int) objectData[9].getValue();
+		autoStart = (long) objectData[9].getValue();
 		interactable = (boolean) objectData[10].getValue();
 		bubbleText = String.valueOf(objectData[11].getValue());
-		displayMode = (int) objectData[12].getValue();
+		displayMode = (long) objectData[12].getValue();
 		tag = String.valueOf(objectData[13].getValue());
 		delegateTag = String.valueOf(objectData[14].getValue());
 		targetZoom = (double) Double.valueOf(String.valueOf(objectData[15].getValue()));

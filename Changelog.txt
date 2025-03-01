@@ -1,1 +1,6 @@
-Added support for converting levels made in 0.9.1
+Object properties represented by integers in-game are now represented by longs in-code, since these values can sometimes be too large/small to fit in an integer
+Once again fixed a bug in the level re-arranger where tiles would be misplaced, hopefully for the last time
+The level re-arranger now better handles levels with an amount of areas greater than 10, and theoretically greater than 100 too, up to a max of 999 areas
+The level re-arranger now stops you from creating a level that exceeds the size limits of the level editor
+All objects now have default values which will be used if no value is provided by the level code
+Normalized most object names so that they are better grouped according to what type of object they are

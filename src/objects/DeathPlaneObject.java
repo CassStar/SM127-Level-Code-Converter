@@ -7,7 +7,8 @@ import util.Utility;
 
 public class DeathPlaneObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts;
+	public int ID,pallete = 0;
+	public long parts;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible,stopsCamera,vertical;
@@ -37,7 +38,7 @@ public class DeathPlaneObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
+		parts = (long) objectData[7].getValue();
 		stopsCamera = (boolean) objectData[8].getValue();
 		vertical = (boolean) objectData[9].getValue();
 	}

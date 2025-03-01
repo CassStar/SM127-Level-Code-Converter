@@ -4,7 +4,7 @@ import util.Utility;
 
 public class IntegerType implements DataType {
 	
-	int value;
+	long value;
 	String type;
 	
 	public IntegerType(String data) {
@@ -20,7 +20,7 @@ public class IntegerType implements DataType {
 	
 	public void setValue(Object data) {
 		
-		value = (int) data;
+		value = (long) data;
 	}
 	
 	public String getType() {

@@ -2,18 +2,22 @@ package objects;
 
 import level.LevelObject;
 import main.ConversionType;
-import types.Vector2Type;
+import types.*;
 import util.Utility;
 
 public class CannonObject extends LevelObject {
 	
-	public int ID,pallete = 0,launchPower,minRotation,maxRotation;
-	public double[] position,scale;
-	public double rotation,targetZoom;
-	public boolean enabled,visible,facesRight;
+	public int ID,pallete = 0;
+	public long launchPower = 1200,minRotation = 0,maxRotation = 90;
+	public double[] position = {0,0},scale = {1,1};
+	public double rotation = 0,targetZoom = 1.5;
+	public boolean enabled = true,visible = true,facesRight = true;
 	
 	public CannonObject(String data,ConversionType type) throws Exception {
 		super(data,type);
+		
+		defaultValues = new Object[] {ID,pallete,position,scale,rotation,enabled,visible,launchPower,minRotation,maxRotation,facesRight,targetZoom};
+		
 		setupValues();
 	}
 	
@@ -25,31 +29,38 @@ public class CannonObject extends LevelObject {
 	protected void setPosition(double[] position) {
 		
 		this.position = position.clone();
-		objectData[2] = new Vector2Type(Utility.vector2DToString(this.position,false));
+		objectData[2] = new Vector2Type(Utility.vector2ToString(this.position,false));
 	}
 	
 	void setupValues() {
 		
+		objectData = Utility.ensureMinimumLength(objectData,11);
+		
 		ID = objectID;
-		position = (double[]) objectData[2].getValue();
-		scale = (double[]) objectData[3].getValue();
-		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
-		enabled = (boolean) objectData[5].getValue();
-		visible = (boolean) objectData[6].getValue();
-		launchPower = (int) objectData[7].getValue();
-		minRotation = (int) objectData[8].getValue();
-		maxRotation = (int) objectData[9].getValue();
-		facesRight = (boolean) objectData[10].getValue();
+		pallete = (objectData[1] == null) ? pallete:(int) objectData[1].getValue();
+		position = (objectData[2] == null) ? position:(double[]) objectData[2].getValue();
+		scale = (objectData[3] == null) ? scale:(double[]) objectData[3].getValue();
+		rotation = (objectData[4] == null) ? rotation:(double) Double.valueOf(String.valueOf(objectData[4].getValue()));
+		enabled = (objectData[5] == null) ? enabled:(boolean) objectData[5].getValue();
+		visible = (objectData[6] == null) ? visible:(boolean) objectData[6].getValue();
+		launchPower = (objectData[7] == null) ? launchPower:(long) objectData[7].getValue();
+		minRotation = (objectData[8] == null) ? minRotation:(long) objectData[8].getValue();
+		maxRotation = (objectData[9] == null) ? maxRotation:(long) objectData[9].getValue();
+		facesRight = (objectData[10] == null) ? facesRight:(boolean) objectData[10].getValue();
 		
-		switch(objectData.length) {
+		if (objectData[2] == null) { objectData[2] = new Vector2Type(Utility.vector2ToString(position,false));}
+		if (objectData[3] == null) { objectData[3] = new Vector2Type(Utility.vector2ToString(scale,false));}
+		if (objectData[4] == null) { objectData[4] = new FloatType(Utility.floatToString(rotation));}
+		if (objectData[5] == null) { objectData[5] = new BooleanType(Utility.booleanToString(enabled));}
+		if (objectData[6] == null) { objectData[6] = new BooleanType(Utility.booleanToString(visible));}
+		if (objectData[7] == null) { objectData[7] = new IntegerType(Utility.integerToString(launchPower));}
+		if (objectData[8] == null) { objectData[8] = new IntegerType(Utility.integerToString(minRotation));}
+		if (objectData[9] == null) { objectData[9] = new IntegerType(Utility.integerToString(maxRotation));}
+		if (objectData[10] == null) { objectData[10] = new BooleanType(Utility.booleanToString(facesRight));}
 		
-		case 12:
-			
-			targetZoom = (double) Double.valueOf(String.valueOf(objectData[11].getValue()));
+		if (objectData.length > 11) {
 		
-		case 11:
-			
-			pallete = (int) objectData[1].getValue();
+			targetZoom = (objectData[11] == null) ? targetZoom:(double) Double.valueOf(String.valueOf(objectData[11].getValue()));
 		}
 	}
 

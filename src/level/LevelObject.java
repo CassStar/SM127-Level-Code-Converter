@@ -1,6 +1,7 @@
 package level;
 
 import main.ConversionType;
+import main.Converter;
 import types.*;
 import util.Utility;
 
@@ -10,13 +11,21 @@ public abstract class LevelObject {
 	public String stringData;
 	public DataType[] objectData;
 	protected ConversionType conversionType;
+	protected Object[] defaultValues;
 	
 	public LevelObject(String data,ConversionType type) throws Exception {
 		
 		stringData = data;
 		conversionType = type;
 		
-		String[] splitData = data.split(",");
+		String[] splitData;
+		
+		if (data.endsWith(",")) {
+			
+			data = data.concat("--");
+		}
+		
+		splitData = data.split(",");
 		String tempType;
 		
 		try {
@@ -32,8 +41,19 @@ public abstract class LevelObject {
 		if (Utility.isValidType(tempType)) {
 			
 			// Add pallete of 0.
-			data = data.substring(0,data.indexOf(',')+1)+"0,"+
-			data.substring(data.indexOf(',')+1);
+			if (data.indexOf(',') != -1) {
+				
+				data = data.substring(0,data.indexOf(',')+1)+"0,"+
+						data.substring(data.indexOf(',')+1);
+				
+			} else {
+				
+				data += ",0";
+			}
+			
+		} else if (data.split(",").length == 1) {
+			
+			data += ",0";
 		}
 		
 		splitData = data.split(",");
@@ -45,11 +65,25 @@ public abstract class LevelObject {
 		objectData[0] = new IDType(splitData[0]);
 		objectID = (int) objectData[0].getValue();
 		
+		if (splitData[1].length() == 0) {
+			
+			splitData[1] = "0";
+		}
+		
 		objectData[1] = new PalleteType(splitData[1]);
 		
 		for (int i = startIndex;i < splitData.length;i++) {
 			
-			String dataType = Utility.getDataType(splitData[i]);
+			String dataType;
+			
+			if (splitData[i].length() == 0) {
+				
+				dataType = "--";
+				
+			} else {
+				
+				dataType = Utility.getDataType(splitData[i]);
+			}
 			
 			boolean isValid = Utility.isValidType(dataType);
 			
@@ -110,6 +144,10 @@ public abstract class LevelObject {
 				
 				objectData[i] = new BooleanType("BL0");
 				break;
+				
+			case "--":
+				
+				objectData[i] = null;
 			}
 		}
 	}
@@ -186,7 +224,19 @@ public abstract class LevelObject {
 			if (i == 1 && !Utility.versionGreaterThanVersion(conversionType.gameVersionTo,"0.6.9")) {
 				continue;
 			}
-			output.append(objectData[i].toString());
+			
+			boolean optimizableValue = (Converter.getOptimizeObjectCode() &&
+					(i != 0 && Utility.areSameValue(objectData[i],defaultValues[i])));
+			
+			if (optimizableValue) {
+				
+				// Don't add anything to optimize the level code.
+				
+			} else {
+				
+				output.append(objectData[i].toString());
+			}
+			
 			output.append(",");
 		}
 		

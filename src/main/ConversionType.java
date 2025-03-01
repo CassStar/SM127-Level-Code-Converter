@@ -15,7 +15,7 @@ public class ConversionType {
 	int[] allMaxObjectID = {68,69,90,96,97,125,139,141};
 	int[] allMaxTileID = {210,250,350,360,360,410,410,410};
 	
-	String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2","0.8.0","0.9.0","0.9.1"};
+	static String[] validGameVersions = {"0.6.0","0.6.1","0.7.0","0.7.1","0.7.2","0.8.0","0.9.0","0.9.1"};
 	String[] validCodeVersions = {"0.4.5","0.4.5","0.4.8","0.4.9","0.4.9","0.4.9","0.5.0","0.5.1"};
 	
 	public ConversionType(boolean fromGameVersion,String versionFrom,String versionTo) {
@@ -169,5 +169,10 @@ public class ConversionType {
 		}
 		
 		return gameVersionFrom;
+	}
+	
+	static boolean isMostRecentGameVersion(String version) {
+		
+		return version.equals(validGameVersions[validGameVersions.length-1]);
 	}
 }

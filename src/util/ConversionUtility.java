@@ -11,24 +11,24 @@ public class ConversionUtility {
 	
 	public static LevelObject convertDownToZeroSixZero(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof EnchantedGearObject) {
+		if (object instanceof PowerUpEnchantedGearObject) {
 			
-			object = new EnchantedGearObject(object.stringData.substring(0,
+			object = new PowerUpEnchantedGearObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof RainbowStarObject) {
+		} else if (object instanceof PowerUpRainbowStarObject) {
 			
-			object = new RainbowStarObject(object.stringData.substring(0,
+			object = new PowerUpRainbowStarObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof GhostPepperObject) {
+		} else if (object instanceof PowerUpGhostPepperObject) {
 			
-			object = new GhostPepperObject(object.stringData.substring(0,
+			object = new PowerUpGhostPepperObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof SuperFeatherObject) {
+		} else if (object instanceof PowerUpSuperFeatherObject) {
 			
-			object = new SuperFeatherObject(object.stringData.substring(0,
+			object = new PowerUpSuperFeatherObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 		}
 		
@@ -88,14 +88,14 @@ public class ConversionUtility {
 	
 	public static LevelObject convertDownToZeroSevenZero(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof MetalPlatformObject) {
+		if (object instanceof PlatformMetalObject) {
 			
-			object = new MetalPlatformObject(object.stringData.substring(
+			object = new PlatformMetalObject(object.stringData.substring(
 					0,object.stringData.indexOf(",CL")),conversionType);
 			
-		} else if (object instanceof TwistedTreeTopObject) {
+		} else if (object instanceof TreeTwistedTopObject) {
 			
-			object = new TwistedTreeTopObject(object.stringData.substring(
+			object = new TreeTwistedTopObject(object.stringData.substring(
 					0,object.stringData.indexOf(",CL")),conversionType);
 			
 		} else if (object instanceof WarpPipeTopObject) {
@@ -127,9 +127,9 @@ public class ConversionUtility {
 					"STnone,STnone,"+
 					object.objectData[7].toString(),conversionType);
 			
-		} else if (object instanceof WoodenPlatformObject) {
+		} else if (object instanceof PlatformWoodenObject) {
 			
-			object = new WoodenPlatformObject(object.stringData.substring(
+			object = new PlatformWoodenObject(object.stringData.substring(
 					0,object.stringData.indexOf(",CL")),conversionType);
 			
 		}
@@ -145,34 +145,34 @@ public class ConversionUtility {
 			object = new ArrowObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof HoverFluddObject) {
+		} else if (object instanceof FluddHoverObject) {
 			
 			// Remove last boolean value.
-			object = new HoverFluddObject(object.stringData.substring(0,
+			object = new FluddHoverObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof RocketFluddObject) {
+		} else if (object instanceof FluddRocketObject) {
 			
 			// Remove last boolean value.
-			object = new RocketFluddObject(object.stringData.substring(0,
+			object = new FluddRocketObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof TurboFluddObject) {
+		} else if (object instanceof FluddTurboObject) {
 			
 			// Remove last boolean value.
-			object = new TurboFluddObject(object.stringData.substring(0,
+			object = new FluddTurboObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof SmallWaterBottleObject) {
+		} else if (object instanceof WaterBottleSmallObject) {
 			
 			// Remove last boolean value.
-			object = new SmallWaterBottleObject(object.stringData.substring(0,
+			object = new WaterBottleSmallObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof LargeWaterBottleObject) {
+		} else if (object instanceof WaterBottleLargeObject) {
 			
 			// Remove last boolean value.
-			object = new LargeWaterBottleObject(object.stringData.substring(0,
+			object = new WaterBottleLargeObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
 		} else if (object instanceof KoopaTroopaObject) {
@@ -181,22 +181,22 @@ public class ConversionUtility {
 			object = new KoopaTroopaObject(object.stringData.substring(0,
 					object.stringData.length()-",BL0".length()),conversionType);
 			
-		} else if (object instanceof RecoveryHeartObject) {
+		} else if (object instanceof HeartSpinningObject) {
 			
 			// Remove last 2 values.
-			object = new RecoveryHeartObject(object.stringData.substring(
+			object = new HeartSpinningObject(object.stringData.substring(
 					0,object.stringData.indexOf(",CL")),conversionType);
 			
-		} else if (object instanceof MovingPlatformObject) {
+		} else if (object instanceof PlatformMovingObject) {
 			
 			// Remove last value.
-			object = new MovingPlatformObject(object.stringData.substring(
+			object = new PlatformMovingObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",C2")),conversionType);
 			
-		} else if (object instanceof OnOffControlledMovingPlatformObject) {
+		} else if (object instanceof PlatformOnOffControlledMovingObject) {
 			
 			// Remove last value.
-			object = new OnOffControlledMovingPlatformObject(object.stringData.substring(
+			object = new PlatformOnOffControlledMovingObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",C2")),conversionType);
 			
 		}
@@ -212,16 +212,16 @@ public class ConversionUtility {
 			object = new SawBladeObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",FL")),conversionType);
 			
-		} else if (object instanceof WarpZoneObject) {
+		} else if (object instanceof ControllerWarpObject) {
 			
 			// Remove last value.
-			object = new WarpZoneObject(object.stringData.substring(
+			object = new ControllerWarpObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",BL")),conversionType);
 			
-		} else if (object instanceof OnOffControlledMovingPlatformObject) {
+		} else if (object instanceof PlatformOnOffControlledMovingObject) {
 			
 			// Remove last value.
-			object = new OnOffControlledMovingPlatformObject(object.stringData.substring(
+			object = new PlatformOnOffControlledMovingObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",FL")),conversionType);
 			
 		} else if (object instanceof CheckpointObject) {
@@ -230,10 +230,10 @@ public class ConversionUtility {
 			object = new CheckpointObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",BL")),conversionType);
 			
-		} else if (object instanceof FluidControllerObject) {
+		} else if (object instanceof ControllerFluidObject) {
 			
 			// Remove last two values.
-			object = new FluidControllerObject(object.stringData.substring(
+			object = new ControllerFluidObject(object.stringData.substring(
 					0,object.stringData.substring(0,object.stringData.lastIndexOf(",FL")).lastIndexOf(",FL")),
 					conversionType);
 			
@@ -243,10 +243,10 @@ public class ConversionUtility {
 			object = new ArrowObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",BL")),conversionType);
 			
-		} else if (object instanceof MovingPlatformObject) {
+		} else if (object instanceof PlatformMovingObject) {
 			
 			// Remove last value.
-			object = new MovingPlatformObject(object.stringData.substring(
+			object = new PlatformMovingObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",FL")),conversionType);
 			
 		} else if (object instanceof DoorObject) {
@@ -292,22 +292,22 @@ public class ConversionUtility {
 	
 	public static LevelObject convertDownToZeroNineZero(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof BonePlatformObject) {
+		if (object instanceof PlatformBoneObject) {
 			
 			// Remove last value.
-			object = new BonePlatformObject(object.stringData.substring(
+			object = new PlatformBoneObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",CL")),conversionType);
 			
-		} else if (object instanceof ConditionLockedDoorObject) {
+		} else if (object instanceof DoorConditionLockedObject) {
 			
 			// Remove last two values.
-			object = new ConditionLockedDoorObject(object.stringData.substring(
+			object = new DoorConditionLockedObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",ST")),conversionType);
 			
-		} else if (object instanceof PearlPlatformObject) {
+		} else if (object instanceof PlatformPearlObject) {
 			
 			// Remove last value.
-			object = new PearlPlatformObject(object.stringData.substring(
+			object = new PlatformPearlObject(object.stringData.substring(
 					0,object.stringData.lastIndexOf(",CL")),conversionType);
 			
 		}
@@ -317,21 +317,21 @@ public class ConversionUtility {
 	
 	public static LevelObject convertUpToZeroSixOne(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof EnchantedGearObject) {
+		if (object instanceof PowerUpEnchantedGearObject) {
 			
-			object = new EnchantedGearObject(object.stringData+",BL1",conversionType);
+			object = new PowerUpEnchantedGearObject(object.stringData+",BL1",conversionType);
 			
-		} else if (object instanceof RainbowStarObject) {
+		} else if (object instanceof PowerUpRainbowStarObject) {
 			
-			object = new RainbowStarObject(object.stringData+",BL1",conversionType);
+			object = new PowerUpRainbowStarObject(object.stringData+",BL1",conversionType);
 			
-		} else if (object instanceof GhostPepperObject) {
+		} else if (object instanceof PowerUpGhostPepperObject) {
 			
-			object = new GhostPepperObject(object.stringData+",BL1",conversionType);
+			object = new PowerUpGhostPepperObject(object.stringData+",BL1",conversionType);
 			
-		} else if (object instanceof SuperFeatherObject) {
+		} else if (object instanceof PowerUpSuperFeatherObject) {
 			
-			object = new SuperFeatherObject(object.stringData+",BL1",conversionType);
+			object = new PowerUpSuperFeatherObject(object.stringData+",BL1",conversionType);
 		}
 		
 		return object;
@@ -403,14 +403,14 @@ public class ConversionUtility {
 	
 	public static LevelObject convertUpToZeroSevenTwo(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof MetalPlatformObject) {
+		if (object instanceof PlatformMetalObject) {
 			
-			object = new MetalPlatformObject(object.stringData+",CL1x1x1",
+			object = new PlatformMetalObject(object.stringData+",CL1x1x1",
 					conversionType);
 			
-		} else if (object instanceof TwistedTreeTopObject) {
+		} else if (object instanceof TreeTwistedTopObject) {
 			
-			object = new TwistedTreeTopObject(object.stringData+",CL0.97x0.5x0.16",
+			object = new TreeTwistedTopObject(object.stringData+",CL0.97x0.5x0.16",
 					conversionType);
 			
 		} else if (object instanceof WarpPipeTopObject) {
@@ -427,9 +427,9 @@ public class ConversionUtility {
 			object = new DoorObject(object.stringData+",BL1",
 					conversionType);
 			
-		} else if (object instanceof WoodenPlatformObject) {
+		} else if (object instanceof PlatformWoodenObject) {
 			
-			object = new WoodenPlatformObject(object.stringData+",CL1x0x0",conversionType);
+			object = new PlatformWoodenObject(object.stringData+",CL1x0x0",conversionType);
 		}
 		
 		return object;
@@ -437,9 +437,9 @@ public class ConversionUtility {
 	
 	public static LevelObject convertUpToZeroEightZero(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof TwistedTreeTopObject) {
+		if (object instanceof TreeTwistedTopObject) {
 			
-			TwistedTreeTopObject compareObject = (TwistedTreeTopObject) object;
+			TreeTwistedTopObject compareObject = (TreeTwistedTopObject) object;
 			double[] colour = compareObject.colour;
 			
 			// Testing if the colour is set to default.
@@ -462,35 +462,35 @@ public class ConversionUtility {
 			// Add last value
 			object = new SawBladeObject(object.stringData+",FL0",conversionType);
 			
-		} else if (object instanceof WarpZoneObject) {
+		} else if (object instanceof ControllerWarpObject) {
 			
 			// Add last value.
-			object = new WarpZoneObject(object.stringData+",BL0",conversionType);
+			object = new ControllerWarpObject(object.stringData+",BL0",conversionType);
 			
-		} else if (object instanceof OnOffControlledMovingPlatformObject) {
+		} else if (object instanceof PlatformOnOffControlledMovingObject) {
 			
 			// Add last value.
-			object = new OnOffControlledMovingPlatformObject(object.stringData+",FL0",conversionType);
+			object = new PlatformOnOffControlledMovingObject(object.stringData+",FL0",conversionType);
 			
 		} else if (object instanceof CheckpointObject) {
 			
 			// Add last value.
 			object = new CheckpointObject(object.stringData+",BL1",conversionType);
 			
-		} else if (object instanceof FluidControllerObject) {
+		} else if (object instanceof ControllerFluidObject) {
 			
 			// Add last two values.
-			object = new FluidControllerObject(object.stringData+",FL0,FL0",conversionType);
+			object = new ControllerFluidObject(object.stringData+",FL0,FL0",conversionType);
 			
 		} else if (object instanceof ArrowObject) {
 			
 			// Add last two values.
 			object = new ArrowObject(object.stringData+",BL0,CL1x1x1x1",conversionType);
 			
-		} else if (object instanceof MovingPlatformObject) {
+		} else if (object instanceof PlatformMovingObject) {
 			
 			// Add last value.
-			object = new MovingPlatformObject(object.stringData+",FL0",conversionType);
+			object = new PlatformMovingObject(object.stringData+",FL0",conversionType);
 			
 		} else if (object instanceof DoorObject) {
 			
@@ -529,21 +529,21 @@ public class ConversionUtility {
 	
 	public static LevelObject convertUpToZeroNineOne(LevelObject object,ConversionType conversionType) throws Exception {
 		
-		if (object instanceof BonePlatformObject) {
+		if (object instanceof PlatformBoneObject) {
 			
 			// Add last value.
-			object = new BonePlatformObject(object.stringData+",CL1x1x1x1",conversionType);
+			object = new PlatformBoneObject(object.stringData+",CL1x1x1x1",conversionType);
 			
-		} else if (object instanceof ConditionLockedDoorObject) {
+		} else if (object instanceof DoorConditionLockedObject) {
 			
 			// Add last two values.
-			object = new ConditionLockedDoorObject(object.stringData+
+			object = new DoorConditionLockedObject(object.stringData+
 					",STSorry%21%20You%20need%20%7bnum%7d%20%7bcol%7d%20to%20open%20this%20door%21,BL0",conversionType);
 			
-		} else if (object instanceof PearlPlatformObject) {
+		} else if (object instanceof PlatformPearlObject) {
 			
 			// Add last value.
-			object = new PearlPlatformObject(object.stringData+",CL1x1x1x1",conversionType);
+			object = new PlatformPearlObject(object.stringData+",CL1x1x1x1",conversionType);
 			
 		}
 		

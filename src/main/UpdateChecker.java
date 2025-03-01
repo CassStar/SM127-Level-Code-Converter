@@ -11,8 +11,8 @@ import main.ProgramLogger.LogType;
 
 public class UpdateChecker {
 	
-	private static final String VERSION = "V0.4.2",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
-	private final long MAX_FILE_SIZE = 1000000;
+	private static final String VERSION = "V0.4.3",LATEST_URL = "https://github.com/CassStar/SM127-Level-Code-Converter/releases/latest";
+	private final long MAX_FILE_SIZE = 10000000;
 	private Scanner input;
 	private String workingDirectory,parentDirectory;
 	

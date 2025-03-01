@@ -7,7 +7,8 @@ import util.Utility;
 
 public class NoteblockObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts,strongBouncePower;
+	public int ID,pallete = 0;
+	public long parts,strongBouncePower;
 	public double[] position,scale;
 	public double rotation;
 	public boolean enabled,visible;
@@ -36,8 +37,8 @@ public class NoteblockObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
-		strongBouncePower = (int) objectData[8].getValue();
+		parts = (long) objectData[7].getValue();
+		strongBouncePower = (long) objectData[8].getValue();
 		
 		if (objectData.length > 8) {
 			

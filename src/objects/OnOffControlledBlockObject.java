@@ -37,7 +37,13 @@ public class OnOffControlledBlockObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		inverted = (boolean) objectData[7].getValue();
+		
+		switch (objectData.length) {
+		
+		case 8:
+			
+			inverted = (boolean) objectData[7].getValue();
+		}
 	}
 
 }

@@ -26,7 +26,9 @@ public class ZeroSevenOne implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getBackerBG()) {
+			int backerBG = (int) fromArea.getBackerBG();
+			
+			switch(backerBG) {
 			
 			// Bleak Clouds
 			case 6:
@@ -51,7 +53,9 @@ public class ZeroSevenOne implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getMusicID()) {
+			int musicID = (int) fromArea.getMusicID();
+			
+			switch(musicID) {
 			
 			// Yoshi's Island - Underground (Remix)
 			case 62:

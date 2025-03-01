@@ -34,7 +34,9 @@ public class ZeroSixOne implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getFronterBG()) {
+			int fronterBG = (int) fromArea.getFronterBG();
+			
+			switch(fronterBG) {
 			
 			// Sharp, Icy Mountains
 			//Soft, Snow Capped Mountains
@@ -54,7 +56,9 @@ public class ZeroSixOne implements ConversionBase {
 		
 		if (Utility.versionGreaterThanVersion(thisGameVersion,conversionType.gameVersionTo)) {
 			
-			switch(fromArea.getMusicID()) {
+			int musicID = (int) fromArea.getMusicID();
+			
+			switch(musicID) {
 			
 			// Inside The Castle Walls
 			case 37:

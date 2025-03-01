@@ -51,8 +51,9 @@ public class Converter {
 	// A list of level objects that were added after the conversion process. These need to be converted as well.
 	ArrayList<LevelObject> postConversionAdditions = new ArrayList<LevelObject>();
 	
+	private static boolean optimizeObjectCode = false;
 	// A flag determining if this program should include debug information in its logging.
-	static boolean isDebug;
+	private static boolean isDebug;
 	
 	// Used for all user input.
 	Scanner input = new Scanner(System.in);
@@ -60,7 +61,33 @@ public class Converter {
 	// Main function. All it does is run the converter.
 	public static void main(String[] args) {
 		
+		if (args.length > 0) {
+			
+			handleProgramArguments(args);
+		}
+		
 		new Converter();
+	}
+	
+	static void handleProgramArguments(String[] args) {
+		
+		for (String arg:args) {
+			
+			if (arg.equalsIgnoreCase("-d")) {
+				
+				setIsDebug(true);
+				
+			} else if (arg.equalsIgnoreCase("-o")) {
+				
+				setOptimizeObjectCode(true);
+				
+			} else {
+				
+				System.err.printf("Invalid argument provided: %s%nValid arguments:%n-d\tRuns the program in debug mode%n-o\tOptimizes "
+						+ "level object code (only available for the most recent game version)%n",arg);
+				System.out.println("_____________________________________________________________________________________________________");
+			}
+		}
 	}
 	
 	/**
@@ -145,6 +172,24 @@ public class Converter {
 	}
 	
 	void saveLevelCode(LevelCode code,String fileName) {
+		
+		if (ConversionType.isMostRecentGameVersion(conversionType.gameVersionTo)) {
+			
+			boolean optimizeObjects = getOptimizeObjectCode();
+			
+			if (!optimizeObjects) {
+				
+				optimizeObjects = getYesNo("Would you like to optimize the level code for objects? (Y/N): ","%nInvalid value entered."
+						+ "%nWould you like to optimize the level code for objects? (Please enter either 'Y' or 'N'): ");
+			}
+			
+			setOptimizeObjectCode(optimizeObjects);
+			
+		} else if (getOptimizeObjectCode()) {
+			
+			ProgramLogger.logMessage("Cannot optimize level object code. Target game version is not the most recent game version.",
+					LogType.WARNING);
+		}
 		
 		code.generateCode();
 		
@@ -327,9 +372,9 @@ public class Converter {
 				if (object instanceof DoorObject) {
 					
 					String data = ""+object.objectID+","+
-							Utility.vector2DToString(
+							Utility.vector2ToString(
 									(double[]) object.objectData[2].getValue(),false)+","+
-							Utility.vector2DToString(
+							Utility.vector2ToString(
 									(double[]) object.objectData[3].getValue(),false)+","+
 							object.objectData[4].getType()+object.objectData[4].getValue()+","+
 							Utility.booleanToString((boolean) object.objectData[5].getValue())+","+
@@ -370,7 +415,7 @@ public class Converter {
 		
 		Path file = inputDirectory.resolve(fileName);
 		
-		String levelData = fileHandler.readFromFile(file);
+		String levelData = fileHandler.readFromFile(file).strip();
 		
 		if (levelData == null) {
 			
@@ -406,6 +451,18 @@ public class Converter {
 				
 				fromLevel = new LevelCode(levelData,areaGrid,conversionType);
 				
+				while (fromLevel.getLevelData() == null) {
+					
+					defaultAreaLayout = getYesNo("You can either choose where you want areas placed, or leave it to the default "
+							+ "layout.%n%nThe default layout places each area sequentially "
+							+ "left-to-right starting from area ID 0.%n%nDo you want to go with the default layout? (Y/N): ",
+							"%nInvalid value entered.%nDo you want to go with the default layout? (Please enter either 'Y' or 'N'): ");
+					
+					placeAreas(levelData,defaultAreaLayout);
+					
+					fromLevel = new LevelCode(levelData,areaGrid,conversionType);
+				}
+				
 				fromLevel.setNumberOfAreas(1);
 				
 				levelData = fromLevel.getLevelData();
@@ -433,14 +490,61 @@ public class Converter {
 					
 					fromLevel = new LevelCode(levelData,areaGrid,conversionType);
 					
+					while (fromLevel.getLevelData() == null) {
+						
+						defaultAreaLayout = getYesNo("You can either choose where you want areas placed, or leave it to the default "
+								+ "layout.%n%nThe default layout places each area sequentially "
+								+ "left-to-right starting from area ID 0.%n%nDo you want to go with the default layout? (Y/N): ",
+								"%nInvalid value entered.%nDo you want to go with the default layout? (Please enter either 'Y' or 'N'): ");
+						
+						placeAreas(levelData,defaultAreaLayout);
+						
+						fromLevel = new LevelCode(levelData,areaGrid,conversionType);
+					}
+					
 					fromLevel.setNumberOfAreas(1);
 					
 					levelData = fromLevel.getLevelData();
 				}
-				
 			} else {
 				
-				fromLevel = new LevelCode(levelData,numberOfAreas,conversionType);
+				boolean reArrangeLevel = getYesNo("Would you like to re-arrange the level? (Y/N): ",
+						"%nInvalid value entered.%n\"Would you like to re-arrange the level? "
+						+ "(Please enter either 'Y' or 'N'): ");
+				
+				if (!reArrangeLevel) {
+					
+					ProgramLogger.logMessage("Continuing to level conversion.",LogType.INFO);
+					
+					fromLevel = new LevelCode(levelData,numberOfAreas,conversionType);
+					
+				} else {
+					
+					boolean defaultAreaLayout = getYesNo("You can either choose where you want areas placed, or leave it to the default "
+							+ "layout.%n%nThe default layout places each area sequentially "
+							+ "left-to-right starting from area ID 0.%n%nDo you want to go with the default layout? (Y/N): ",
+							"%nInvalid value entered.%nDo you want to go with the default layout? (Please enter either 'Y' or 'N'): ");
+					
+					placeAreas(levelData,defaultAreaLayout);
+					
+					fromLevel = new LevelCode(levelData,areaGrid,conversionType);
+					
+					while (fromLevel.getLevelData() == null) {
+						
+						defaultAreaLayout = getYesNo("You can either choose where you want areas placed, or leave it to the default "
+								+ "layout.%n%nThe default layout places each area sequentially "
+								+ "left-to-right starting from area ID 0.%n%nDo you want to go with the default layout? (Y/N): ",
+								"%nInvalid value entered.%nDo you want to go with the default layout? (Please enter either 'Y' or 'N'): ");
+						
+						placeAreas(levelData,defaultAreaLayout);
+						
+						fromLevel = new LevelCode(levelData,areaGrid,conversionType);
+					}
+					
+					fromLevel.setNumberOfAreas(1);
+					
+					levelData = fromLevel.getLevelData();
+				}
 			}
 			
 			ProgramLogger.logMessage("Level Code: "+levelData+"\n",LogType.DEBUG);
@@ -607,7 +711,7 @@ public class Converter {
 			}
 		}
 		
-		String dimensions = Utility.vector2DToString(areaDimensions,true);
+		String dimensions = Utility.vector2ToString(areaDimensions,true);
 		dimensions = dimensions.replace("x",",");
 		dimensions = dimensions.substring(2);
 		
@@ -623,7 +727,7 @@ public class Converter {
 		
 		ProgramLogger.logMessage("Area backer BG Data: "+temp,LogType.INFO);
 		
-		int areaBackerBG = Utility.parseInteger(temp);
+		long areaBackerBG = Utility.parseInteger(temp);
 		
 		if (areaBackerBG < conversionType.minBackerBG[0] ||
 				areaBackerBG > conversionType.maxBackerBG[0]) {
@@ -649,7 +753,7 @@ public class Converter {
 		
 		ProgramLogger.logMessage("Area fronter BG Data: "+temp,LogType.INFO);
 		
-		int areaFronterBG = Utility.parseInteger(temp);
+		long areaFronterBG = Utility.parseInteger(temp);
 		
 		if (areaFronterBG < conversionType.minFronterBG[0] ||
 				areaFronterBG > conversionType.maxFronterBG[0]) {
@@ -676,7 +780,7 @@ public class Converter {
 		
 		String musicDataType = Utility.getDataType(temp),musicData = null;
 		
-		int musicID;
+		long musicID;
 		
 		if (!(musicDataType.equals("ST") || musicDataType.equals("IT"))) {
 			
@@ -763,7 +867,7 @@ public class Converter {
 			
 			ProgramLogger.logMessage("Area BG Pallete Data: "+temp,LogType.INFO);
 			
-			int areaBGPallete = Utility.parseInteger(temp);
+			long areaBGPallete = Utility.parseInteger(temp);
 			
 			ProgramLogger.logMessage("Area BG Pallete: "+areaBGPallete,LogType.INFO);
 			System.out.println();
@@ -1222,6 +1326,23 @@ public class Converter {
 	public static boolean getIsDebug() {
 		
 		return Boolean.valueOf(isDebug);
+	}
+	
+	private static void setIsDebug(boolean value) {
+		
+		isDebug = Boolean.valueOf(value);
+		ProgramLogger.logMessage("Set debug mode: "+String.valueOf(value),LogType.INFO);
+	}
+	
+	public static boolean getOptimizeObjectCode() {
+		
+		return Boolean.valueOf(optimizeObjectCode);
+	}
+	
+	public static void setOptimizeObjectCode(boolean value) {
+		
+		optimizeObjectCode = Boolean.valueOf(value);
+		ProgramLogger.logMessage("Set optimize level object code: "+String.valueOf(value),LogType.INFO);
 	}
 	
 	String[] getAreaArray() {
@@ -1749,7 +1870,7 @@ public class Converter {
 					return null;
 				}
 				
-				if (!areaWithinRange(array[i],0,numberOfAreas-1)) {
+				if (!areaWithinRange(array[i],0,numberOfAreas-1) && array[i] != -1) {
 					
 					ProgramLogger.logMessage("Area provided doesn't exist in-level: "+tempArray[i],LogType.ERROR);
 					return null;
@@ -2115,7 +2236,20 @@ public class Converter {
 						output.append(" - ");
 						
 					} else {
-						output.append(" "+grid[j][i]+" ");
+						
+						if (grid[j][i] < 10) {
+							
+							output.append(" "+grid[j][i]+" ");
+							
+						} else if (grid[j][i] < 100) {
+							
+							output.append(" "+grid[j][i]);
+							
+						} else {
+							
+							output.append(grid[j][i]);
+						}
+						
 					}
 				}
 				

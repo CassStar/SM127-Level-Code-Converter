@@ -54,6 +54,12 @@ public class LevelCode {
 	
 	void setLevelData(String value) {
 		
+		if (value == null) {
+			
+			levelData = null;
+			return;
+		}
+		
 		levelData = new String(value);
 	}
 	

@@ -1,1 +1,1 @@
-java -jar Converter.jar
+java -jar Converter.jar %*

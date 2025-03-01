@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import main.ProgramLogger;
 import main.Converter.AreaGrid;
 import main.ProgramLogger.LogType;
-import objects.MarioSpawnObject;
-import objects.LuigiSpawnObject;
+import objects.SpawnPlayer1Object;
+import objects.SpawnPlayer2Object;
 import types.Vector2Type;
 import util.Utility;
 
@@ -45,6 +45,13 @@ public class LevelRearranger {
 		Vector2Type levelDimensions = getLevelDimensions(areas,grid);
 		
 		String newLevelCode = createLevelFromGrid(code,areas,grid,levelDimensions);
+		
+		if (newLevelCode == null) {
+			
+			this.code = null;
+			return;
+			
+		}
 		
 		this.code = new String(newLevelCode);
 	}
@@ -148,16 +155,68 @@ public class LevelRearranger {
 		
 		ProgramLogger.logMessage("Creating new level code from grid:\n"+areaGrid.toString()+"\n",LogType.INFO);
 		
-		String codeVersion = getCodeVersion(code);
-		String levelName = getLevelName(code);
+		int currentIndex = 0,nextIndex = 0;
+		
+		nextIndex = code.indexOf(',');
+		
 		String preTileValues = getPreTileValues(code);
+		
+		String codeVersion = code.substring(currentIndex,nextIndex);
+		
+		code = code.substring(nextIndex+1,code.length());
+		nextIndex = code.indexOf(',');
+		
+		String levelName = code.substring(currentIndex,nextIndex);
 		
 		StringBuilder levelCode = new StringBuilder();
 		
 		levelCode.append(codeVersion);
 		levelCode.append(',');
 		levelCode.append(levelName);
-		levelCode.append(",[],[");
+		levelCode.append(',');
+		
+		code = code.substring(nextIndex+1,code.length());
+		nextIndex = code.indexOf(',');
+		
+		// More data needs to be added to the level code depending on the version
+		if (Utility.versionGreaterThanVersion(codeVersion,"0.4.9")) {
+			
+			String levelAuthor = code.substring(currentIndex,nextIndex);
+			
+			code = code.substring(nextIndex+1,code.length());
+			nextIndex = code.indexOf(',');
+			
+			String levelDescription = code.substring(currentIndex,nextIndex);
+			
+			code = code.substring(nextIndex+1,code.length());
+			nextIndex = code.indexOf(',');
+			
+			String levelThumbnail = code.substring(currentIndex,nextIndex);
+			
+			code = code.substring(nextIndex+1,code.length());
+			nextIndex = code.indexOf(']')+1;
+			
+			levelCode.append(levelAuthor);
+			levelCode.append(',');
+			levelCode.append(levelDescription);
+			levelCode.append(',');
+			levelCode.append(levelThumbnail);
+			levelCode.append(',');
+			
+		} else {
+			
+			levelCode.append("Unkown");
+			levelCode.append(',');
+			levelCode.append("This%20level%20has%20no%20description.");
+			levelCode.append(',');
+			levelCode.append("");
+			levelCode.append(',');
+		}
+		
+		String levelHotBar = code.substring(currentIndex,nextIndex);
+		
+		levelCode.append(levelHotBar);
+		levelCode.append(",[");
 		levelCode.append(levelDimensions.toString());
 		levelCode.append(',');
 		levelCode.append(preTileValues);
@@ -167,29 +226,22 @@ public class LevelRearranger {
 		
 		String allLevelTiles = getAllLevelTiles(areas.clone(),areaGrid);
 		
+		if (allLevelTiles == null) {
+			
+			return null;
+		}
+		
 		ProgramLogger.logMessage("Done level tiles. Re-arranging level objects...",LogType.INFO);
-		String allLevelObjects = getAllLevelObjects(areas,areaGrid);
+		String allLevelObjects = getAllLevelObjects(areas.clone(),areaGrid);
 		
 		levelCode.append(allLevelTiles);
 		levelCode.append("~");
 		levelCode.append(allLevelObjects);
 		levelCode.append(']');
 		
-		ProgramLogger.logMessage("Finisehd re-arranging level",LogType.INFO);
+		ProgramLogger.logMessage("Finisehd re-arranging level.",LogType.INFO);
 		
 		return levelCode.toString();
-	}
-	
-	String getCodeVersion(String code) {
-		
-		return code.substring(0,code.indexOf(','));
-	}
-	
-	String getLevelName(String code) {
-		
-		code = code.substring(code.indexOf(',')+1);
-		
-		return code.substring(0,code.indexOf(','));
 	}
 	
 	String getPreTileValues(String code) {
@@ -210,6 +262,17 @@ public class LevelRearranger {
 		int[] widths = widthsAndHeights[0];
 		int[] heights = widthsAndHeights[1];
 		
+		boolean exceedsMaximumBounds = getExceedsAreaBounds(widths,heights);
+		
+		if (exceedsMaximumBounds) {
+			
+			ProgramLogger.logMessage("Re-arranged level would exceed maximum area bounds!\n"
+					+ "Areas can only be a max of 1500 units in width and height.\n"
+					+ "Please re-arrange the areas in a way that does not exceed this limit.\n",LogType.ERROR);
+			
+			return null;
+		}
+		
 		int[][] grid = areaGrid.getGrid();
 		
 		for (int row = 0;row < grid.length;row++) {
@@ -223,7 +286,6 @@ public class LevelRearranger {
 			ProgramLogger.logMessage("Adding row tiles...",LogType.DEBUG);
 			tiles.append(arrayToString(condensedTiles));
 			
-			// Seperator to tell the different rows apart.
 			tiles.append("%20");
 		}
 		
@@ -515,6 +577,14 @@ public class LevelRearranger {
 					// Reached end of row.
 					if (xValue == areaWidths[i]) {
 						
+						// Area width less than column width.
+						if (areaWidths[i] < widths[i]) {
+							
+							LevelTile buffer = new LevelTile("000*"+(widths[i]-areaWidths[i]));
+							
+							rowTiles.add(buffer.clone());
+						}
+						
 						if (originalAmount-nextTile.getTileAmount() > 0) {
 							
 							LevelTile overflowTile = nextTile.clone();
@@ -605,11 +675,6 @@ public class LevelRearranger {
 		
 		for (int i = 0;i < tiles.size();i++) {
 			
-			if (i == 2906) {
-				
-				System.currentTimeMillis();
-			}
-			
 			currentTile = tiles.get(i);
 			
 			if (currentTile == null) {
@@ -670,6 +735,35 @@ public class LevelRearranger {
 		output.deleteCharAt(output.length()-1);
 		
 		return output.toString();
+	}
+	
+	boolean getExceedsAreaBounds(int[] widths,int[] heights) {
+		
+		int max = 1500,total = 0;
+		
+		for (int width:widths) {
+			
+			total += width;
+		}
+		
+		if (total > max) {
+			
+			return true;
+		}
+		
+		total = 0;
+		
+		for (int height:heights) {
+			
+			total += height;
+		}
+		
+		if (total > max) {
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	String getAllLevelObjects(String[] areas,AreaGrid areaGrid) {
@@ -768,7 +862,7 @@ public class LevelRearranger {
 		
 		for (LevelObject object:objects) {
 			
-			if (object instanceof MarioSpawnObject) {
+			if (object instanceof SpawnPlayer1Object) {
 				
 				if (placedMarioSpawn) {
 					continue;
@@ -776,7 +870,7 @@ public class LevelRearranger {
 				
 				placedMarioSpawn = true;
 				
-			} else if (object instanceof LuigiSpawnObject) {
+			} else if (object instanceof SpawnPlayer2Object) {
 				
 				if (placedLuigiSpawn) {
 					continue;

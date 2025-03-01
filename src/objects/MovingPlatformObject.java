@@ -7,7 +7,8 @@ import util.Utility;
 
 public class MovingPlatformObject extends LevelObject {
 	
-	public int ID,pallete = 0,parts,moveType;
+	public int ID,pallete = 0;
+	public long parts,moveType;
 	public double[] position,scale,colour;
 	public double rotation,maxSpeed,startOffset,unkownFloatValue;
 	public boolean enabled,visible,touchStart;
@@ -37,10 +38,10 @@ public class MovingPlatformObject extends LevelObject {
 		rotation = (double) Double.valueOf(String.valueOf(objectData[4].getValue()));
 		enabled = (boolean) objectData[5].getValue();
 		visible = (boolean) objectData[6].getValue();
-		parts = (int) objectData[7].getValue();
+		parts = (long) objectData[7].getValue();
 		maxSpeed = (double) Double.valueOf(String.valueOf(objectData[8].getValue()));
 		path = (double[][]) objectData[9].getValue();
-		moveType = (int) objectData[10].getValue();
+		moveType = (long) objectData[10].getValue();
 		touchStart = (boolean) objectData[11].getValue();
 		colour = (double[]) objectData[12].getValue();
 		startOffset = (double) Double.valueOf(String.valueOf(objectData[13].getValue()));

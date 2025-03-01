@@ -7,7 +7,8 @@ import util.Utility;
 
 public class PrincessPeachNPCObject extends LevelObject {
 	
-	public int ID,pallete = 0,idleExpression,idleAction,speakingExpression,speakingAction,requiredShines;
+	public int ID,pallete = 0;
+	public long idleExpression,idleAction,speakingExpression,speakingAction,requiredShines;
 	public double[] position,scale;
 	public double rotation,walkSpeed;
 	public boolean enabled,visible,moveType,physicsEnabled,pathReference;
@@ -44,13 +45,13 @@ public class PrincessPeachNPCObject extends LevelObject {
 		moveType = (boolean) objectData[9].getValue();
 		walkSpeed = (double) Double.valueOf(String.valueOf(objectData[10].getValue()));
 		physicsEnabled = (boolean) objectData[11].getValue();
-		idleExpression = (int) objectData[12].getValue();
-		idleAction = (int) objectData[13].getValue();
-		speakingExpression = (int) objectData[14].getValue();
-		speakingAction = (int) objectData[15].getValue();
+		idleExpression = (long) objectData[12].getValue();
+		idleAction = (long) objectData[13].getValue();
+		speakingExpression = (long) objectData[14].getValue();
+		speakingAction = (long) objectData[15].getValue();
 		pathReference = (boolean) objectData[16].getValue();
 		tagLink = String.valueOf(objectData[17].getValue());
-		requiredShines = (int) objectData[18].getValue();
+		requiredShines = (long) objectData[18].getValue();
 	}
 	
 }

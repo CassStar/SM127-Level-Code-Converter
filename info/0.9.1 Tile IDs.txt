@@ -34,6 +34,8 @@ ID	Tile Type				Max Pallete Value
 081	Half-Tile Old Cave				0
 
 090	Glass Pane Block				7
+092	Up-Right Slope Glass Pane			7
+093	Up-Left Slope Glass Pane			7
 
 100	Full-Tile Wooden Cabin				7
 102	Up-Right Cabin Stairs				7
